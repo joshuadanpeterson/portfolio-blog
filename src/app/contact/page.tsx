@@ -1,7 +1,7 @@
 // src/app/contact/page.tsx
 "use client";
 
-import { useState } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 
 const ContactPage = () => {
@@ -14,7 +14,9 @@ const ContactPage = () => {
 
   const router = useRouter();
 
-  const handleChange = (e) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -22,7 +24,7 @@ const ContactPage = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const response = await fetch("/api/contact", {
       method: "POST",
