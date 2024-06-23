@@ -1,4 +1,7 @@
+// src/app/layout.tsx
+import Container from "@/app/_components/container";
 import Footer from "@/app/_components/footer";
+import Navbar from "@/app/_components/navbar";
 import { CMS_NAME, HOME_OG_IMAGE_URL } from "@/lib/constants";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -56,6 +59,11 @@ export default function RootLayout({
         <link rel="alternate" type="application/rss+xml" href="/feed.xml" />
       </head>
       <body className={inter.className}>
+        <div>
+          <Container>
+            <Navbar />
+          </Container>
+        </div>
         <div className="min-h-screen">{children}</div>
         <Footer />
       </body>
