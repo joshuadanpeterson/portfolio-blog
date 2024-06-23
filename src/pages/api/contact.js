@@ -7,14 +7,6 @@ export default async (req, res) => {
   if (req.method === "POST") {
     const { name, email, subject, message } = req.body;
 
-    // Log the request body and environment variables
-    console.log("Request Body:", req.body);
-    console.log("Email User:", process.env.EMAIL_USER);
-    console.log(
-      "Email Pass:",
-      process.env.EMAIL_PASS ? "Loaded" : "Not Loaded",
-    );
-
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -24,7 +16,8 @@ export default async (req, res) => {
     });
 
     const mailOptions = {
-      from: email,
+      from: process.env.EMAIL_USER,
+      replyTo: email,
       to: "joshuadanpeterson@gmail.com",
       subject: `Contact Form Submission: ${subject}`,
       text: `You have a new contact form submission from:
