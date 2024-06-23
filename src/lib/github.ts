@@ -1,12 +1,24 @@
 // @/lib/github
 // Grabs pinned repositories from GitHub using the GitHub GraphQL API
-const GITHUB_API_URL = "https://api.github.com/graphql";
 
-export async function fetchPinnedRepos() {
+import axios from "axios";
+
+const GITHUB_API_URL = "https://api.github.com/graphql";
+const GITHUB_ACCESS_TOKEN = process.env.GITHUB_ACCESS_TOKEN;
+
+interface Repository {
+  name: string;
+  description: string;
+  url: string;
+  stargazerCount: number;
+  forkCount: number;
+}
+
+export async function fetchPinnedRepos(): Promise<Repository[]> {
   const query = `
     {
-      user(login: "joshuadanpeterson") {
-        pinnedItems(first: 6, types: [REPOSITORY]) {
+      viewer {
+        pinnedItems(first: 6, types: REPOSITORY) {
           nodes {
             ... on Repository {
               name
@@ -21,19 +33,21 @@ export async function fetchPinnedRepos() {
     }
   `;
 
-  const response = await fetch(GITHUB_API_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.GITHUB_ACCESS_TOKEN}`,
+  const response = await axios.post(
+    GITHUB_API_URL,
+    { query },
+    {
+      headers: {
+        Authorization: `Bearer ${GITHUB_ACCESS_TOKEN}`,
+      },
     },
-    body: JSON.stringify({ query }),
-  });
+  );
 
-  if (!response.ok) {
-    throw new Error("Failed to fetch pinned repositories");
-  }
-
-  const result = await response.json();
-  return result.data.user.pinnedItems.nodes;
+  return response.data.data.viewer.pinnedItems.nodes.map((repo: any) => ({
+    name: repo.name,
+    description: repo.description,
+    url: repo.url,
+    stargazerCount: repo.stargazerCount,
+    forkCount: repo.forkCount,
+  }));
 }
