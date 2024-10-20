@@ -52,16 +52,35 @@ export default function BlogPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold mb-6">Blog</h1>
+      {/* Blog Title and Description */}
+      <div className="flex flex-col items-center justify-center mt-16 mb-16">
+        <h1 className="text-5xl md:text-8xl font-bold tracking-tighter leading-tight md:pr-8">
+          Blog
+        </h1>
+        {/* Updated Blog description */}
+        <p className="text-lg text-center mt-4 max-w-2xl text-gray-600">
+          Welcome to my personal blog, where I share my journey as a web
+          developer and explore a wide range of topics at the intersection of
+          technology, AI, supply chain logistics, crypto, space, and tech
+          policy. Dive into my latest projects, technical insights, and
+          tutorials on web development, while also discovering in-depth analyses
+          on emerging trends like AI, blockchain, and space exploration. This is
+          where I document the evolution of my portfolio, share my learning
+          experiences, and provide thought-provoking content on how technology
+          is shaping our world.
+        </p>
+      </div>
 
-      {/* Search Bar */}
-      <input
-        type="text"
-        value={searchTerm}
-        onChange={handleSearchChange}
-        className="border border-gray-300 p-2 w-full mb-6"
-        placeholder="Search blog posts..."
-      />
+      {/* Center the search bar and limit its width */}
+      <div className="flex justify-center mb-6">
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={handleSearchChange}
+          className="border border-gray-300 p-2 w-full max-w-md md:w-1/2 rounded"
+          placeholder="Search blog posts..."
+        />
+      </div>
 
       {/* Display filtered posts in a grid layout */}
       <ul className="grid grid-cols-1 md:grid-cols-3 gap-8">
