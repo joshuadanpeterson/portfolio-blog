@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Post } from "@/interfaces/post";
 
 // Fetch posts from the API route
@@ -22,11 +23,9 @@ export default function BlogPage() {
         const date1 = new Date(post1.date);
         const date2 = new Date(post2.date);
 
-        // Compare dates first (newest first)
         if (date1 > date2) return -1;
         if (date1 < date2) return 1;
 
-        // If dates are equal, sort alphabetically by title (case-insensitive)
         return post1.title
           .toLowerCase()
           .localeCompare(post2.title.toLowerCase());
@@ -64,21 +63,40 @@ export default function BlogPage() {
         placeholder="Search blog posts..."
       />
 
-      {/* Display filtered posts */}
-      <ul className="space-y-6">
+      {/* Display filtered posts in a grid layout */}
+      <ul className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {filteredPosts.length > 0 ? (
           filteredPosts.map((post) => (
-            <li key={post.slug} className="border-b pb-4">
-              <Link
-                href={`/posts/${post.slug}`}
-                className="text-2xl font-semibold text-blue-600 hover:underline"
-              >
-                {post.title}
-              </Link>
-              <p className="text-gray-500 text-sm">
-                {new Date(post.date).toLocaleDateString()}
-              </p>
-              <p className="text-gray-600">{post.excerpt}</p>
+            <li
+              key={post.slug}
+              className="border rounded-lg overflow-hidden shadow-lg flex flex-col"
+            >
+              {/* Display Post Image */}
+              <div className="relative h-48">
+                {post.coverImage && (
+                  <Image
+                    src={post.coverImage}
+                    alt={post.title}
+                    fill
+                    objectFit="cover"
+                    className="w-full"
+                  />
+                )}
+              </div>
+
+              {/* Post Details */}
+              <div className="p-4 flex flex-col justify-between flex-grow">
+                <Link
+                  href={`/posts/${post.slug}`}
+                  className="text-xl font-semibold text-blue-600 hover:underline"
+                >
+                  {post.title}
+                </Link>
+                <p className="text-gray-500 text-sm">
+                  {new Date(post.date).toLocaleDateString()}
+                </p>
+                <p className="text-gray-600 mt-2">{post.excerpt}</p>
+              </div>
             </li>
           ))
         ) : (
