@@ -62,6 +62,19 @@ const Navbar: FC = () => {
             Portfolio
           </Link>
         </li>
+
+        {/* New Blog Link */}
+        <li>
+          <Link
+            href="/posts"
+            className={clsx(
+              "underline hover:text-blue-600 duration-200 transition-colors",
+              { "text-blue-600": pathname === "/posts" },
+            )}
+          >
+            Blog
+          </Link>
+        </li>
         <li>
           <Link
             href="/about"
