@@ -65,7 +65,7 @@ export default function BlogPage() {
       setSelectedIndex(-1);
     } else {
       setSuggestions([]);
-      setFilteredPosts(posts); // Reset to show all posts when input is empty
+      setFilteredPosts(posts);
       setSelectedIndex(-1);
     }
   };
@@ -100,7 +100,7 @@ export default function BlogPage() {
       );
       setFilteredPosts(filtered);
     } else {
-      setFilteredPosts(posts); // Reset to show all posts when form is submitted with empty input
+      setFilteredPosts(posts);
     }
     setSuggestions([]);
     setSelectedIndex(-1);
@@ -137,21 +137,18 @@ export default function BlogPage() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="flex flex-col items-center justify-center mt-16 mb-16">
-        <h1 className="text-5xl md:text-8xl font-bold tracking-tighter leading-tight md:pr-8">
-          Blog
-        </h1>
-        <p className="text-lg text-center mt-4 max-w-2xl text-gray-600">
-          Welcome to my personal blog, where I share my journey as a web
-          developer and explore a wide range of topics at the intersection of
-          technology, AI, supply chain logistics, crypto, space, and tech
-          policy.
-        </p>
-      </div>
+    <div className="flex flex-col items-center justify-center mt-16 mb-16 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h1 className="text-5xl md:text-8xl font-bold tracking-tighter leading-tight md:pr-8 mb-8">
+        Blog
+      </h1>
+      <p className="text-lg text-center mt-5 md:pl-8 max-w-2xl mb-8">
+        Welcome to my personal blog, where I share my journey as a web developer
+        and explore a wide range of topics at the intersection of technology,
+        AI, supply chain logistics, crypto, space, and tech policy.
+      </p>
 
-      <div className="relative flex justify-center mb-6" ref={searchRef}>
-        <form onSubmit={handleFormSubmit} className="relative w-full max-w-md">
+      <div className="relative w-full max-w-md mb-12" ref={searchRef}>
+        <form onSubmit={handleFormSubmit} className="relative">
           <input
             ref={inputRef}
             type="text"
@@ -182,7 +179,7 @@ export default function BlogPage() {
         </form>
       </div>
 
-      <ul className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
         {filteredPosts.length > 0 ? (
           filteredPosts.map((post) => (
             <li
@@ -215,7 +212,7 @@ export default function BlogPage() {
             </li>
           ))
         ) : (
-          <li>No posts found.</li>
+          <li className="col-span-full text-center">No posts found.</li>
         )}
       </ul>
     </div>
