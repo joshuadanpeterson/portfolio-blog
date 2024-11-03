@@ -1,3 +1,5 @@
+// src/app/posts/page.tsx
+
 "use client";
 
 import { useState, useEffect, useRef, KeyboardEvent } from "react";
@@ -6,6 +8,27 @@ import Image from "next/image";
 import { Post } from "@/interfaces/post";
 import { useRouter } from "next/navigation";
 import { fetchRSSFeeds, FeedItem } from "@/lib/rss";
+
+// Helper function to determine image path
+const getImagePath = (post: Post | FeedItem): string => {
+  // If it's an RSS feed item with an image URL
+  if ("imageUrl" in post && post.imageUrl && post.imageUrl.startsWith("http")) {
+    return post.imageUrl;
+  }
+
+  // If it's a local post with imageUrl
+  if ("imageUrl" in post && post.imageUrl) {
+    return `/assets/blog/${post.imageUrl}`;
+  }
+
+  // If it's a local post with a slug, try to find a cover image
+  if ("slug" in post) {
+    return `/assets/blog/${post.slug}/cover.jpg`;
+  }
+
+  // Default fallback image
+  return "/assets/blog/preview/cover.jpg";
+};
 
 export default function BlogPage() {
   const [posts, setPosts] = useState<(Post | FeedItem)[]>([]);
@@ -126,36 +149,6 @@ export default function BlogPage() {
     setSelectedIndex(-1);
   };
 
-  const suggestionListStyle: React.CSSProperties = {
-    position: "absolute",
-    top: "100%",
-    left: 0,
-    right: 0,
-    backgroundColor: "white",
-    border: "1px solid #ddd",
-    borderTop: "none",
-    listStyleType: "none",
-    margin: 0,
-    padding: 0,
-    zIndex: 1000,
-    maxHeight: "300px",
-    overflowY: "auto",
-    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-    display: "flex",
-    flexDirection: "column",
-  };
-
-  const suggestionItemStyle: React.CSSProperties = {
-    padding: "10px",
-    cursor: "pointer",
-    borderBottom: "1px solid #eee",
-  };
-
-  const selectedItemStyle: React.CSSProperties = {
-    ...suggestionItemStyle,
-    backgroundColor: "#f0f0f0",
-  };
-
   return (
     <div className="flex flex-col items-center justify-center mt-16 mb-16 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <h1 className="text-5xl md:text-8xl font-bold tracking-tighter leading-tight md:pr-8 mb-8">
@@ -179,17 +172,14 @@ export default function BlogPage() {
             className="border border-gray-300 p-2 w-full rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-shadow duration-200"
           />
           {suggestions.length > 0 && (
-            <ul style={suggestionListStyle}>
+            <ul className="absolute w-full bg-white border border-gray-300 rounded-b shadow-lg z-10">
               {suggestions.map((post, index) => (
                 <li
                   key={post.link || post.slug}
                   onClick={() => handleSuggestionClick(post)}
-                  style={
-                    index === selectedIndex
-                      ? selectedItemStyle
-                      : suggestionItemStyle
-                  }
-                  className={`hover:bg-gray-100 ${index === selectedIndex ? "bg-gray-200" : ""}`}
+                  className={`p-2 cursor-pointer hover:bg-gray-100 ${
+                    index === selectedIndex ? "bg-gray-200" : ""
+                  }`}
                 >
                   {post.title}
                 </li>
@@ -204,26 +194,21 @@ export default function BlogPage() {
           filteredPosts.map((post) => (
             <li
               key={post.link || post.slug}
-              className="border rounded-lg overflow-hidden shadow-lg flex flex-col"
+              className="border rounded-lg shadow-lg overflow-hidden"
             >
               <div className="relative h-48">
-                {post.imageUrl && (
-                  <Image
-                    src={post.imageUrl}
-                    alt={post.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover"
-                    priority={true} // Add this if the image is above the fold
-                  />
-                )}
+                <Image
+                  src={getImagePath(post)}
+                  alt={post.title || "Blog post thumbnail"}
+                  fill
+                  style={{ objectFit: "cover" }}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
               </div>
-              <div className="p-4 flex flex-col justify-between flex-grow">
+              <div className="p-4">
                 <Link
                   href={post.link || `/posts/${post.slug}`}
                   className="text-xl font-semibold text-blue-600 hover:underline"
-                  target={post.link ? "_blank" : undefined}
-                  rel={post.link ? "noopener noreferrer" : undefined}
                 >
                   {post.title}
                 </Link>
