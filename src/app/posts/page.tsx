@@ -4,35 +4,40 @@ import { useState, useEffect, useRef, KeyboardEvent } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Post } from "@/interfaces/post";
-import { useRouter } from "next/navigation"; // Import useRouter hook
+import { useRouter } from "next/navigation";
+import { fetchRSSFeeds, FeedItem } from "@/lib/rss"; // Import RSS fetching function
 
 export default function BlogPage() {
-  const [posts, setPosts] = useState<Post[]>([]);
+  const [posts, setPosts] = useState<(Post | FeedItem)[]>([]);
   const [value, setValue] = useState<string>("");
-  const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
-  const [suggestions, setSuggestions] = useState<Post[]>([]);
+  const [filteredPosts, setFilteredPosts] = useState<(Post | FeedItem)[]>([]);
+  const [suggestions, setSuggestions] = useState<(Post | FeedItem)[]>([]);
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
   const searchRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const router = useRouter(); // Initialize useRouter for navigation
+  const router = useRouter();
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const response = await fetch("/api/posts");
-      const data = await response.json();
+      const feedUrls = [
+        // "https://your-substack-feed-url/rss", --Future Substack RSS
+        "/api/proxy-rss?url=https://medium.com/feed/@joshpeterson",
+        "/api/proxy-rss?url=https://rss.app/feeds/Q0d7If1vLw2uZdL2.xml",
+      ];
 
-      const sortedPosts = data.sort((post1: Post, post2: Post) => {
-        const date1 = new Date(post1.date);
-        const date2 = new Date(post2.date);
-        if (date1 > date2) return -1;
-        if (date1 < date2) return 1;
-        return post1.title
-          .toLowerCase()
-          .localeCompare(post2.title.toLowerCase());
-      });
+      const [rssData, apiPosts] = await Promise.all([
+        fetchRSSFeeds(feedUrls),
+        fetch("/api/posts").then((res) => res.json()),
+      ]);
 
-      setPosts(sortedPosts);
-      setFilteredPosts(sortedPosts);
+      const combinedPosts = [...apiPosts, ...rssData].sort(
+        (a, b) =>
+          new Date(b.pubDate || b.date).getTime() -
+          new Date(a.pubDate || a.date).getTime(),
+      );
+
+      setPosts(combinedPosts);
+      setFilteredPosts(combinedPosts);
     };
 
     fetchPosts();
@@ -59,7 +64,7 @@ export default function BlogPage() {
 
     if (inputValue.trim()) {
       const filteredSuggestions = posts.filter((post) =>
-        post.title.toLowerCase().includes(inputValue.toLowerCase()),
+        (post.title || "").toLowerCase().includes(inputValue.toLowerCase()),
       );
       setSuggestions(filteredSuggestions);
       setFilteredPosts(filteredSuggestions);
@@ -71,8 +76,8 @@ export default function BlogPage() {
     }
   };
 
-  const handleSuggestionClick = (post: Post) => {
-    setValue(post.title);
+  const handleSuggestionClick = (post: Post | FeedItem) => {
+    setValue(post.title || "");
     setFilteredPosts([post]);
     setSuggestions([]);
     setSelectedIndex(-1);
@@ -91,9 +96,9 @@ export default function BlogPage() {
       e.preventDefault();
       const selectedPost = suggestions[selectedIndex];
       if (selectedPost) {
-        setValue(selectedPost.title); // Populate the search bar
-        setSuggestions([]); // Clear suggestions
-        router.push(`/posts/${selectedPost.slug}`); // Navigate to selected post page
+        setValue(selectedPost.title || "");
+        setSuggestions([]);
+        router.push(selectedPost.link || `/posts/${selectedPost.slug}`);
       }
     }
   };
@@ -103,14 +108,14 @@ export default function BlogPage() {
 
     if (value.trim()) {
       const matchedPost = posts.find(
-        (post) => post.title.toLowerCase() === value.toLowerCase(),
+        (post) => (post.title || "").toLowerCase() === value.toLowerCase(),
       );
 
       if (matchedPost) {
-        router.push(`/posts/${matchedPost.slug}`);
+        router.push(matchedPost.link || `/posts/${matchedPost.slug}`);
       } else {
         const filtered = posts.filter((post) =>
-          post.title.toLowerCase().includes(value.toLowerCase()),
+          (post.title || "").toLowerCase().includes(value.toLowerCase()),
         );
         setFilteredPosts(filtered);
       }
@@ -178,7 +183,7 @@ export default function BlogPage() {
             <ul style={suggestionListStyle}>
               {suggestions.map((post, index) => (
                 <li
-                  key={post.slug}
+                  key={post.link || post.slug}
                   onClick={() => handleSuggestionClick(post)}
                   style={
                     index === selectedIndex
@@ -199,7 +204,7 @@ export default function BlogPage() {
         {filteredPosts.length > 0 ? (
           filteredPosts.map((post) => (
             <li
-              key={post.slug}
+              key={post.link || post.slug}
               className="border rounded-lg overflow-hidden shadow-lg flex flex-col"
             >
               <div className="relative h-48">
@@ -215,15 +220,19 @@ export default function BlogPage() {
               </div>
               <div className="p-4 flex flex-col justify-between flex-grow">
                 <Link
-                  href={`/posts/${post.slug}`}
+                  href={post.link || `/posts/${post.slug}`}
                   className="text-xl font-semibold text-blue-600 hover:underline"
+                  target={post.link ? "_blank" : undefined}
+                  rel={post.link ? "noopener noreferrer" : undefined}
                 >
                   {post.title}
                 </Link>
                 <p className="text-gray-500 text-sm">
-                  {new Date(post.date).toLocaleDateString()}
+                  {new Date(post.pubDate || post.date).toLocaleDateString()}
                 </p>
-                <p className="text-gray-600 mt-2">{post.excerpt}</p>
+                <p className="text-gray-600 mt-2">
+                  {post.contentSnippet || post.excerpt}
+                </p>
               </div>
             </li>
           ))
