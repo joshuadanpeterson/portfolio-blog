@@ -5,11 +5,27 @@
 import { useState, useEffect, useRef, KeyboardEvent } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Post } from "@/interfaces/post";
 import { useRouter } from "next/navigation";
 import { fetchRSSFeeds, FeedItem } from "@/lib/rss";
 
-// Extended interface for RSS feed items
+// Interface for your local post format
+interface Post {
+  title: string;
+  excerpt: string;
+  coverImage: string;
+  date: string;
+  author: {
+    name: string;
+    picture: string;
+  };
+  ogImage: {
+    url: string;
+  };
+  slug?: string;
+  content?: string;
+}
+
+// Interface for RSS feed items
 interface ExtendedFeedItem extends FeedItem {
   "content:encoded"?: string;
   description?: string;
@@ -22,17 +38,18 @@ interface ExtendedFeedItem extends FeedItem {
   };
 }
 
+// Helper function to extract CDATA content
+const extractCDATA = (text: string): string => {
+  const cdataMatch = text.match(/<!\[CDATA\[(.*?)\]\]>/s);
+  return cdataMatch ? cdataMatch[1] : text;
+};
+
 // Helper function to strip HTML and CDATA
 const stripHtml = (html: string): string => {
   if (!html) return "";
 
-  // Remove CDATA
-  let text = html.replace(/<!\[CDATA\[(.*?)\]\]>/gs, "$1");
-
-  // Remove HTML tags
+  let text = extractCDATA(html);
   text = text.replace(/<[^>]*>/g, " ");
-
-  // Decode HTML entities
   text = text
     .replace(/&amp;/g, "&")
     .replace(/&lt;/g, "<")
@@ -41,102 +58,85 @@ const stripHtml = (html: string): string => {
     .replace(/&#39;/g, "'")
     .replace(/&nbsp;/g, " ");
 
-  // Clean up whitespace
-  text = text.replace(/\s+/g, " ").trim();
-
-  return text;
-};
-
-// Debug logging function
-const debugLog = (post: any) => {
-  console.log("Post Content Debug:");
-  console.log("Title:", post.title);
-  console.log("Content:encoded:", post["content:encoded"]?.substring(0, 100));
-  console.log("Description:", post.description?.substring(0, 100));
-  console.log("Content:", post.content?.substring(0, 100));
+  return text.replace(/\s+/g, " ").trim();
 };
 
 // Helper function to get excerpt
 const getExcerpt = (post: Post | ExtendedFeedItem): string => {
-  // Debug log
-  debugLog(post);
+  // For local posts with excerpt field
+  if ("excerpt" in post && post.excerpt) {
+    if (post.excerpt.length > 80) {
+      return post.excerpt.substring(0, 77) + "...";
+    }
+    return post.excerpt;
+  }
 
-  let content = "";
-  let excerpt = "";
-
-  // Try Medium content:encoded first
+  // For RSS feed items
   if ("content:encoded" in post && post["content:encoded"]) {
-    content = post["content:encoded"];
-    // Find first paragraph content
+    const content = extractCDATA(post["content:encoded"]);
     const paragraphMatch = content.match(/<p>(.*?)<\/p>/);
     if (paragraphMatch && paragraphMatch[1]) {
-      excerpt = stripHtml(paragraphMatch[1]);
+      const plainText = stripHtml(paragraphMatch[1]);
+      if (plainText.length > 80) {
+        return plainText.substring(0, 77) + "...";
+      }
+      return plainText;
     }
   }
 
-  // Try description next
-  if (!excerpt && "description" in post && post.description) {
-    excerpt = stripHtml(post.description);
-  }
-
-  // Try content field
-  if (!excerpt && "content" in post && post.content) {
-    excerpt = stripHtml(post.content);
-  }
-
-  // Try excerpt field for local posts
-  if (!excerpt && "excerpt" in post && post.excerpt) {
-    excerpt = post.excerpt;
-  }
-
-  // If we have an excerpt, trim it to 80 chars
-  if (excerpt) {
-    if (excerpt.length > 80) {
-      return excerpt.substring(0, 77) + "...";
+  // For RSS items with description
+  if ("description" in post && post.description) {
+    const plainText = stripHtml(extractCDATA(post.description));
+    if (plainText.length > 80) {
+      return plainText.substring(0, 77) + "...";
     }
-    return excerpt;
+    return plainText;
   }
 
   return "No excerpt available";
 };
 
-// Helper function for image path
-const getImagePath = (post: Post | ExtendedFeedItem): string => {
-  // For Medium RSS items
-  if ("content:encoded" in post && post["content:encoded"]) {
-    const imgMatch = post["content:encoded"].match(/<img.*?src="(.*?)".*?>/);
-    if (imgMatch && imgMatch[1]) {
-      return imgMatch[1];
+// Helper function to determine image path
+const getImagePath = (post: Post | ExtendedFeedItem): string | null => {
+  try {
+    // For local posts with coverImage (including Midjourney)
+    if ("coverImage" in post && post.coverImage) {
+      return post.coverImage;
     }
-  }
 
-  // For RSS.app feed items with enclosure
-  if ("enclosure" in post && post.enclosure?.url) {
-    return post.enclosure.url;
-  }
-
-  // For posts with description containing image
-  if ("description" in post && post.description) {
-    const imgMatch = post.description.match(/<img.*?src="(.*?)".*?>/);
-    if (imgMatch && imgMatch[1]) {
-      return imgMatch[1];
+    // For local posts with explicit imageUrl
+    if ("imageUrl" in post && post.imageUrl) {
+      if (post.imageUrl.startsWith("http")) {
+        return post.imageUrl;
+      }
+      return `/assets/blog/${post.imageUrl}`;
     }
-  }
 
-  // For direct imageUrl
-  if ("imageUrl" in post && post.imageUrl) {
-    return post.imageUrl.startsWith("http")
-      ? post.imageUrl
-      : `/assets/blog/${post.imageUrl}`;
-  }
+    // For Medium RSS items with content:encoded
+    if ("content:encoded" in post && post["content:encoded"]) {
+      const imgMatch = post["content:encoded"].match(/<img.*?src="(.*?)".*?>/);
+      if (imgMatch && imgMatch[1]) {
+        const imageUrl = imgMatch[1];
+        if (
+          imageUrl.includes("cdn-images-1.medium.com") ||
+          imageUrl.includes("cdn.pixabay.com") ||
+          imageUrl.includes("img.youtube.com")
+        ) {
+          return imageUrl;
+        }
+      }
+    }
 
-  // For local posts with slug
-  if ("slug" in post) {
-    return `/assets/blog/${post.slug}/cover.jpg`;
-  }
+    // For RSS.app feed items with enclosure
+    if ("enclosure" in post && post.enclosure?.url) {
+      return post.enclosure.url;
+    }
 
-  // Default fallback
-  return "/assets/blog/preview/cover.jpg";
+    return "/assets/blog/preview/cover.jpg";
+  } catch (error) {
+    console.error("Error getting image path:", error);
+    return "/assets/blog/preview/cover.jpg";
+  }
 };
 
 export default function BlogPage() {
@@ -166,16 +166,13 @@ export default function BlogPage() {
           fetch("/api/posts").then((res) => res.json()),
         ]);
 
-        console.log("Raw RSS Data:", rssData); // Debug log
-
-        const processedRssData = (rssData as ExtendedFeedItem[]).map((post) => {
-          const excerpt = getExcerpt(post);
-          console.log(`Processed excerpt for ${post.title}:`, excerpt); // Debug log
-          return {
+        const processedRssData = (rssData as ExtendedFeedItem[]).map(
+          (post) => ({
             ...post,
-            excerpt,
-          };
-        });
+            "content:encoded": post["content:encoded"] || undefined,
+            description: post.description || undefined,
+          }),
+        );
 
         const combinedPosts = [...apiPosts, ...processedRssData].sort(
           (a, b) =>
@@ -226,9 +223,9 @@ export default function BlogPage() {
     }
   };
 
-  const handleSuggestionClick = (post: Post | ExtendedFeedItem) => {
-    setValue(post.title || "");
-    setFilteredPosts([post]);
+  const handleSuggestionClick = (currentPost: Post | ExtendedFeedItem) => {
+    setValue(currentPost.title || "");
+    setFilteredPosts([currentPost]);
     setSuggestions([]);
     setSelectedIndex(-1);
   };
@@ -301,15 +298,18 @@ export default function BlogPage() {
           />
           {suggestions.length > 0 && (
             <ul className="absolute w-full bg-white border border-gray-300 rounded-b shadow-lg z-10">
-              {suggestions.map((post, index) => (
+              {suggestions.map((currentPost, index) => (
                 <li
-                  key={post.link || post.slug}
-                  onClick={() => handleSuggestionClick(post)}
+                  key={
+                    currentPost.link ||
+                    ("slug" in currentPost ? currentPost.slug : "")
+                  }
+                  onClick={() => handleSuggestionClick(currentPost)}
                   className={`p-2 cursor-pointer hover:bg-gray-100 ${
                     index === selectedIndex ? "bg-gray-200" : ""
                   }`}
                 >
-                  {post.title}
+                  {currentPost.title}
                 </li>
               ))}
             </ul>
@@ -319,32 +319,49 @@ export default function BlogPage() {
 
       <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
         {filteredPosts.length > 0 ? (
-          filteredPosts.map((post) => (
+          filteredPosts.map((currentPost) => (
             <li
-              key={post.link || post.slug}
+              key={
+                currentPost.link ||
+                ("slug" in currentPost ? currentPost.slug : "")
+              }
               className="border rounded-lg shadow-lg overflow-hidden"
             >
               <div className="relative h-48">
-                <Image
-                  src={getImagePath(post)}
-                  alt={post.title || "Blog post thumbnail"}
-                  fill
-                  style={{ objectFit: "cover" }}
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                />
+                {getImagePath(currentPost) ? (
+                  <Image
+                    src={getImagePath(currentPost)}
+                    alt={currentPost.title || "Blog post thumbnail"}
+                    fill
+                    style={{ objectFit: "cover" }}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    unoptimized={getImagePath(currentPost).includes(
+                      "cdn.midjourney.com",
+                    )} // Add this line
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                    <span className="text-gray-400">No image available</span>
+                  </div>
+                )}
               </div>
               <div className="p-4">
                 <Link
-                  href={post.link || `/posts/${post.slug}`}
+                  href={
+                    currentPost.link ||
+                    `/posts/${"slug" in currentPost ? currentPost.slug : ""}`
+                  }
                   className="text-xl font-semibold text-blue-600 hover:underline"
                 >
-                  {post.title}
+                  {currentPost.title}
                 </Link>
                 <p className="text-gray-500 text-sm">
-                  {new Date(post.pubDate || post.date).toLocaleDateString()}
+                  {new Date(
+                    currentPost.pubDate || currentPost.date,
+                  ).toLocaleDateString()}
                 </p>
                 <p className="text-gray-600 mt-2 line-clamp-3">
-                  {getExcerpt(post)}
+                  {getExcerpt(currentPost)}
                 </p>
               </div>
             </li>
