@@ -9,32 +9,145 @@ import { Post } from "@/interfaces/post";
 import { useRouter } from "next/navigation";
 import { fetchRSSFeeds, FeedItem } from "@/lib/rss";
 
-// Helper function to determine image path
-const getImagePath = (post: Post | FeedItem): string => {
-  // If it's an RSS feed item with an image URL
-  if ("imageUrl" in post && post.imageUrl && post.imageUrl.startsWith("http")) {
-    return post.imageUrl;
+// Extended interface for RSS feed items
+interface ExtendedFeedItem extends FeedItem {
+  "content:encoded"?: string;
+  description?: string;
+  content?: string;
+  imageUrl?: string;
+  enclosure?: {
+    url: string;
+    type: string;
+    length: string;
+  };
+}
+
+// Helper function to strip HTML and CDATA
+const stripHtml = (html: string): string => {
+  if (!html) return "";
+
+  // Remove CDATA
+  let text = html.replace(/<!\[CDATA\[(.*?)\]\]>/gs, "$1");
+
+  // Remove HTML tags
+  text = text.replace(/<[^>]*>/g, " ");
+
+  // Decode HTML entities
+  text = text
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&nbsp;/g, " ");
+
+  // Clean up whitespace
+  text = text.replace(/\s+/g, " ").trim();
+
+  return text;
+};
+
+// Debug logging function
+const debugLog = (post: any) => {
+  console.log("Post Content Debug:");
+  console.log("Title:", post.title);
+  console.log("Content:encoded:", post["content:encoded"]?.substring(0, 100));
+  console.log("Description:", post.description?.substring(0, 100));
+  console.log("Content:", post.content?.substring(0, 100));
+};
+
+// Helper function to get excerpt
+const getExcerpt = (post: Post | ExtendedFeedItem): string => {
+  // Debug log
+  debugLog(post);
+
+  let content = "";
+  let excerpt = "";
+
+  // Try Medium content:encoded first
+  if ("content:encoded" in post && post["content:encoded"]) {
+    content = post["content:encoded"];
+    // Find first paragraph content
+    const paragraphMatch = content.match(/<p>(.*?)<\/p>/);
+    if (paragraphMatch && paragraphMatch[1]) {
+      excerpt = stripHtml(paragraphMatch[1]);
+    }
   }
 
-  // If it's a local post with imageUrl
+  // Try description next
+  if (!excerpt && "description" in post && post.description) {
+    excerpt = stripHtml(post.description);
+  }
+
+  // Try content field
+  if (!excerpt && "content" in post && post.content) {
+    excerpt = stripHtml(post.content);
+  }
+
+  // Try excerpt field for local posts
+  if (!excerpt && "excerpt" in post && post.excerpt) {
+    excerpt = post.excerpt;
+  }
+
+  // If we have an excerpt, trim it to 80 chars
+  if (excerpt) {
+    if (excerpt.length > 80) {
+      return excerpt.substring(0, 77) + "...";
+    }
+    return excerpt;
+  }
+
+  return "No excerpt available";
+};
+
+// Helper function for image path
+const getImagePath = (post: Post | ExtendedFeedItem): string => {
+  // For Medium RSS items
+  if ("content:encoded" in post && post["content:encoded"]) {
+    const imgMatch = post["content:encoded"].match(/<img.*?src="(.*?)".*?>/);
+    if (imgMatch && imgMatch[1]) {
+      return imgMatch[1];
+    }
+  }
+
+  // For RSS.app feed items with enclosure
+  if ("enclosure" in post && post.enclosure?.url) {
+    return post.enclosure.url;
+  }
+
+  // For posts with description containing image
+  if ("description" in post && post.description) {
+    const imgMatch = post.description.match(/<img.*?src="(.*?)".*?>/);
+    if (imgMatch && imgMatch[1]) {
+      return imgMatch[1];
+    }
+  }
+
+  // For direct imageUrl
   if ("imageUrl" in post && post.imageUrl) {
-    return `/assets/blog/${post.imageUrl}`;
+    return post.imageUrl.startsWith("http")
+      ? post.imageUrl
+      : `/assets/blog/${post.imageUrl}`;
   }
 
-  // If it's a local post with a slug, try to find a cover image
+  // For local posts with slug
   if ("slug" in post) {
     return `/assets/blog/${post.slug}/cover.jpg`;
   }
 
-  // Default fallback image
+  // Default fallback
   return "/assets/blog/preview/cover.jpg";
 };
 
 export default function BlogPage() {
-  const [posts, setPosts] = useState<(Post | FeedItem)[]>([]);
+  const [posts, setPosts] = useState<(Post | ExtendedFeedItem)[]>([]);
   const [value, setValue] = useState<string>("");
-  const [filteredPosts, setFilteredPosts] = useState<(Post | FeedItem)[]>([]);
-  const [suggestions, setSuggestions] = useState<(Post | FeedItem)[]>([]);
+  const [filteredPosts, setFilteredPosts] = useState<
+    (Post | ExtendedFeedItem)[]
+  >([]);
+  const [suggestions, setSuggestions] = useState<(Post | ExtendedFeedItem)[]>(
+    [],
+  );
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
   const searchRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -47,19 +160,34 @@ export default function BlogPage() {
         "/api/proxy-rss?url=https://rss.app/feeds/Q0d7If1vLw2uZdL2.xml",
       ];
 
-      const [rssData, apiPosts] = await Promise.all([
-        fetchRSSFeeds(feedUrls),
-        fetch("/api/posts").then((res) => res.json()),
-      ]);
+      try {
+        const [rssData, apiPosts] = await Promise.all([
+          fetchRSSFeeds(feedUrls),
+          fetch("/api/posts").then((res) => res.json()),
+        ]);
 
-      const combinedPosts = [...apiPosts, ...rssData].sort(
-        (a, b) =>
-          new Date(b.pubDate || b.date).getTime() -
-          new Date(a.pubDate || a.date).getTime(),
-      );
+        console.log("Raw RSS Data:", rssData); // Debug log
 
-      setPosts(combinedPosts);
-      setFilteredPosts(combinedPosts);
+        const processedRssData = (rssData as ExtendedFeedItem[]).map((post) => {
+          const excerpt = getExcerpt(post);
+          console.log(`Processed excerpt for ${post.title}:`, excerpt); // Debug log
+          return {
+            ...post,
+            excerpt,
+          };
+        });
+
+        const combinedPosts = [...apiPosts, ...processedRssData].sort(
+          (a, b) =>
+            new Date(b.pubDate || b.date).getTime() -
+            new Date(a.pubDate || a.date).getTime(),
+        );
+
+        setPosts(combinedPosts);
+        setFilteredPosts(combinedPosts);
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
     };
 
     fetchPosts();
@@ -98,7 +226,7 @@ export default function BlogPage() {
     }
   };
 
-  const handleSuggestionClick = (post: Post | FeedItem) => {
+  const handleSuggestionClick = (post: Post | ExtendedFeedItem) => {
     setValue(post.title || "");
     setFilteredPosts([post]);
     setSuggestions([]);
@@ -215,8 +343,8 @@ export default function BlogPage() {
                 <p className="text-gray-500 text-sm">
                   {new Date(post.pubDate || post.date).toLocaleDateString()}
                 </p>
-                <p className="text-gray-600 mt-2">
-                  {post.contentSnippet || post.excerpt}
+                <p className="text-gray-600 mt-2 line-clamp-3">
+                  {getExcerpt(post)}
                 </p>
               </div>
             </li>
