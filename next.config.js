@@ -11,11 +11,28 @@ const nextConfig = {
     EMAIL_PASS: process.env.EMAIL_PASS,
   },
   images: {
-    // loaderFile: path.resolve(__dirname, "src/lib/imageLoader.js"),
     remotePatterns: [
       {
         protocol: "https",
         hostname: "cdn.midjourney.com",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "cdn.pixabay.com",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "cdn-images-1.medium.com",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "img.youtube.com",
         port: "",
         pathname: "/**",
       },

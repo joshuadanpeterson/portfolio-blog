@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Post } from "@/interfaces/post";
 import { useRouter } from "next/navigation";
-import { fetchRSSFeeds, FeedItem } from "@/lib/rss"; // Import RSS fetching function
+import { fetchRSSFeeds, FeedItem } from "@/lib/rss";
 
 export default function BlogPage() {
   const [posts, setPosts] = useState<(Post | FeedItem)[]>([]);
@@ -20,7 +20,6 @@ export default function BlogPage() {
   useEffect(() => {
     const fetchPosts = async () => {
       const feedUrls = [
-        // "https://your-substack-feed-url/rss", --Future Substack RSS
         "/api/proxy-rss?url=https://medium.com/feed/@joshpeterson",
         "/api/proxy-rss?url=https://rss.app/feeds/Q0d7If1vLw2uZdL2.xml",
       ];
@@ -208,13 +207,14 @@ export default function BlogPage() {
               className="border rounded-lg overflow-hidden shadow-lg flex flex-col"
             >
               <div className="relative h-48">
-                {post.coverImage && (
+                {post.imageUrl && (
                   <Image
-                    src={post.coverImage}
+                    src={post.imageUrl}
                     alt={post.title}
                     fill
-                    objectFit="cover"
-                    className="w-full"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="object-cover"
+                    priority={true} // Add this if the image is above the fold
                   />
                 )}
               </div>
