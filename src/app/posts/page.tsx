@@ -1,10 +1,10 @@
-//src/app/posts/page.tsx
 "use client";
 
 import { useState, useEffect, useRef, KeyboardEvent } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Post } from "@/interfaces/post";
+import { useRouter } from "next/navigation"; // Import useRouter hook
 
 export default function BlogPage() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -14,6 +14,7 @@ export default function BlogPage() {
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
   const searchRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const router = useRouter(); // Initialize useRouter for navigation
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -88,20 +89,35 @@ export default function BlogPage() {
       setSelectedIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : -1));
     } else if (e.key === "Enter" && selectedIndex >= 0) {
       e.preventDefault();
-      handleSuggestionClick(suggestions[selectedIndex]);
+      const selectedPost = suggestions[selectedIndex];
+      if (selectedPost) {
+        setValue(selectedPost.title); // Populate the search bar
+        setSuggestions([]); // Clear suggestions
+        router.push(`/posts/${selectedPost.slug}`); // Navigate to selected post page
+      }
     }
   };
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     if (value.trim()) {
-      const filtered = posts.filter((post) =>
-        post.title.toLowerCase().includes(value.toLowerCase()),
+      const matchedPost = posts.find(
+        (post) => post.title.toLowerCase() === value.toLowerCase(),
       );
-      setFilteredPosts(filtered);
+
+      if (matchedPost) {
+        router.push(`/posts/${matchedPost.slug}`);
+      } else {
+        const filtered = posts.filter((post) =>
+          post.title.toLowerCase().includes(value.toLowerCase()),
+        );
+        setFilteredPosts(filtered);
+      }
     } else {
       setFilteredPosts(posts);
     }
+
     setSuggestions([]);
     setSelectedIndex(-1);
   };
