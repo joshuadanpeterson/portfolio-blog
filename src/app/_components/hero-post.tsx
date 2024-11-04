@@ -1,3 +1,5 @@
+// src/app/_components/hero-post.tsx
+
 import Avatar from "@/app/_components/avatar";
 import CoverImage from "@/app/_components/cover-image";
 import { type Author } from "@/interfaces/author";
@@ -24,21 +26,31 @@ export function HeroPost({
   return (
     <section>
       <div className="mb-8 md:mb-16">
-        <CoverImage title={title} src={coverImage} slug={slug} />
+        <CoverImage
+          title={title}
+          src={coverImage}
+          slug={slug}
+          priority={true} // Add priority for hero image
+        />
       </div>
       <div className="md:grid md:grid-cols-2 md:gap-x-16 lg:gap-x-8 mb-20 md:mb-28">
         <div>
-          <h3 className="mb-4 text-4xl lg:text-5xl leading-tight">
-            <Link href={`/posts/${slug}`} className="hover:underline">
+          <h3 className="mb-4 text-4xl lg:text-5xl leading-tight text-gray-900">
+            <Link
+              href={`/posts/${slug}`}
+              className="hover:underline hover:text-blue-600 transition-colors duration-200"
+            >
               {title}
             </Link>
           </h3>
-          <div className="mb-4 md:mb-0 text-lg">
+          <div className="mb-4 md:mb-0 text-lg text-gray-600">
             <DateFormatter dateString={date} />
           </div>
         </div>
         <div>
-          <p className="text-lg leading-relaxed mb-4">{excerpt}</p>
+          <p className="text-lg leading-relaxed mb-4 text-gray-700">
+            {excerpt}
+          </p>
           <Avatar name={author.name} picture={author.picture} />
         </div>
       </div>
