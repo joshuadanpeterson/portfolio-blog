@@ -369,7 +369,9 @@ export default function BlogPage() {
                 </Link>
                 <p className="text-gray-500 text-sm">
                   {new Date(
-                    currentPost.pubDate || currentPost.date,
+                    "pubDate" in currentPost && currentPost.pubDate
+                      ? currentPost.pubDate
+                      : currentPost.date,
                   ).toLocaleDateString()}
                 </p>
                 <p className="text-gray-600 mt-2 line-clamp-3">
