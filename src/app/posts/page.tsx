@@ -10,6 +10,7 @@ import { fetchRSSFeeds, FeedItem } from "@/lib/rss";
 
 // Interface for your local post format
 interface Post {
+  link?: string;
   title: string;
   excerpt: string;
   coverImage: string;
@@ -245,7 +246,7 @@ export default function BlogPage() {
       if (selectedPost) {
         setValue(selectedPost.title || "");
         setSuggestions([]);
-        router.push(selectedPost.link || `/posts/${selectedPost.slug}`);
+        router.push(selectedPost.link || `/posts/${selectedPost.slug || ""}`);
       }
     }
   };
@@ -259,7 +260,7 @@ export default function BlogPage() {
       );
 
       if (matchedPost) {
-        router.push(matchedPost.link || `/posts/${matchedPost.slug}`);
+        router.push(matchedPost.link || `/posts/${matchedPost.slug || ""}`);
       } else {
         const filtered = posts.filter((post) =>
           (post.title || "").toLowerCase().includes(value.toLowerCase()),
