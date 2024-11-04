@@ -15,6 +15,7 @@
     "dotenv": "^16.4.5",
     "gray-matter": "^4.0.3",
     "next": "^14.2.15",
+    "node-fetch": "^3.3.2",
     "nodemailer": "^6.9.14",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
