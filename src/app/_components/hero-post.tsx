@@ -30,15 +30,15 @@ export function HeroPost({
           title={title}
           src={coverImage}
           slug={slug}
-          priority={true} // Add priority for hero image
+          priority={true}
         />
       </div>
       <div className="md:grid md:grid-cols-2 md:gap-x-16 lg:gap-x-8 mb-20 md:mb-28">
         <div>
-          <h3 className="mb-4 text-4xl lg:text-5xl leading-tight text-gray-900">
+          <h3 className="mb-4 text-4xl lg:text-5xl leading-tight">
             <Link
               href={`/posts/${slug}`}
-              className="hover:underline hover:text-blue-600 transition-colors duration-200"
+              className="text-black hover:underline hover:text-blue-600 transition-colors duration-200"
             >
               {title}
             </Link>
