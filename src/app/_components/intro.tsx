@@ -1,3 +1,5 @@
+// src/app/_components/intro.tsx
+
 import { CMS_NAME } from "@/lib/constants";
 
 export function Intro() {
