@@ -342,14 +342,14 @@ export default function BlogPage() {
               <div className="relative h-48">
                 {getImagePath(currentPost) ? (
                   <Image
-                    src={getImagePath(currentPost)}
+                    src={getImagePath(currentPost) as string} // Type assertion to ensure it's treated as string
                     alt={currentPost.title || "Blog post thumbnail"}
                     fill
                     style={{ objectFit: "cover" }}
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    unoptimized={getImagePath(currentPost).includes(
+                    unoptimized={getImagePath(currentPost)?.includes(
                       "cdn.midjourney.com",
-                    )} // Add this line
+                    )} // Ensure no null errors
                   />
                 ) : (
                   <div className="w-full h-full bg-gray-200 flex items-center justify-center">
