@@ -246,7 +246,13 @@ export default function BlogPage() {
       if (selectedPost) {
         setValue(selectedPost.title || "");
         setSuggestions([]);
-        router.push(selectedPost.link || `/posts/${selectedPost.slug || ""}`);
+
+        // Use type narrowing to safely access slug
+        if ("slug" in selectedPost && selectedPost.slug) {
+          router.push(selectedPost.link || `/posts/${selectedPost.slug}`);
+        } else {
+          router.push(selectedPost.link || "/");
+        }
       }
     }
   };
@@ -260,7 +266,12 @@ export default function BlogPage() {
       );
 
       if (matchedPost) {
-        router.push(matchedPost.link || `/posts/${matchedPost.slug || ""}`);
+        // Safely access slug with type check
+        if ("slug" in matchedPost && matchedPost.slug) {
+          router.push(matchedPost.link || `/posts/${matchedPost.slug}`);
+        } else {
+          router.push(matchedPost.link || "/");
+        }
       } else {
         const filtered = posts.filter((post) =>
           (post.title || "").toLowerCase().includes(value.toLowerCase()),
