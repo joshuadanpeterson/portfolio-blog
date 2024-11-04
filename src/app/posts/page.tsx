@@ -371,7 +371,9 @@ export default function BlogPage() {
                   {new Date(
                     "pubDate" in currentPost && currentPost.pubDate
                       ? currentPost.pubDate
-                      : currentPost.date,
+                      : "date" in currentPost && currentPost.date
+                        ? currentPost.date
+                        : new Date().toISOString(), // Fallback to current date if neither exists
                   ).toLocaleDateString()}
                 </p>
                 <p className="text-gray-600 mt-2 line-clamp-3">
