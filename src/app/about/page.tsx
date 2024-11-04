@@ -20,10 +20,10 @@ const AboutPage = () => {
           DevOps.
         </p>
         <p className="mb-4">
-          Outside of work, I’m a musician, avid hiker, and tech enthusiast
-          interested in AI, space, crypto, and tech policy. My blog dives into
-          these topics, blending my unique background in journalism, logistics,
-          and tech.
+          Outside of work, I’m a musician, photographer and digital artist, avid
+          hiker and snowboarder, and tech enthusiast interested in AI, space,
+          crypto, and tech policy. My blog dives into these topics, blending my
+          unique background in journalism, logistics, and tech.
         </p>
       </div>
     </div>
