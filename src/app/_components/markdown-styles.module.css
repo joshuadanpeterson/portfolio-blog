@@ -3,8 +3,6 @@
 }
 
 .markdown p,
-.markdown ul,
-.markdown ol,
 .markdown blockquote {
   @apply my-6;
 }
@@ -15,4 +13,27 @@
 
 .markdown h3 {
   @apply text-2xl mt-8 mb-4 leading-snug;
+}
+
+/* List styling */
+.markdown ul {
+  @apply my-6 list-disc pl-10;
+}
+
+.markdown ol {
+  @apply my-6 list-decimal pl-10;
+}
+
+.markdown li {
+  @apply my-2;
+}
+
+.markdown li > ul,
+.markdown li > ol {
+  @apply my-0 ml-4;
+}
+
+/* Task list styling */
+.markdown ul > li > input[type='checkbox'] {
+  @apply mr-2;
 }

@@ -1,14 +1,18 @@
 ---
-title: Testing Code Syntax Highlighting
-excerpt: This post demonstrates code syntax highlighting with Prism.js in our Next.js blog.
-coverImage: https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80
-date: 2025-03-22T10:00:00.000Z
+title: code-syntax-test
+date_created: 2025-03-22 03:53:15
+date_modified: 2025-03-22 04:41:14
+tags: 
+favorite: 
+id: 01JPYMAR6XGG00194ET01P20EC
 author:
   name: Josh Peterson
-  picture: /assets/blog/authors/josh.jpeg
+  picture: /assets/blog/authors/2017_profile_pic.jpg
+coverImage: https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80
+date: 2025-03-22T10:00:00.000Z
+excerpt: This post demonstrates code syntax highlighting with Prism.js in our Next.js blog.
 ogImage:
   url: https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80
-id: 01JPYMAR6XGG00194ET01P20EC
 ---
 
 # Code Syntax Highlighting Test
@@ -170,4 +174,3 @@ Sometimes you want to include `inline code` within your text. This should be sty
 ## Conclusion
 
 With Prism.js properly configured, our blog now has beautiful syntax highlighting for code blocks across multiple languages!
-

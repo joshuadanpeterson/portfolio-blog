@@ -17,7 +17,7 @@ type Props = {
 const CoverImage = ({ title, src, slug, priority = false }: Props) => {
   const [imageError, setImageError] = useState(false);
 
-  const isMidjourneyImage = src.includes("cdn.midjourney.com");
+  const isMidjourneyImage: boolean = Boolean(src && src.includes("cdn.midjourney.com"));
 
   const image = (
     <div className="w-full">

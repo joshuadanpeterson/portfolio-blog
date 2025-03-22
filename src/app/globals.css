@@ -2,28 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Navigation styles */
 nav {
   background: #333;
   padding: 1rem;
 }
 
-ul {
+nav ul {
   list-style: none;
   display: flex;
   justify-content: space-around;
 }
 
-li {
+nav li {
   margin: 0 1rem;
 }
 
-a {
+nav a {
   color: white;
   text-decoration: none;
 }
 
 @media (max-width: 768px) {
-  ul {
+  nav ul {
     display: none;
   }
 }
