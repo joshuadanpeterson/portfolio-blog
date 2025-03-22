@@ -12,7 +12,6 @@ export interface FeedItem {
   description?: string;
 }
 
-// Extend Parser types to include custom fields
 interface CustomFeed {
   items: CustomItem[];
 }
@@ -35,7 +34,6 @@ interface CustomItem {
   content?: string;
 }
 
-// Configure parser with custom fields
 const parser = new Parser<CustomFeed, CustomItem>({
   customFields: {
     item: [
@@ -46,7 +44,6 @@ const parser = new Parser<CustomFeed, CustomItem>({
     ],
   },
   xml2js: {
-    // Preserve CDATA content
     xmlMode: true,
     normalize: true,
     trim: true,
@@ -59,11 +56,9 @@ export async function fetchRSSFeeds(feedUrls: string[]): Promise<FeedItem[]> {
       try {
         const feed = await parser.parseURL(url);
         return feed.items.map((item) => {
-          // Get image URL from various possible sources
           let imageUrl =
             item["media:content"]?.$?.url || item.enclosure?.url || "";
 
-          // Fallback: Extract first image from content:encoded
           if (!imageUrl && item["content:encoded"]) {
             const match = item["content:encoded"].match(
               /<img.*?src=["'](.*?)["']/,
@@ -73,12 +68,10 @@ export async function fetchRSSFeeds(feedUrls: string[]): Promise<FeedItem[]> {
             }
           }
 
-          // Get content from various possible sources
           const contentEncoded = item["content:encoded"] || "";
           const description = item.description || "";
           const content = item.content || "";
 
-          // Extract text content for snippet
           const contentSnippet = getContentSnippet(
             contentEncoded || description || content,
           );
@@ -104,18 +97,15 @@ export async function fetchRSSFeeds(feedUrls: string[]): Promise<FeedItem[]> {
   return feeds.flat();
 }
 
-// Helper function to extract text content for snippet
 function getContentSnippet(content: string): string {
   if (!content) return "No content";
 
-  // Remove HTML tags
   const textContent = content
-    .replace(/<!\[CDATA\[(.*?)\]\]>/gs, "$1") // Remove CDATA
-    .replace(/<[^>]+>/g, " ") // Remove HTML tags
-    .replace(/\s+/g, " ") // Normalize whitespace
+    .replace(/<!\[CDATA\[(.*?)\]\]>/gs, "$1")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/\s+/g, " ")
     .trim();
 
-  // Get first 150 characters
   return textContent.length > 150
     ? textContent.substring(0, 147) + "..."
     : textContent;

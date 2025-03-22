@@ -7,7 +7,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
 import "./globals.css";
-
+import "./prism.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -26,6 +26,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+          name="keywords"
+          content="Josh Peterson, Software Engineer, Programming, Blog"
+        />
+        <script src="https://unpkg.com/prismjs@v1.29.0/components/prism-core.min.js"></script>
+        <script src="https://unpkg.com/prismjs@v1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
         <link
           rel="icon"
           type="image/png"
@@ -42,14 +49,25 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/favicon/apple-icon.png" />
         <link rel="manifest" href="/favicon/manifest.json" />
       </head>
-      <body className={inter.className}>
+      <body className={inter.className} suppressHydrationWarning>
         <div>
           <Container>
             <Navbar />
           </Container>
         </div>
         <div className="min-h-screen">{children}</div>
-        <Footer />
+52|        <Footer />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              document.addEventListener('DOMContentLoaded', (event) => {
+                if (typeof window !== 'undefined' && window.Prism) {
+                  window.Prism.highlightAll();
+                }
+              });
+            `,
+          }}
+        />
       </body>
     </html>
   );

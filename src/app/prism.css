@@ -1,0 +1,33 @@
+/* Import the Prism theme CSS */
+@import 'prismjs/themes/prism-tomorrow.css';
+@import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
+@import 'prismjs/plugins/command-line/prism-command-line.css';
+
+/* Optional: Add some custom styles for code blocks */
+pre[class*="language-"] {
+  margin: 1.5em 0;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  overflow: auto;
+}
+
+code[class*="language-"] {
+  font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-size: 0.9rem;
+}
+
+.line-numbers .line-numbers-rows {
+  border-right: 2px solid rgba(255, 255, 255, 0.2);
+  padding-right: 0.5rem;
+}
+
+/* Style for inline code */
+:not(pre) > code {
+  background-color: rgba(175, 184, 193, 0.2);
+  padding: 0.2em 0.4em;
+  border-radius: 0.25rem;
+  font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-size: 0.9em;
+  color: #e83e8c;
+}
+

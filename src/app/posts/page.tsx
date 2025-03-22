@@ -159,6 +159,7 @@ export default function BlogPage() {
       const feedUrls = [
         "/api/proxy-rss?url=https://medium.com/feed/@joshpeterson",
         "/api/proxy-rss?url=https://rss.app/feeds/Q0d7If1vLw2uZdL2.xml",
+        "/api/proxy-rss?url=https://joshuadanpeterson.substack.com/feed",
       ];
 
       try {
