@@ -1,7 +1,7 @@
 ---
 title: "Automating Google Tasks with google-tasks1-cli and Warp's Agentic Mode"
 date_created: 2025-03-22 02:26:35
-date_modified: 2025-03-22 03:28:24
+date_modified: 2025-03-22 02:34:54
 tags: [informative, documentation, tools, task-automation, google-tasks, warp-agentic-mode]
 favorite: 
 id: 01JBTX108VXRC8Z8Y3Q1EABXWD
