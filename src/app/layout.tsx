@@ -56,7 +56,7 @@ export default function RootLayout({
           </Container>
         </div>
         <div className="min-h-screen">{children}</div>
-52|        <Footer />
+        <Footer />
         <script
           dangerouslySetInnerHTML={{
             __html: `
