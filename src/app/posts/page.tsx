@@ -57,6 +57,8 @@ const stripHtml = (html: string): string => {
     .replace(/&gt;/g, ">")
     .replace(/&quot;/g, '"')
     .replace(/&#39;/g, "'")
+    .replace(/&#8216;/g, "'")  // Left single quote
+    .replace(/&#8217;/g, "'")  // Right single quote
     .replace(/&nbsp;/g, " ");
 
   return text.replace(/\s+/g, " ").trim();
