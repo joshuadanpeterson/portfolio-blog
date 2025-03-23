@@ -170,26 +170,50 @@ export function getPostBySlug(slug: string) {
 export function getAllPosts(): Post[] {
   console.log(`getAllPosts: Getting posts from directory: ${postsDirectory}`);
   const filenames = getPostSlugs();
-  console.log(`getAllPosts: Found ${filenames.length} files`);
+  console.log(`getAllPosts: Found ${filenames.length} files: ${JSON.stringify(filenames)}`);
+  
+  // Filter out non-markdown files (like .DS_Store)
+  const markdownFiles = filenames.filter(filename => {
+    const isMarkdown = filename.toLowerCase().endsWith('.md');
+    if (!isMarkdown) {
+      console.log(`getAllPosts: Skipping non-markdown file: "${filename}"`);
+    }
+    return isMarkdown;
+  });
+  console.log(`getAllPosts: Processing ${markdownFiles.length} markdown files`);
   
   // Log any suspicious filenames that might cause issues
-  filenames.forEach(filename => {
+  markdownFiles.forEach(filename => {
     if (filename.includes(' ') || filename.includes('`') || filename.includes("'") || 
         filename.includes('%') || filename.includes('&')) {
       console.log(`getAllPosts: Warning - Special characters in filename: "${filename}"`);
     }
   });
   
-  const posts = filenames
+  const posts = markdownFiles
     .map((filename) => {
       try {
         // We pass the raw filename to getPostBySlug
-        return getPostBySlug(filename);
+        const post = getPostBySlug(filename);
+        console.log(`getAllPosts: Successfully processed post: "${filename}"`, {
+          title: post.title,
+          slug: post.slug,
+          date: post.date,
+          hasAuthor: !!post.author,
+          hasHeroImage: !!post.coverImage,
+          excerpt: post.excerpt?.substring(0, 50) + '...',
+        });
+        return post;
       } catch (error: unknown) {
-        console.warn(`Error loading post from file "${filename}":`, error);
+        console.warn(`getAllPosts: Error loading post from file "${filename}":`, error);
         // Log more details for debugging
         if (error instanceof Error && 'code' in error && error.code === 'ENOENT' && 'path' in error) {
-          console.warn(`File not found: ${(error as { path: string }).path}`);
+          console.warn(`getAllPosts: File not found: ${(error as { path: string }).path}`);
+        } else if (error instanceof Error) {
+          console.warn(`getAllPosts: Error type: ${error.name}, Message: ${error.message}`);
+          if (error.stack) {
+            console.warn(`getAllPosts: Stack trace: ${error.stack}`);
+          }
         }
         return null;
       }
@@ -197,7 +221,7 @@ export function getAllPosts(): Post[] {
     .filter((post): post is Post => {
       if (post === null) {
         // Additional logging for filtered out posts
-        console.log('Post was filtered out because it failed to load');
+        console.log('getAllPosts: Post was filtered out because it failed to load');
         return false;
       }
       return true;
@@ -206,5 +230,24 @@ export function getAllPosts(): Post[] {
     .sort((post1, post2) => (post1.date > post2.date ? -1 : 1));
   
   console.log(`getAllPosts: Successfully loaded ${posts.length} posts`);
+  
+  // Log the first post that would be used as the hero post
+  if (posts.length > 0) {
+    const heroPost = posts[0];
+    console.log(`getAllPosts: Hero post candidate:`, {
+      title: heroPost.title,
+      slug: heroPost.slug,
+      date: heroPost.date,
+      author: heroPost.author ? {
+        name: heroPost.author.name,
+        picture: heroPost.author.picture
+      } : 'undefined',
+      hasExcerpt: !!heroPost.excerpt,
+      hasCoverImage: !!heroPost.coverImage
+    });
+  } else {
+    console.log(`getAllPosts: No posts available for hero post`);
+  }
+  
   return posts;
 }
