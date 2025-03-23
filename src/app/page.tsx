@@ -15,7 +15,7 @@ function isValidPost(post: any): post is Post {
     post &&
     typeof post.title === 'string' &&
     typeof post.coverImage === 'string' &&
-    typeof post.date === 'string' &&
+    (post.date instanceof Date || !isNaN(new Date(post.date).getTime())) &&
     typeof post.excerpt === 'string' &&
     typeof post.slug === 'string' &&
     // Check if author exists and has required properties
@@ -27,15 +27,35 @@ function isValidPost(post: any): post is Post {
 
 export default function Index() {
   const allPosts = getAllPosts();
+  console.log("DEBUG - All posts retrieved:", allPosts);
+  
+  // Log validation details for each post
+  allPosts.forEach((post, index) => {
+    console.log(`DEBUG - Validating post ${index}:`, {
+      title: post.title ? "✓" : "✗",
+      coverImage: post.coverImage ? "✓" : "✗",
+      date: post.date ? "✓" : "✗",
+      excerpt: post.excerpt ? "✓" : "✗", 
+      slug: post.slug ? "✓" : "✗",
+      author: post.author ? "✓" : "✗",
+      authorName: post.author?.name ? "✓" : "✗",
+      authorPicture: post.author?.picture ? "✓" : "✗",
+      isValid: isValidPost(post)
+    });
+  });
   
   // Filter to get only valid posts
   const validPosts = allPosts.filter(isValidPost);
+  console.log(`DEBUG - Valid posts count: ${validPosts.length}/${allPosts.length}`);
+  console.log("DEBUG - Valid posts:", validPosts);
   
   // Select the best post for hero display
   const heroPost = validPosts.length > 0 ? validPosts[0] : null;
+  console.log("DEBUG - Hero post:", heroPost);
   
   // The rest of valid posts will be displayed in the more stories section
   const morePosts = validPosts.slice(1);
+  console.log("DEBUG - More posts:", morePosts);
 
   return (
     <main>
