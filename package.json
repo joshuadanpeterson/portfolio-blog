@@ -27,9 +27,9 @@
     "rss-parser": "^3.13.0"
   },
   "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
+    "@types/node": "^22.13.11",
+    "@types/react": "^19.0.12",
+    "@types/react-dom": "^19.0.4",
     "autoprefixer": "^10.0.1",
     "postcss": "^8",
     "tailwindcss": "^4.0.15",
