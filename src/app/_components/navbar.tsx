@@ -20,7 +20,7 @@ const Navbar: FC = () => {
         <h1 className="text-5xl md:text-8xl font-bold tracking-tighter leading-tight md:pr-8">
           josh
         </h1>
-        <button className="text-white md:hidden" onClick={toggleMenu}>
+        <button className="text-black md:hidden" onClick={toggleMenu}>
           <svg
             className="w-6 h-6"
             fill="none"

@@ -1,39 +1,39 @@
 .markdown {
-  @apply text-lg leading-relaxed;
+  @apply text-[1rem] leading-[1.625];
 }
 
 .markdown p,
 .markdown blockquote {
-  @apply my-6;
+  @apply my-[1.5rem];
 }
 
 .markdown h2 {
-  @apply text-3xl mt-12 mb-4 leading-snug;
+  @apply text-[1.875rem] mt-[3rem] mb-[1rem] leading-[1.375];
 }
 
 .markdown h3 {
-  @apply text-2xl mt-8 mb-4 leading-snug;
+  @apply text-[1.5rem] mt-[2rem] mb-[1rem] leading-[1.375];
 }
 
 /* List styling */
 .markdown ul {
-  @apply my-6 list-disc pl-10;
+  @apply my-[1.5rem] list-disc pl-[2.5rem];
 }
 
 .markdown ol {
-  @apply my-6 list-decimal pl-10;
+  @apply my-[1.5rem] list-decimal pl-[2.5rem];
 }
 
 .markdown li {
-  @apply my-2;
+  @apply my-[0.5rem];
 }
 
 .markdown li > ul,
 .markdown li > ol {
-  @apply my-0 ml-4;
+  @apply my-[0] ml-[1rem];
 }
 
 /* Task list styling */
 .markdown ul > li > input[type='checkbox'] {
-  @apply mr-2;
+  @apply mr-[0.5rem];
 }

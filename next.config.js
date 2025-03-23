@@ -11,7 +11,6 @@ const nextConfig = {
     EMAIL_PASS: process.env.EMAIL_PASS,
   },
   images: {
-    domains: ["cdn.midjourney.com", "images.unsplash.com", "substackcdn.com"], // Add this line
     remotePatterns: [
       {
         protocol: "https",
