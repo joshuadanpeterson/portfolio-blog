@@ -8,14 +8,29 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
+// Add TypeScript definitions for window.goatcounter
+declare global {
+  interface Window {
+    goatcounter?: {
+      count: (opts: { path: string }) => void;
+    };
+  }
+}
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
   useEffect(() => {
+    // Count initial page view
+    if (typeof window !== 'undefined' && window.goatcounter) {
+      window.goatcounter.count({
+        path: router.asPath,
+      });
+    }
+
     const handleRouteChange = (url: string) => {
       if (window.goatcounter) {
         window.goatcounter.count({
-          path: url,
+          path: new URL(url).pathname,
         });
       }
     };
@@ -27,7 +42,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     return () => {
       router.events.off("routeChangeComplete", handleRouteChange);
     };
-  }, [router.events]);
+  }, [router.events, router.asPath]);
 
   return (
     <>
@@ -36,7 +51,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <script
           data-goatcounter="https://joshuadanpeterson.goatcounter.com/count"
           async
-          src="//gc.zgo.at/count.js"
+          src="https://gc.zgo.at/count.js"
         ></script>
       </Head>
       <Component {...pageProps} />
