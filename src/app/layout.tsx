@@ -6,6 +6,8 @@ import { CMS_NAME, HOME_OG_IMAGE_URL } from "@/lib/constants";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
+import { GCScript } from "next-goatcounter";
+
 import "./globals.css";
 import "./prism.css";
 const inter = Inter({ subsets: ["latin"] });
@@ -50,6 +52,7 @@ export default function RootLayout({
         <link rel="manifest" href="/favicon/manifest.json" />
       </head>
       <body className={inter.className} suppressHydrationWarning>
+        <GCScript siteUrl="https://joshuadanpeterson.goatcounter.com/count" />
         <div>
           <Container>
             <Navbar />
