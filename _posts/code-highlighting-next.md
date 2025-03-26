@@ -1,7 +1,7 @@
 ---
-title: Code Highlighting in Next.js - Using Prism.js with Markdown
+title: code-highlighting-next
 date_created: 2025-03-22 03:53:15
-date_modified: 2025-03-22 05:53:00
+date_modified: 2025-03-25 09:30:03
 tags: 
 favorite: 
 id: 01JPYMAR6XGG00194ET01P20EC
