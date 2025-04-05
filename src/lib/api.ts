@@ -101,34 +101,29 @@ export function slugToFilename(slug: string): string {
 export function getPostSlugs() {
   return fs.readdirSync(postsDirectory);
 }
-
 export function getPostBySlug(slug: string) {
   console.log(`getPostBySlug called with slug: "${slug}"`);
   
-  let decodedSlug: string;
+  // Determine if the input is a filename or a URL slug
+  const isFilename = slug.toLowerCase().endsWith('.md');
   
-  try {
-    // Handle potentially double-encoded slugs
-    if (slug.includes('%25')) {
-      console.log(`Detected double-encoded slug: ${slug}`);
-      decodedSlug = decodeURIComponent(decodeURIComponent(slug));
-    } else {
-      decodedSlug = decodeURIComponent(slug);
-    }
-  } catch (error: unknown) {
-    console.warn(`Error decoding slug '${slug}':`, error);
-    decodedSlug = slug;
+  let filename: string;
+  
+  if (isFilename) {
+    // Input is already a filename
+    filename = slug;
+    console.log(`Input is a filename: "${filename}"`);
+  } else {
+    // Input is a slug, convert to filename
+    filename = slugToFilename(slug);
+    console.log(`Converted slug to filename: "${filename}"`);
   }
   
-  // Remove .md extension if present
-  const realSlug = decodedSlug.replace(/\.md$/, "");
-  
-  // Get filename from slug, ensuring proper decoding of special characters
-  const filename = slugToFilename(slug);
-  console.log(`Converted slug to filename: "${filename}"`);
+  // Generate the slug from the filename to ensure consistency
+  const fileBasedSlug = filenameToSlug(filename);
+  console.log(`Generated slug from filename: "${fileBasedSlug}"`);
   
   // Normalize path to prevent double slashes
-  // Construct the full path using path.join to properly handle slash normalization
   const normPath = postsDirectory.replace(/\/+$/, ''); // Remove trailing slashes
   const fullPath = join(normPath, filename.replace(/^\/+/, '')); // Remove leading slashes
   
@@ -137,11 +132,36 @@ export function getPostBySlug(slug: string) {
   // Try multiple approaches to find the correct file
   const pathsToTry = [
     fullPath, // First try the full path with normalized filename
-    join(normPath, `${realSlug}.md`), // Try with realSlug + .md
-    join(normPath, decodedSlug), // Try with raw decoded slug
-    join(normPath, filename.replace(/\'/g, "\\'")), // Try escaping single quotes
-    join(normPath, filename.replace(/`/g, "\\`")), // Try escaping backticks
   ];
+  
+  // Add alternative paths for fallback
+  if (!isFilename) {
+    // Only add these fallbacks if the original input was a slug
+    let decodedSlug: string;
+    
+    try {
+      // Handle potentially double-encoded slugs
+      if (slug.includes('%25')) {
+        console.log(`Detected double-encoded slug: ${slug}`);
+        decodedSlug = decodeURIComponent(decodeURIComponent(slug));
+      } else {
+        decodedSlug = decodeURIComponent(slug);
+      }
+    } catch (error: unknown) {
+      console.warn(`Error decoding slug '${slug}':`, error);
+      decodedSlug = slug;
+    }
+    
+    // Remove .md extension if present
+    const realSlug = decodedSlug.replace(/\.md$/, "");
+    
+    pathsToTry.push(
+      join(normPath, `${realSlug}.md`), // Try with realSlug + .md
+      join(normPath, decodedSlug), // Try with raw decoded slug
+      join(normPath, filename.replace(/\'/g, "\\'")), // Try escaping single quotes
+      join(normPath, filename.replace(/`/g, "\\`")), // Try escaping backticks
+    );
+  }
   
   let lastError = null;
   
@@ -152,8 +172,9 @@ export function getPostBySlug(slug: string) {
       const fileContents = fs.readFileSync(path, "utf8");
       const { data, content } = matter(fileContents);
       
-      // Success - return the post with the encoded slug for URL consistency
-      const encodedSlug = filenameToSlug(filename);
+      // Always use the filename as the basis for the slug to ensure consistency
+      // This ensures URLs are derived from filenames, not post titles
+      const encodedSlug = fileBasedSlug;
       console.log(`Successfully loaded post from: "${path}", using slug: "${encodedSlug}"`);
       return { ...data, slug: encodedSlug, content } as Post;
     } catch (error: unknown) {
@@ -194,8 +215,9 @@ export function getAllPosts(): Post[] {
     .map((filename) => {
       try {
         // We pass the raw filename to getPostBySlug
+        // This ensures the slug is derived from the filename
         const post = getPostBySlug(filename);
-        console.log(`getAllPosts: Successfully processed post: "${filename}"`, {
+        console.log(`getAllPosts: Successfully processed post: \"${filename}\"`, {
           title: post.title,
           slug: post.slug,
           date: post.date,
@@ -204,8 +226,8 @@ export function getAllPosts(): Post[] {
           excerpt: post.excerpt?.substring(0, 50) + '...',
         });
         return post;
-      } catch (error: unknown) {
-        console.warn(`getAllPosts: Error loading post from file "${filename}":`, error);
+      } catch (error) {
+        console.warn(`getAllPosts: Error loading post from file \"${filename}\":`, error);
         // Log more details for debugging
         if (error instanceof Error && 'code' in error && error.code === 'ENOENT' && 'path' in error) {
           console.warn(`getAllPosts: File not found: ${(error as { path: string }).path}`);

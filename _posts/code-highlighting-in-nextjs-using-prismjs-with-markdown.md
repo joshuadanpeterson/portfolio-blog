@@ -1,7 +1,7 @@
 ---
-title: code-highlighting-next
+title: code-highlighting-in-nextjs-using-prismjs-with-markdown
 date_created: 2025-03-22 03:53:15
-date_modified: 2025-03-25 09:30:03
+date_modified: 2025-04-04 09:42:27
 tags: 
 favorite: 
 id: 01JPYMAR6XGG00194ET01P20EC
@@ -14,6 +14,8 @@ excerpt: This post demonstrates code syntax highlighting with Prism.js in our Ne
 ogImage:
   url: https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80
 ---
+# Code Highlighting in Next.js - Using Prism.js with Markdown
+
 **Say goodbye to plain code blocks.** If you're building a [Next.js](https://nextjs.org/) blog and drafting posts in [Obsidian](https://obsidian.md/), you might have noticed that your code blocks don’t look as polished on your blog as they do in your markdown editor. Without syntax highlighting, code can be hard to read and less engaging for your readers. That’s where **[Prism.js](https://prismjs.com/)** comes in—a lightweight, extensible syntax highlighter that seamlessly integrates with Next.js to bring vibrant syntax highlighting to your code blocks. In this post, we’ll explore how Prism.js works to display code blocks when converting markdown to HTML in a Next.js blog, ensuring that your Obsidian-authored posts render properly with beautiful highlighting.
 
 Before diving into the setup, let’s briefly understand what Prism.js is and why it’s so effective.

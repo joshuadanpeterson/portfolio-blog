@@ -1,7 +1,7 @@
 ---
-title: rendering-markdown-lists
+title: rendering-markdown-lists-in-nextjs-a-step-by-step-guide
 date_created: 2025-03-22 04:51:25
-date_modified: 2025-03-25 09:31:00
+date_modified: 2025-04-04 09:42:14
 tags: 
 favorite: 
 id: 01JQ02CDWYYS923XPH76RZ8J8X
@@ -14,6 +14,7 @@ excerpt: Here’s how I transform Markdown lists from Obsidian into HTML for my 
 ogImage:
   url: https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80
 ---
+# Rendering Markdown Lists in Next.js - A Step-by-Step Guide
 
 Picture this: You’ve poured your heart into drafting the perfect blog post in [Obsidian](https://obsidian.md/), complete with crisp Markdown lists and handy task checkboxes. You hit publish on your [Next.js](https://nextjs.org/) blog, only to find your beautifully structured lists look like a jumbled mess. Sound familiar? In today’s web development hustle, where every pixel counts, nailing that polished presentation isn’t just nice—it’s a must. Lucky for you, there’s a way to make those Markdown lists pop on your site, and I’m about to spill the secrets. Whether it’s nested bullets or checked-off tasks, this guide will transform your content into a reader’s dream, effortlessly bridging Obsidian and Next.js. Ready to level up your blog game? Let’s dive in!
 

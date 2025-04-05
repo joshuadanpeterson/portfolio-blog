@@ -1,7 +1,7 @@
 ---
-title: Automating Google Tasks with google-tasks1-cli and Warp's Agentic Mode
+title: automating-google-tasks-with-google-tasks1-cli-and-warps-agentic-mode
 date_created: 2025-03-22 02:26:35
-date_modified: 2025-03-25 09:24:23
+date_modified: 2025-04-04 09:57:43
 tags: [informative, documentation, tools, task-automation, google-tasks, warp-agentic-mode]
 favorite: 
 id: 01JBTX108VXRC8Z8Y3Q1EABXWD
@@ -14,6 +14,7 @@ excerpt: Managing tasks in Google Tasks can be a repetitive chore, especially wh
 ogImage:
   url: https://cdn.midjourney.com/201d9f2d-ba3a-4376-9cc3-61f65c4b389a/0_2.png
 ---
+# Automating Google Tasks with google-tasks1-cli and Warp's Agentic Mode
 
 Managing tasks in Google Tasks can be a repetitive chore, especially when you want to organize them into specific lists and avoid duplicates. Fortunately, with [`google-tasks1-cli`](https://crates.io/crates/google-tasks1-cli), a command-line tool for interacting with Google Tasks, and Warp's agentic mode powered by Claude 3.7 Sonnet, you can automate this process directly from your terminal. In this blog post, I’ll guide you through setting up these tools, configuring a Google Developer Console project, and creating an AI-driven workflow to efficiently manage your tasks. This guide is designed for a general technical audience, with all personal specifics removed and examples generalized.
 
