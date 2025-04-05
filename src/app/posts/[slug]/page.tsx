@@ -17,7 +17,10 @@ export default async function Post(props: any) {
     return notFound();
   }
 
-  const content = await markdownToHtml(post.content || "");
+  const { heading, content } = await markdownToHtml(post.content || "");
+  
+  // Use the extracted heading from markdown if available, otherwise use frontmatter title
+  const displayTitle = heading || post.title;
 
   return (
     <main>
@@ -26,7 +29,7 @@ export default async function Post(props: any) {
         <Header />
         <article className="mb-32">
           <PostHeader
-            title={post.title}
+            title={displayTitle}
             coverImage={post.coverImage}
             date={post.date}
             author={post.author}
@@ -45,8 +48,13 @@ export async function generateMetadata(props: any): Promise<Metadata> {
   if (!post) {
     return notFound();
   }
-
-  const title = `${post.title} | Next.js Blog Example with ${CMS_NAME}`;
+  
+  // Extract heading from markdown to use in metadata if available
+  const { heading } = await markdownToHtml(post.content || "");
+  
+  // Use the extracted heading if available, otherwise use frontmatter title
+  const postTitle = heading || post.title;
+  const title = `${postTitle} | Next.js Blog Example with ${CMS_NAME}`;
 
   return {
     title,
