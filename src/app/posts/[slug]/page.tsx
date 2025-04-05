@@ -8,13 +8,9 @@ import Container from "@/app/_components/container";
 import Header from "@/app/_components/header";
 import { PostBody } from "@/app/_components/post-body";
 import { PostHeader } from "@/app/_components/post-header";
-import { NextPage } from "next";
 
-export default async function Post({
-  params,
-}: {
-  params: { slug: string };
-}) {
+export default async function Post(props: any) {
+  const { params } = props;
   const post = getPostBySlug(params.slug);
 
   if (!post) {
@@ -42,11 +38,8 @@ export default async function Post({
   );
 }
 
-export async function generateMetadata({ 
-  params,
-}: {
-  params: { slug: string };
-}): Promise<Metadata> {
+export async function generateMetadata(props: any): Promise<Metadata> {
+  const { params } = props;
   const post = getPostBySlug(params.slug);
 
   if (!post) {

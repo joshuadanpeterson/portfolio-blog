@@ -8,27 +8,28 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
-// Add TypeScript definitions for window.goatcounter
-declare global {
-  interface Window {
-    goatcounter?: {
-      count: (opts: { path: string }) => void;
-    };
-  }
+// Define the GoatCounter type without extending Window interface
+type GoatCounter = {
+  count: (opts: { path: string }) => void;
+};
+
+// Type guard to check if window has goatcounter
+function hasGoatCounter(win: Window): win is Window & { goatcounter: GoatCounter } {
+  return 'goatcounter' in win && win.goatcounter !== undefined;
 }
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
   useEffect(() => {
     // Count initial page view
-    if (typeof window !== 'undefined' && window.goatcounter) {
+    if (typeof window !== 'undefined' && hasGoatCounter(window)) {
       window.goatcounter.count({
         path: router.asPath,
       });
     }
 
     const handleRouteChange = (url: string) => {
-      if (window.goatcounter) {
+      if (hasGoatCounter(window)) {
         window.goatcounter.count({
           path: new URL(url).pathname,
         });
