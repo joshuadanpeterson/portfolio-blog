@@ -7,6 +7,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { fetchRSSFeeds, FeedItem } from "@/lib/rss";
+import TitleUpdater from "@/app/_components/title-updater";
 
 // Interface for your local post format
 interface Post {
@@ -291,6 +292,7 @@ export default function BlogPage() {
 
   return (
     <div className="flex flex-col items-center justify-center mt-16 mb-16 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <TitleUpdater title="Blog | Josh Peterson" />
       <h1 className="text-5xl md:text-8xl font-bold tracking-tighter leading-tight md:pr-8 mb-8">
         Blog
       </h1>

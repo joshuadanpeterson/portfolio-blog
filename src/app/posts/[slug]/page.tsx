@@ -8,6 +8,7 @@ import Container from "@/app/_components/container";
 import Header from "@/app/_components/header";
 import { PostBody } from "@/app/_components/post-body";
 import { PostHeader } from "@/app/_components/post-header";
+import TitleUpdater from "@/app/_components/title-updater";
 
 export default async function Post(props: any) {
   // Await the entire params object
@@ -22,9 +23,14 @@ export default async function Post(props: any) {
   
   // Use the extracted heading from markdown if available, otherwise use frontmatter title
   const displayTitle = heading || post.title;
+  
+  // Format the title for the browser tab
+  const pageTitle = `${displayTitle} | Josh Peterson's Blog`;
 
   return (
     <main>
+      {/* Update the document title using our context provider */}
+      <TitleUpdater title={pageTitle} />
       {/* <Alert preview={post.preview} /> */}
       <Container>
         <Header />
@@ -56,7 +62,7 @@ export async function generateMetadata(props: any): Promise<Metadata> {
   
   // Use the extracted heading if available, otherwise use frontmatter title
   const postTitle = heading || post.title;
-  const title = `${postTitle} | Next.js Blog Example with ${CMS_NAME}`;
+  const title = `${postTitle} | Josh Peterson's Blog`;
 
   return {
     title,

@@ -4,6 +4,7 @@
 import { useEffect, useState } from "react";
 import { fetchPinnedRepos } from "@/lib/github";
 import Container from "@/app/_components/container"; // Ensure this path is correct
+import TitleUpdater from "@/app/_components/title-updater";
 
 interface Repository {
   name: string;
@@ -30,6 +31,7 @@ const PortfolioPage = () => {
 
   return (
     <Container>
+      <TitleUpdater title="Portfolio | Josh Peterson" />
       <div className="flex flex-col items-center justify-center mt-16 mb-16 px-4 md:px-8 lg:px-16">
         <h1 className="text-5xl md:text-8xl font-bold tracking-tighter leading-tight md:pr-8">
           Portfolio

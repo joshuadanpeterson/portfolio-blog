@@ -2,6 +2,7 @@
 import Container from "@/app/_components/container";
 import { HeroPost } from "@/app/_components/hero-post";
 import { MoreStories } from "@/app/_components/more-stories";
+import TitleUpdater from "@/app/_components/title-updater";
 import { getAllPosts } from "@/lib/api";
 import { Post } from "@/interfaces/post";
 
@@ -57,8 +58,12 @@ export default function Index() {
   const morePosts = validPosts.slice(1);
   console.log("DEBUG - More posts:", morePosts);
 
+  // Set the homepage title
+  const homePageTitle = "Josh Peterson | Portfolio & Blog";
+
   return (
     <main>
+      <TitleUpdater title={homePageTitle} />
       <Container>
         {heroPost && (
           <HeroPost
