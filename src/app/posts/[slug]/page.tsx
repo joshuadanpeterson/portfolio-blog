@@ -10,7 +10,8 @@ import { PostBody } from "@/app/_components/post-body";
 import { PostHeader } from "@/app/_components/post-header";
 
 export default async function Post(props: any) {
-  const { params } = props;
+  // Await the entire params object
+  const params = await props.params;
   const post = getPostBySlug(params.slug);
 
   if (!post) {
@@ -42,7 +43,8 @@ export default async function Post(props: any) {
 }
 
 export async function generateMetadata(props: any): Promise<Metadata> {
-  const { params } = props;
+  // Await the entire params object
+  const params = await props.params;
   const post = getPostBySlug(params.slug);
 
   if (!post) {
