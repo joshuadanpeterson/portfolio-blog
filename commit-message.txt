@@ -1,10 +1,7 @@
-fix(app-router): properly await params object in dynamic routes
+feat(api): extract H1 headings from markdown for post titles
 
-- Fix error in `/posts/[slug]` route by awaiting the entire params object
-- Replace direct access to params.slug with properly awaited pattern
-- Update both Post component and generateMetadata function
-- Ensures compliance with Next.js App Router's handling of dynamic route parameters
-
-The previous implementation incorrectly destructured params and then
-awaited only the slug property, causing the error:
-"Route '/posts/[slug]' used params.slug. params should be awaited before using its properties"
+- Add extractH1FromMarkdown helper function to api.ts that detects both # and <h1> formats
+- Modify getPostBySlug to use H1 heading from content as post title when available
+- Fall back to frontmatter title if H1 heading is not present
+- Add detailed logging to track title extraction behavior
+- Ensure consistent display of titles across all blog pages

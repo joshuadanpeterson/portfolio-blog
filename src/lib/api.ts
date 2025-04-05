@@ -98,6 +98,28 @@ export function slugToFilename(slug: string): string {
   return decodedSlug.endsWith(".md") ? decodedSlug : `${decodedSlug}.md`;
 }
 
+/**
+ * Extracts the first H1 heading from markdown content
+ * @param markdown - The markdown content to process
+ * @returns The text content of the first H1 heading, or null if none is found
+ */
+export function extractH1FromMarkdown(markdown: string): string | null {
+  // First try to match # Heading format (markdown syntax)
+  const markdownHeadingMatch = markdown.match(/^#\s+(.+)$/m);
+  if (markdownHeadingMatch && markdownHeadingMatch[1]) {
+    return markdownHeadingMatch[1].trim();
+  }
+  
+  // If no markdown heading found, try to match <h1>Heading</h1> format (HTML syntax)
+  const htmlHeadingMatch = markdown.match(/<h1.*?>(.*?)<\/h1>/s);
+  if (htmlHeadingMatch && htmlHeadingMatch[1]) {
+    // Remove any HTML tags that might be inside the H1
+    return htmlHeadingMatch[1].replace(/<[^>]*>/g, '').trim();
+  }
+  
+  return null;
+}
+
 export function getPostSlugs() {
   return fs.readdirSync(postsDirectory);
 }
@@ -170,13 +192,21 @@ export function getPostBySlug(slug: string) {
     try {
       console.log(`Trying path: "${path}"`);
       const fileContents = fs.readFileSync(path, "utf8");
-      const { data, content } = matter(fileContents);
       
-      // Always use the filename as the basis for the slug to ensure consistency
       // This ensures URLs are derived from filenames, not post titles
       const encodedSlug = fileBasedSlug;
+      
+      // Parse the file with matter
+      const { data, content } = matter(fileContents);
+      
+      // Extract H1 heading from content if available
+      const h1Heading = extractH1FromMarkdown(content);
+      
+      // If H1 heading was found, use it as the title, otherwise use frontmatter title
+      const title = h1Heading || data.title;
+      
       console.log(`Successfully loaded post from: "${path}", using slug: "${encodedSlug}"`);
-      return { ...data, slug: encodedSlug, content } as Post;
+      return { ...data, title, slug: encodedSlug, content } as Post;
     } catch (error: unknown) {
       lastError = error;
       console.log(`Failed to read from path: "${path}" - ${error instanceof Error ? error.message : String(error)}`);
@@ -217,18 +247,24 @@ export function getAllPosts(): Post[] {
         // We pass the raw filename to getPostBySlug
         // This ensures the slug is derived from the filename
         const post = getPostBySlug(filename);
+        
+        // Extract H1 heading for logging purposes
+        const extractedH1 = extractH1FromMarkdown(post.content);
+        const originalFrontmatterTitle = post.title !== extractedH1 ? post.title : "same as H1";
+        
         console.log(`getAllPosts: Successfully processed post: \"${filename}\"`, {
-          title: post.title,
+          originalTitle: originalFrontmatterTitle,
+          extractedH1: extractedH1 || "none",
+          title: post.title, // This now contains either the H1 or original title
           slug: post.slug,
           date: post.date,
           hasAuthor: !!post.author,
           hasHeroImage: !!post.coverImage,
           excerpt: post.excerpt?.substring(0, 50) + '...',
         });
+        
         return post;
-      } catch (error) {
-        console.warn(`getAllPosts: Error loading post from file \"${filename}\":`, error);
-        // Log more details for debugging
+      } catch (error: unknown) {
         if (error instanceof Error && 'code' in error && error.code === 'ENOENT' && 'path' in error) {
           console.warn(`getAllPosts: File not found: ${(error as { path: string }).path}`);
         } else if (error instanceof Error) {
