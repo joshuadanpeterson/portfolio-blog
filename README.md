@@ -1,5 +1,11 @@
 # A statically generated blog example using Next.js, Markdown, and TypeScript
 
+<div>
+  <a href="https://deepwiki.com/joshuadanpeterson/portfolio-blog">
+    <img src="https://deepwiki.com/badge.svg" alt="Ask DeepWiki">
+  </a>
+</div>
+
 This is the existing [blog-starter](https://github.com/vercel/next.js/tree/canary/examples/blog-starter) plus TypeScript.
 
 This example showcases Next.js's [Static Generation](https://nextjs.org/docs/app/building-your-application/routing/layouts-and-templates) feature using Markdown files as the data source.
