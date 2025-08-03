@@ -1,7 +1,7 @@
 ---
 title: slack-api-secrets-overcoming-the-canvas-editing-one-change-limit
 date_created: 2025-04-05 09:07:34
-date_modified: 2025-04-06 12:00:04
+date_modified: 2025-08-03 02:12:17
 tags: [informative, analysis, documentation, slack-api, canvas-editing, automation-challenges]
 favorite: 
 id: 01JBTX108VXRC8Z8Y3Q1EABXWD
