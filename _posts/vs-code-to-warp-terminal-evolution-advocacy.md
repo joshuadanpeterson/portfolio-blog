@@ -9,7 +9,7 @@ author:
   name: Josh Peterson
   picture: /assets/blog/authors/2017_profile_pic.jpg
 coverImage: https://cdn.midjourney.com/28a83250-d08c-4bd7-906a-74ab5a58f31e/0_2.png
-date: 2025-06-25 02:13:03
+date: 2025-08-03 02:13:03
 excerpt: Two years ago, I made a simple editor switch that spiraled into something unexpected—a Developer Advocate role that emerged organically from genuine enthusiasm. This isn't a pitch; it's a map of that journey for anyone curious about next-generation terminals and how advocacy sometimes writes itself.
 ogImage:
   url: https://cdn.midjourney.com/28a83250-d08c-4bd7-906a-74ab5a58f31e/0_2.png
