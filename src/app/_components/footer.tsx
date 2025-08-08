@@ -9,7 +9,6 @@ import {
   faXTwitter,
   faInstagram,
   faLinkedin,
-  faSubstack,
 } from "@fortawesome/free-brands-svg-icons";
 
 export default function Footer() {
@@ -34,7 +33,21 @@ export default function Footer() {
               className="text-gray-600 hover:text-gray-800"
               aria-label="Substack"
             >
-              <FontAwesomeIcon icon={faSubstack} size="2x" />
+              {/* Inline SVG fallback for Substack brand icon */}
+              <svg
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                focusable="false"
+              >
+                {/* Simple three-bar mark approximating Substack */}
+                <rect x="3" y="5" width="18" height="3" rx="0.5" />
+                <rect x="3" y="10.5" width="18" height="3" rx="0.5" />
+                <rect x="3" y="16" width="18" height="3" rx="0.5" />
+              </svg>
             </a>
             <a
               href="https://x.com/jdpeterson"
