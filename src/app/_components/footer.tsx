@@ -9,6 +9,7 @@ import {
   faXTwitter,
   faInstagram,
   faLinkedin,
+  faSubstack,
 } from "@fortawesome/free-brands-svg-icons";
 
 export default function Footer() {
@@ -22,8 +23,18 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-600 hover:text-gray-800"
+              aria-label="Medium"
             >
               <FontAwesomeIcon icon={faMedium} size="2x" />
+            </a>
+            <a
+              href="https://substack.com/@joshuadanpeterson"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-600 hover:text-gray-800"
+              aria-label="Substack"
+            >
+              <FontAwesomeIcon icon={faSubstack} size="2x" />
             </a>
             <a
               href="https://x.com/jdpeterson"
