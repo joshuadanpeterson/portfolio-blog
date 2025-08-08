@@ -5,6 +5,11 @@
     "build": "next build",
     "start": "next start"
   },
+  "engines": {
+    "node": ">=22.9.0 <23",
+    "npm": ">=11"
+  },
+  "packageManager": "npm@^11",
   "dependencies": {
     "@fortawesome/free-brands-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
