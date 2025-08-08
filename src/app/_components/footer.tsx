@@ -59,7 +59,7 @@ export default function Footer() {
             </a>
           </div>
           <div className="mt-4 lg:mt-0 text-gray-600">
-            &copy; 2024 Josh Peterson
+            © {new Date().getFullYear()} Josh Peterson
           </div>
         </div>
       </Container>
