@@ -37,3 +37,12 @@
 .markdown ul > li > input[type='checkbox'] {
   @apply mr-[0.5rem];
 }
+
+/* Link styling */
+.markdown a {
+  @apply text-sky-500 font-bold underline;
+}
+
+.markdown a:hover {
+  @apply text-sky-600;
+}
