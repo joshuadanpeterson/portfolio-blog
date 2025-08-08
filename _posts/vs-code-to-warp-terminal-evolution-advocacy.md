@@ -1,7 +1,7 @@
 ---
 title: vs-code-to-warp-terminal-evolution-advocacy
 date_created: 2025-06-25 12:22:27
-date_modified: 2025-08-03 01:34:12
+date_modified: 2025-08-03 09:37:23
 tags: 
 favorite: 
 id: 01JBTX108VXRC8Z8Y3Q1EABXWD
@@ -92,3 +92,9 @@ I didn't set out to revolutionize my terminal setup or collect another title. I 
 Try it or don't—I'm not here to convert anyone. But if you're still wrestling with tools instead of solving problems, maybe ask yourself why. The best setup is the one that lets you think about code instead of configuration. Everything else follows naturally from there.
 
 _P.S. - Yes, using a proprietary terminal makes me part of the ecosystem. Sometimes the future arrives through unexpected channels._
+
+*If you do decide to give Warp a shot, here’s a little thank-you from me:*  
+
+*Use **`JOSHPETERSONPRO`** for **$5 off your first month of Warp Pro** (about 25–33% off depending on your plan), and sign up through my [referral](https://app.warp.dev/referral/MPN8V3) link (I get credit if you do).*
+
+*No pressure—just a way to save a few bucks if you’re curious enough to see where the terminal is headed next.*
