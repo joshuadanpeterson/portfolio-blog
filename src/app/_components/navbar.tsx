@@ -5,6 +5,7 @@ import { FC, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
+import ThemeToggle from "@/app/_components/ThemeToggle";
 
 const Navbar: FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,10 +18,15 @@ const Navbar: FC = () => {
   return (
     <nav className="flex-col md:flex-row flex items-center md:justify-between mt-16 mb-16 md:mb-12">
       <div className="flex items-center justify-between w-full md:w-auto">
-        <h1 className="text-5xl md:text-8xl font-bold tracking-tighter leading-tight md:pr-8">
-          josh
-        </h1>
-        <button className="text-black md:hidden" onClick={toggleMenu}>
+        <div className="flex items-center">
+          <h1 className="text-5xl md:text-8xl font-bold tracking-tighter leading-tight md:pr-8">
+            josh
+          </h1>
+          <div className="hidden md:block">
+            <ThemeToggle />
+          </div>
+        </div>
+        <button className="text-black dark:text-white md:hidden" onClick={toggleMenu}>
           <svg
             className="w-6 h-6"
             fill="none"
@@ -98,6 +104,11 @@ const Navbar: FC = () => {
           </Link>
         </li>
       </ul>
+      {isOpen && (
+        <div className="mt-4 md:hidden w-full">
+          <ThemeToggle />
+        </div>
+      )}
     </nav>
   );
 };
