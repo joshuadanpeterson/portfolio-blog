@@ -38,17 +38,17 @@ export function HeroPost({
           <h3 className="mb-4 text-4xl lg:text-5xl leading-tight">
             <Link
               href={`/posts/${slug}`}
-              className="text-black hover:underline hover:text-blue-600 transition-colors duration-200"
+              className="text-black dark:text-neutral-200 visited:text-purple-600 dark:visited:text-purple-400 hover:underline hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 motion-reduce:transition-none"
             >
               {title}
             </Link>
           </h3>
-          <div className="mb-4 md:mb-0 text-lg text-gray-600">
+          <div className="mb-4 md:mb-0 text-lg text-gray-600 dark:text-neutral-400">
             <DateFormatter dateString={date} />
           </div>
         </div>
         <div>
-          <p className="text-lg leading-relaxed mb-4 text-gray-700">
+          <p className="text-lg leading-relaxed mb-4 text-gray-700 dark:text-neutral-300">
             {excerpt}
           </p>
           {author && <Avatar name={author.name} picture={author.picture} />}

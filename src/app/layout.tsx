@@ -34,6 +34,20 @@ export default function RootLayout({
           name="keywords"
           content="Josh Peterson, Software Engineer, Programming, Blog"
         />
+        {/* Set theme early to avoid flash */}
+        <script dangerouslySetInnerHTML={{
+          __html: `
+            (function() {
+              try {
+                var saved = localStorage.getItem('theme');
+                var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                var initial = saved || (prefersDark ? 'dark' : 'light');
+                if (initial === 'dark') document.documentElement.classList.add('dark');
+                else document.documentElement.classList.remove('dark');
+              } catch (e) {}
+            })();
+          `,
+        }} />
         <script src="https://unpkg.com/prismjs@v1.29.0/components/prism-core.min.js"></script>
         <script src="https://unpkg.com/prismjs@v1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
         <link
@@ -52,7 +66,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/favicon/apple-icon.png" />
         <link rel="manifest" href="/favicon/manifest.json" />
       </head>
-      <body className={inter.className} suppressHydrationWarning>
+      <body className={`${inter.className} bg-white text-black dark:bg-neutral-900 dark:text-neutral-100`} suppressHydrationWarning>
         <GCScript siteUrl="https://joshuadanpeterson.goatcounter.com/count" />
         <TitleProvider defaultTitle={metadata.title as string}>
           <div>

@@ -31,15 +31,15 @@ export function PostPreview({
       <h3 className="text-3xl mb-3 leading-snug">
         <Link
           href={`/posts/${slug}`}
-          className="text-black hover:underline hover:text-blue-600 transition-colors duration-200"
+          className="text-black dark:text-neutral-200 visited:text-purple-600 dark:visited:text-purple-400 hover:underline hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 motion-reduce:transition-none"
         >
           {title}
         </Link>
       </h3>
-      <div className="text-lg mb-4 text-gray-600">
+      <div className="text-lg mb-4 text-gray-600 dark:text-neutral-400">
         <DateFormatter dateString={date} />
       </div>
-      <p className="text-lg leading-relaxed mb-4 text-gray-700">{excerpt}</p>
+      <p className="text-lg leading-relaxed mb-4 text-gray-700 dark:text-neutral-300">{excerpt}</p>
       {author && <Avatar name={author.name} picture={author.picture} />}
     </div>
   );

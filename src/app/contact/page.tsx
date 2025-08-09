@@ -52,13 +52,13 @@ const ContactPage = () => {
         <form className="w-full max-w-lg mt-5" onSubmit={handleSubmit}>
           <div className="mb-4">
             <label
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="block text-gray-700 dark:text-neutral-300 text-sm font-bold mb-2"
               htmlFor="name"
             >
               Name:
             </label>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-neutral-200 dark:bg-neutral-800 dark:border-neutral-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-neutral-600 focus:border-transparent"
               id="name"
               type="text"
               name="name"
@@ -69,13 +69,13 @@ const ContactPage = () => {
           </div>
           <div className="mb-4">
             <label
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="block text-gray-700 dark:text-neutral-300 text-sm font-bold mb-2"
               htmlFor="email"
             >
               Email:
             </label>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-neutral-200 dark:bg-neutral-800 dark:border-neutral-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-neutral-600 focus:border-transparent"
               id="email"
               type="email"
               name="email"
@@ -86,13 +86,13 @@ const ContactPage = () => {
           </div>
           <div className="mb-4">
             <label
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="block text-gray-700 dark:text-neutral-300 text-sm font-bold mb-2"
               htmlFor="subject"
             >
               Subject:
             </label>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-neutral-200 dark:bg-neutral-800 dark:border-neutral-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-neutral-600 focus:border-transparent"
               id="subject"
               type="text"
               name="subject"
@@ -103,13 +103,13 @@ const ContactPage = () => {
           </div>
           <div className="mb-6">
             <label
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="block text-gray-700 dark:text-neutral-300 text-sm font-bold mb-2"
               htmlFor="message"
             >
               Message:
             </label>
             <textarea
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline h-32"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-neutral-200 dark:bg-neutral-800 dark:border-neutral-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-neutral-600 focus:border-transparent h-32"
               id="message"
               name="message"
               value={formData.message}

@@ -5,6 +5,7 @@ import { FC, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
+import ThemeToggle from "@/app/_components/ThemeToggle";
 
 const Navbar: FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,10 +18,12 @@ const Navbar: FC = () => {
   return (
     <nav className="flex-col md:flex-row flex items-center md:justify-between mt-16 mb-16 md:mb-12">
       <div className="flex items-center justify-between w-full md:w-auto">
-        <h1 className="text-5xl md:text-8xl font-bold tracking-tighter leading-tight md:pr-8">
-          josh
-        </h1>
-        <button className="text-black md:hidden" onClick={toggleMenu}>
+        <div className="flex items-center">
+          <h1 className="text-5xl md:text-8xl font-bold tracking-tighter leading-tight md:pr-8">
+            josh
+          </h1>
+        </div>
+        <button className="text-black dark:text-white md:hidden" onClick={toggleMenu}>
           <svg
             className="w-6 h-6"
             fill="none"
@@ -38,7 +41,7 @@ const Navbar: FC = () => {
         </button>
       </div>
       <ul
-        className={`flex-col md:flex-row flex md:space-x-4 text-lg mt-5 md:pl-8 ${isOpen ? "block" : "hidden"} md:flex`}
+        className={`flex-col md:flex-row flex md:space-x-4 text-lg mt-5 md:pl-8 ${isOpen ? "block" : "hidden"} md:flex items-center md:ml-auto`}
       >
         <li>
           <Link
@@ -96,6 +99,10 @@ const Navbar: FC = () => {
           >
             Contact
           </Link>
+        </li>
+        {/* Theme toggle aligned to the right */}
+        <li className="mt-4 md:mt-0">
+          <ThemeToggle />
         </li>
       </ul>
     </nav>
