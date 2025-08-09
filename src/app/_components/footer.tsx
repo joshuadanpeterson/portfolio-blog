@@ -10,89 +10,77 @@ import {
   faInstagram,
   faLinkedin,
 } from "@fortawesome/free-brands-svg-icons";
-
-const SUBSTACK_PATH = "M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z";
+import { siSubstack } from "simple-icons";
 
 export default function Footer() {
   return (
-    <footer className="bg-neutral-50 dark:bg-neutral-900 border-t border-neutral-200 dark:border-neutral-800">
+    <footer className="bg-neutral-50 border-t border-neutral-200">
       <Container>
         <div className="flex flex-col lg:flex-row items-center justify-between py-4">
-          <div className="flex items-center gap-4">
-            {/* Conversion-focused order: Substack, Medium, X, GitHub, LinkedIn, Instagram */}
-            <a
-              href="https://substack.com/@joshuadanpeterson"
-              target="_blank"
-              rel="noopener noreferrer"
-className="p-2 rounded-md text-gray-600 dark:text-neutral-300 hover:text-[#FF6719] dark:hover:text-[#FF6719] hover:bg-neutral-100 dark:hover:bg-neutral-800 visited:text-inherit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50 align-middle transition-colors duration-150 motion-reduce:transition-none"
-              aria-label="Substack"
-              title="Substack"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="32"
-                height="32"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-                focusable="false"
-                className="align-middle"
-              >
-                <path d={SUBSTACK_PATH} />
-              </svg>
-            </a>
+          <div className="flex space-x-6">
             <a
               href="https://medium.com/@joshpeterson"
               target="_blank"
               rel="noopener noreferrer"
-className="p-2 rounded-md text-gray-600 dark:text-neutral-300 hover:text-[#00AB6C] dark:hover:text-[#00AB6C] hover:bg-neutral-100 dark:hover:bg-neutral-800 visited:text-inherit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50 align-middle transition-colors duration-150 motion-reduce:transition-none"
+              className="text-gray-600 hover:text-gray-800"
               aria-label="Medium"
-              title="Medium"
             >
-              <FontAwesomeIcon icon={faMedium} size="2x" className="align-middle" />
+              <FontAwesomeIcon icon={faMedium} size="2x" />
+            </a>
+            <a
+              href="https://substack.com/@joshuadanpeterson"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-600 hover:text-gray-800"
+              aria-label="Substack"
+            >
+              {/* Simple Icons: Substack official glyph (inline path) */}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="1.75em"
+                height="1.75em"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path d={siSubstack.path} />
+              </svg>
             </a>
             <a
               href="https://x.com/jdpeterson"
               target="_blank"
               rel="noopener noreferrer"
-className="p-2 rounded-md text-gray-600 dark:text-neutral-300 hover:text-gray-800 dark:hover:text-gray-100 hover:underline hover:bg-neutral-100 dark:hover:bg-neutral-800 visited:text-inherit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50 align-middle transition-colors duration-150 motion-reduce:transition-none"
-              aria-label="X"
-              title="X (Twitter)"
+              className="text-gray-600 hover:text-gray-800"
             >
-              <FontAwesomeIcon icon={faXTwitter} size="2x" className="align-middle" />
-            </a>
-            <a
-              href="https://github.com/joshuadanpeterson"
-              target="_blank"
-              rel="noopener noreferrer"
-className="p-2 rounded-md text-gray-600 dark:text-neutral-300 hover:text-gray-800 dark:hover:text-gray-100 hover:underline hover:bg-neutral-100 dark:hover:bg-neutral-800 visited:text-inherit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50 align-middle transition-colors duration-150 motion-reduce:transition-none"
-              aria-label="GitHub"
-              title="GitHub"
-            >
-              <FontAwesomeIcon icon={faGithub} size="2x" className="align-middle" />
-            </a>
-            <a
-              href="https://linkedin.com/in/joshuadanpeterson"
-              target="_blank"
-              rel="noopener noreferrer"
-className="p-2 rounded-md text-gray-600 dark:text-neutral-300 hover:text-[#0A66C2] dark:hover:text-[#0A66C2] hover:bg-neutral-100 dark:hover:bg-neutral-800 visited:text-inherit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50 align-middle transition-colors duration-150 motion-reduce:transition-none"
-              aria-label="LinkedIn"
-              title="LinkedIn"
-            >
-              <FontAwesomeIcon icon={faLinkedin} size="2x" className="align-middle" />
+              <FontAwesomeIcon icon={faXTwitter} size="2x" />
             </a>
             <a
               href="https://instagram.com/chromaticera"
               target="_blank"
               rel="noopener noreferrer"
-className="p-2 rounded-md text-gray-600 dark:text-neutral-300 hover:text-[#E4405F] dark:hover:text-[#E4405F] hover:bg-neutral-100 dark:hover:bg-neutral-800 visited:text-inherit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50 align-middle transition-colors duration-150 motion-reduce:transition-none"
-              aria-label="Instagram"
-              title="Instagram"
+              className="text-gray-600 hover:text-gray-800"
             >
-              <FontAwesomeIcon icon={faInstagram} size="2x" className="align-middle" />
+              <FontAwesomeIcon icon={faInstagram} size="2x" />
+            </a>
+            <a
+              href="https://github.com/joshuadanpeterson"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-600 hover:text-gray-800"
+            >
+              <FontAwesomeIcon icon={faGithub} size="2x" />
+            </a>
+            <a
+              href="https://linkedin.com/in/joshuadanpeterson"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-600 hover:text-gray-800"
+            >
+              <FontAwesomeIcon icon={faLinkedin} size="2x" />
             </a>
           </div>
-          <div className="mt-4 lg:mt-0 text-gray-600 dark:text-neutral-400">
+          <div className="mt-4 lg:mt-0 text-gray-600">
             © {new Date().getFullYear()} Josh Peterson
           </div>
         </div>
