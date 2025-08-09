@@ -47,8 +47,8 @@ const Navbar: FC = () => {
           <Link
             href="/"
             className={clsx(
-              "underline hover:text-blue-600 duration-200 transition-colors",
-              { "text-blue-600": pathname === "/" },
+              "font-semibold underline underline-offset-2 transition-colors duration-200 text-neutral-800 dark:text-neutral-200 hover:text-sky-700 dark:hover:text-sky-300",
+              { "text-sky-700 dark:text-sky-300": pathname === "/" },
             )}
           >
             Home
@@ -58,8 +58,8 @@ const Navbar: FC = () => {
           <Link
             href="/portfolio"
             className={clsx(
-              "underline hover:text-blue-600 duration-200 transition-colors",
-              { "text-blue-600": pathname === "/portfolio" },
+              "font-semibold underline underline-offset-2 transition-colors duration-200 text-neutral-800 dark:text-neutral-200 hover:text-sky-700 dark:hover:text-sky-300",
+              { "text-sky-700 dark:text-sky-300": pathname === "/portfolio" },
             )}
           >
             Portfolio
@@ -71,8 +71,8 @@ const Navbar: FC = () => {
           <Link
             href="/posts"
             className={clsx(
-              "underline hover:text-blue-600 duration-200 transition-colors",
-              { "text-blue-600": pathname === "/posts" },
+              "font-semibold underline underline-offset-2 transition-colors duration-200 text-neutral-800 dark:text-neutral-200 hover:text-sky-700 dark:hover:text-sky-300",
+              { "text-sky-700 dark:text-sky-300": pathname === "/posts" },
             )}
           >
             Blog
@@ -82,8 +82,8 @@ const Navbar: FC = () => {
           <Link
             href="/about"
             className={clsx(
-              "underline hover:text-blue-600 duration-200 transition-colors",
-              { "text-blue-600": pathname === "/about" },
+              "font-semibold underline underline-offset-2 transition-colors duration-200 text-neutral-800 dark:text-neutral-200 hover:text-sky-700 dark:hover:text-sky-300",
+              { "text-sky-700 dark:text-sky-300": pathname === "/about" },
             )}
           >
             About
@@ -93,8 +93,8 @@ const Navbar: FC = () => {
           <Link
             href="/contact"
             className={clsx(
-              "underline hover:text-blue-600 duration-200 transition-colors",
-              { "text-blue-600": pathname === "/contact" },
+              "font-semibold underline underline-offset-2 transition-colors duration-200 text-neutral-800 dark:text-neutral-200 hover:text-sky-700 dark:hover:text-sky-300",
+              { "text-sky-700 dark:text-sky-300": pathname === "/contact" },
             )}
           >
             Contact

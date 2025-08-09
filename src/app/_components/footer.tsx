@@ -55,7 +55,8 @@ className="p-2 rounded-md text-gray-600 dark:text-neutral-300 hover:text-[#00AB6
               href="https://x.com/jdpeterson"
               target="_blank"
               rel="noopener noreferrer"
-className="p-2 rounded-md text-gray-600 dark:text-neutral-300 hover:text-black hover:bg-neutral-100 dark:hover:bg-neutral-800 visited:text-inherit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50 align-middle transition-colors duration-150 motion-reduce:transition-none"
+className="p-2 rounded-md text-gray-600 dark:text-neutral-300 hover:text-black dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-800 visited:text-inherit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50 align-middle transition-colors duration-150 motion-reduce:transition-none"
+duce:transition-none"
               aria-label="X"
               title="X (Twitter)"
             >
