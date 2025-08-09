@@ -22,6 +22,9 @@ const Navbar: FC = () => {
           <h1 className="text-5xl md:text-8xl font-bold tracking-tighter leading-tight md:pr-8">
             josh
           </h1>
+          <div className="hidden md:block">
+            <ThemeToggle />
+          </div>
         </div>
         <button className="text-black dark:text-white md:hidden" onClick={toggleMenu}>
           <svg
@@ -41,7 +44,7 @@ const Navbar: FC = () => {
         </button>
       </div>
       <ul
-        className={`flex-col md:flex-row flex md:space-x-4 text-lg mt-5 md:pl-8 ${isOpen ? "block" : "hidden"} md:flex items-center md:ml-auto`}
+        className={`flex-col md:flex-row flex md:space-x-4 text-lg mt-5 md:pl-8 ${isOpen ? "block" : "hidden"} md:flex`}
       >
         <li>
           <Link
@@ -100,11 +103,12 @@ const Navbar: FC = () => {
             Contact
           </Link>
         </li>
-        {/* Theme toggle aligned to the right */}
-        <li className="mt-4 md:mt-0">
-          <ThemeToggle />
-        </li>
       </ul>
+      {isOpen && (
+        <div className="mt-4 md:hidden w-full">
+          <ThemeToggle />
+        </div>
+      )}
     </nav>
   );
 };

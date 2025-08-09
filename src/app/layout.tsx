@@ -3,6 +3,7 @@ import Container from "@/app/_components/container";
 import Footer from "@/app/_components/footer";
 import Navbar from "@/app/_components/navbar";
 import { TitleProvider } from "@/context/TitleContext";
+import { ThemeProvider } from "@/context/ThemeContext";
 import { CMS_NAME, HOME_OG_IMAGE_URL } from "@/lib/constants";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -69,13 +70,15 @@ export default function RootLayout({
       <body className={`${inter.className} bg-white text-black dark:bg-neutral-900 dark:text-neutral-100`} suppressHydrationWarning>
         <GCScript siteUrl="https://joshuadanpeterson.goatcounter.com/count" />
         <TitleProvider defaultTitle={metadata.title as string}>
-          <div>
-            <Container>
-              <Navbar />
-            </Container>
-          </div>
-          <div className="min-h-screen">{children}</div>
-          <Footer />
+          <ThemeProvider>
+            <div>
+              <Container>
+                <Navbar />
+              </Container>
+            </div>
+            <div className="min-h-screen">{children}</div>
+            <Footer />
+          </ThemeProvider>
         </TitleProvider>
         <script
           dangerouslySetInnerHTML={{
