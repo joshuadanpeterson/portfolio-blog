@@ -10,6 +10,7 @@ import {
   faInstagram,
   faLinkedin,
 } from "@fortawesome/free-brands-svg-icons";
+import { siSubstack } from "simple-icons";
 
 export default function Footer() {
   return (
@@ -33,21 +34,17 @@ export default function Footer() {
               className="text-gray-600 hover:text-gray-800"
               aria-label="Substack"
             >
-              {/* Bootstrap Icons: Substack (inlined) */}
+              {/* Simple Icons: Substack official glyph (inline path) */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="1.75em"
                 height="1.75em"
                 fill="currentColor"
-                viewBox="0 0 16 16"
-                className="bi bi-substack"
+                viewBox="0 0 24 24"
                 aria-hidden="true"
                 focusable="false"
               >
-                {/* This approximates the Bootstrap Icons Substack glyph with three horizontal bars */}
-                <rect x="2" y="3" width="12" height="2" rx="0.5" />
-                <rect x="2" y="7" width="12" height="2" rx="0.5" />
-                <rect x="2" y="11" width="12" height="2" rx="0.5" />
+                <path d={siSubstack.path} />
               </svg>
             </a>
             <a

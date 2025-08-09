@@ -37,7 +37,9 @@
     "@types/react": "^19.0.12",
     "@types/react-dom": "^19.0.4",
     "autoprefixer": "^10.0.1",
+    "bootstrap-icons": "^1.13.1",
     "postcss": "^8",
+    "simple-icons": "^15.9.0",
     "tailwindcss": "^3.3.0",
     "typescript": "^5"
   }
