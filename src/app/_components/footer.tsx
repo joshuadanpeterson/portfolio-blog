@@ -24,7 +24,7 @@ export default function Footer() {
               href="https://substack.com/@joshuadanpeterson"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 rounded-md text-gray-600 hover:text-[#FF6719] hover:bg-neutral-100 focus:outline-none focus:ring-2 focus:ring-sky-400/50 align-middle"
+className="p-2 rounded-md text-gray-600 dark:text-neutral-300 hover:text-[#FF6719] hover:bg-neutral-100 dark:hover:bg-neutral-800 visited:text-inherit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50 align-middle transition-colors duration-150 motion-reduce:transition-none"
               aria-label="Substack"
               title="Substack"
             >
@@ -45,7 +45,7 @@ export default function Footer() {
               href="https://medium.com/@joshpeterson"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 rounded-md text-gray-600 hover:text-[#00AB6C] hover:bg-neutral-100 focus:outline-none focus:ring-2 focus:ring-sky-400/50 align-middle"
+className="p-2 rounded-md text-gray-600 dark:text-neutral-300 hover:text-[#00AB6C] hover:bg-neutral-100 dark:hover:bg-neutral-800 visited:text-inherit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50 align-middle transition-colors duration-150 motion-reduce:transition-none"
               aria-label="Medium"
               title="Medium"
             >
@@ -55,7 +55,7 @@ export default function Footer() {
               href="https://x.com/jdpeterson"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 rounded-md text-gray-600 hover:text-black hover:bg-neutral-100 focus:outline-none focus:ring-2 focus:ring-sky-400/50 align-middle"
+className="p-2 rounded-md text-gray-600 dark:text-neutral-300 hover:text-black hover:bg-neutral-100 dark:hover:bg-neutral-800 visited:text-inherit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50 align-middle transition-colors duration-150 motion-reduce:transition-none"
               aria-label="X"
               title="X (Twitter)"
             >
@@ -75,7 +75,7 @@ export default function Footer() {
               href="https://linkedin.com/in/joshuadanpeterson"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 rounded-md text-gray-600 hover:text-[#0A66C2] hover:bg-neutral-100 focus:outline-none focus:ring-2 focus:ring-sky-400/50 align-middle"
+className="p-2 rounded-md text-gray-600 dark:text-neutral-300 hover:text-[#0A66C2] hover:bg-neutral-100 dark:hover:bg-neutral-800 visited:text-inherit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50 align-middle transition-colors duration-150 motion-reduce:transition-none"
               aria-label="LinkedIn"
               title="LinkedIn"
             >
@@ -85,7 +85,7 @@ export default function Footer() {
               href="https://instagram.com/chromaticera"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 rounded-md text-gray-600 hover:text-[#E4405F] hover:bg-neutral-100 focus:outline-none focus:ring-2 focus:ring-sky-400/50 align-middle"
+className="p-2 rounded-md text-gray-600 dark:text-neutral-300 hover:text-[#E4405F] hover:bg-neutral-100 dark:hover:bg-neutral-800 visited:text-inherit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50 align-middle transition-colors duration-150 motion-reduce:transition-none"
               aria-label="Instagram"
               title="Instagram"
             >
