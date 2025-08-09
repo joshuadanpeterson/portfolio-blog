@@ -15,7 +15,7 @@ const SUBSTACK_PATH = "M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 1
 
 export default function Footer() {
   return (
-    <footer className="bg-neutral-50 border-t border-neutral-200">
+    <footer className="bg-neutral-50 dark:bg-neutral-900 border-t border-neutral-200 dark:border-neutral-800">
       <Container>
         <div className="flex flex-col lg:flex-row items-center justify-between py-4">
           <div className="flex items-center gap-4">
@@ -65,7 +65,7 @@ className="p-2 rounded-md text-gray-600 dark:text-neutral-300 hover:text-black h
               href="https://github.com/joshuadanpeterson"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 rounded-md text-gray-600 hover:text-black hover:bg-neutral-100 focus:outline-none focus:ring-2 focus:ring-sky-400/50 align-middle"
+              className="p-2 rounded-md text-gray-600 dark:text-neutral-300 hover:text-black hover:bg-neutral-100 dark:hover:bg-neutral-800 visited:text-inherit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50 align-middle transition-colors duration-150 motion-reduce:transition-none"
               aria-label="GitHub"
               title="GitHub"
             >
@@ -92,7 +92,7 @@ className="p-2 rounded-md text-gray-600 dark:text-neutral-300 hover:text-[#E4405
               <FontAwesomeIcon icon={faInstagram} size="2x" className="align-middle" />
             </a>
           </div>
-          <div className="mt-4 lg:mt-0 text-gray-600">
+          <div className="mt-4 lg:mt-0 text-gray-600 dark:text-neutral-400">
             © {new Date().getFullYear()} Josh Peterson
           </div>
         </div>

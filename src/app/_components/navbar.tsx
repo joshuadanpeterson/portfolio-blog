@@ -18,13 +18,10 @@ const Navbar: FC = () => {
   return (
     <nav className="flex-col md:flex-row flex items-center md:justify-between mt-16 mb-16 md:mb-12">
       <div className="flex items-center justify-between w-full md:w-auto">
-        <div className="flex items-center">
+      <div className="flex items-center">
           <h1 className="text-5xl md:text-8xl font-bold tracking-tighter leading-tight md:pr-8">
             josh
           </h1>
-          <div className="hidden md:block">
-            <ThemeToggle />
-          </div>
         </div>
         <button className="text-black dark:text-white md:hidden" onClick={toggleMenu}>
           <svg
@@ -102,6 +99,10 @@ const Navbar: FC = () => {
           >
             Contact
           </Link>
+        </li>
+        {/* Desktop-only theme toggle to the right of Contact */}
+        <li className="hidden md:block md:ml-2">
+          <ThemeToggle />
         </li>
       </ul>
       {isOpen && (
