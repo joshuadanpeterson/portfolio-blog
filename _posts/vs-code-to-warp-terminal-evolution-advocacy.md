@@ -1,7 +1,7 @@
 ---
 title: vs-code-to-warp-terminal-evolution-advocacy
 date_created: 2025-06-25 12:22:27
-date_modified: 2025-08-03 09:37:23
+date_modified: 2025-08-11 02:14:29
 tags: 
 favorite: 
 id: 01JBTX108VXRC8Z8Y3Q1EABXWD
