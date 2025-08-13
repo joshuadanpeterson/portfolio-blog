@@ -48,18 +48,17 @@ const Navbar: FC = () => {
             <NavigationMenuList>
               {links.map((l) => (
                 <NavigationMenuItem key={l.href}>
-                  <Link href={l.href} legacyBehavior passHref>
-                    <NavigationMenuLink
-                      className={clsx(
-                        "px-3 py-2 rounded-md text-lg underline underline-offset-2 transition-colors",
-                        pathname === l.href
-                          ? "bg-accent text-accent-foreground"
-                          : "hover:bg-accent hover:text-accent-foreground",
-                      )}
-                    >
-                      {l.label}
-                    </NavigationMenuLink>
-                  </Link>
+                  <NavigationMenuLink
+                    asChild
+                    className={clsx(
+                      "px-3 py-2 rounded-md text-lg underline underline-offset-2 transition-colors",
+                      pathname === l.href
+                        ? "bg-accent text-accent-foreground"
+                        : "hover:bg-accent hover:text-accent-foreground",
+                    )}
+                  >
+                    <Link href={l.href}>{l.label}</Link>
+                  </NavigationMenuLink>
                 </NavigationMenuItem>
               ))}
             </NavigationMenuList>
