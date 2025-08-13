@@ -18,14 +18,19 @@ const Navbar: FC = () => {
   return (
     <nav className="flex-col md:flex-row flex items-center md:justify-between mt-16 mb-16 md:mb-12 dark:text-white">
       <div className="flex items-center justify-between w-full md:w-auto">
-      <div className="flex items-center">
+        <div className="flex items-center">
           <h1 className="text-5xl md:text-8xl font-bold tracking-tighter leading-tight md:pr-8 dark:text-white">
             josh
           </h1>
         </div>
-        <button className="text-black dark:text-white md:hidden" onClick={toggleMenu}>
+        <button
+          className="text-black dark:text-white md:hidden"
+          onClick={toggleMenu}
+          aria-label="Toggle navigation"
+          type="button"
+        >
           <svg
-            className="w-6 h-6"
+            className="w-6 h-6 text-black dark:text-white"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -36,13 +41,11 @@ const Navbar: FC = () => {
               strokeLinejoin="round"
               strokeWidth="2"
               d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
-            ></path>
+            />
           </svg>
         </button>
       </div>
-      ul
-        className={`flex-col md:flex-row flex md:space-x-4 text-lg mt-5 md:pl-8 ${isOpen ? "block" : "hidden"} md:flex`}
-      
+      <ul className={`flex-col md:flex-row flex md:space-x-4 text-lg mt-5 md:pl-8 ${isOpen ? "block" : "hidden"} md:flex`}>
         <li>
           <Link
             href="/"
@@ -65,8 +68,6 @@ const Navbar: FC = () => {
             Portfolio
           </Link>
         </li>
-
-        {/* New Blog Link */}
         <li>
           <Link
             href="/posts"
@@ -100,7 +101,6 @@ const Navbar: FC = () => {
             Contact
           </Link>
         </li>
-        {/* Desktop-only theme toggle to the right of Contact */}
         <li className="hidden md:block md:ml-2">
           <ThemeToggle />
         </li>
