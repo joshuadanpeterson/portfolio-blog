@@ -1,120 +1,112 @@
 // src/app/_components/navbar.tsx
 "use client";
 
-import { FC, useState } from "react";
+import { FC } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
+import { Menu } from "lucide-react";
 import ThemeToggle from "@/app/_components/ThemeToggle";
-import { useTheme } from "@/context/ThemeContext";
+import { Button } from "@/components/ui/button";
+import {
+  NavigationMenu,
+  NavigationMenuList,
+  NavigationMenuItem,
+  NavigationMenuLink,
+} from "@/components/ui/navigation-menu";
+import {
+  Sheet,
+  SheetTrigger,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetClose,
+} from "@/components/ui/sheet";
 
 const Navbar: FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
+  const links = [
+    { href: "/", label: "Home" },
+    { href: "/posts", label: "Blog" },
+    { href: "/portfolio", label: "Portfolio" },
+    { href: "/about", label: "About" },
+    { href: "/contact", label: "Contact" },
+  ];
 
   return (
-    <nav className="flex-col md:flex-row flex items-center md:justify-between mt-16 mb-16 md:mb-12 dark:text-white">
-      <div className="flex items-center justify-between w-full md:w-auto">
+    <header className="sticky top-0 z-40 w-full bg-transparent">
+      <div className="flex items-center justify-between mt-16 mb-16 md:mb-12">
         <div className="flex items-center">
-          <h1 className="text-5xl md:text-8xl font-bold tracking-tighter leading-tight md:pr-8 dark:text-white">
+          <h1 className="text-5xl md:text-8xl font-bold tracking-tighter leading-tight md:pr-8 text-foreground">
             josh
           </h1>
         </div>
-        <button
-          className="text-black dark:text-white md:hidden"
-          onClick={toggleMenu}
-          aria-label="Toggle navigation"
-          type="button"
-        >
-          <svg
-            className="w-6 h-6"
-            style={{ color: isDark ? "#ffffff" : "#000000" }}
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
-            />
-          </svg>
-        </button>
-      </div>
-      <ul className={`flex-col md:flex-row flex md:space-x-4 text-lg mt-5 md:pl-8 ${isOpen ? "block" : "hidden"} md:flex`}>
-        <li>
-          <Link
-            href="/"
-            className={clsx(
-              "font-semibold underline underline-offset-2 transition-colors duration-200 hover:text-sky-700 dark:hover:text-white",
-              { "underline decoration-2": pathname === "/" },
-            )}
-          >
-            Home
-          </Link>
-        </li>
-        <li>
-          <Link
-            href="/portfolio"
-            className={clsx(
-              "font-semibold underline underline-offset-2 transition-colors duration-200 hover:text-sky-700 dark:hover:text-white",
-              { "underline decoration-2": pathname === "/portfolio" },
-            )}
-          >
-            Portfolio
-          </Link>
-        </li>
-        <li>
-          <Link
-            href="/posts"
-            className={clsx(
-              "font-semibold underline underline-offset-2 transition-colors duration-200 hover:text-sky-700 dark:hover:text-white",
-              { "underline decoration-2": pathname === "/posts" },
-            )}
-          >
-            Blog
-          </Link>
-        </li>
-        <li>
-          <Link
-            href="/about"
-            className={clsx(
-              "font-semibold underline underline-offset-2 transition-colors duration-200 hover:text-sky-700 dark:hover:text-white",
-              { "underline decoration-2": pathname === "/about" },
-            )}
-          >
-            About
-          </Link>
-        </li>
-        <li>
-          <Link
-            href="/contact"
-            className={clsx(
-              "font-semibold underline underline-offset-2 transition-colors duration-200 hover:text-sky-700 dark:hover:text-white",
-              { "underline decoration-2": pathname === "/contact" },
-            )}
-          >
-            Contact
-          </Link>
-        </li>
-        <li className="hidden md:block md:ml-2">
-          <ThemeToggle />
-        </li>
-      </ul>
-      {isOpen && (
-        <div className="mt-4 md:hidden w-full">
-          <ThemeToggle />
+
+        {/* Desktop nav */}
+        <nav className="hidden md:block">
+          <NavigationMenu>
+            <NavigationMenuList>
+              {links.map((l) => (
+                <NavigationMenuItem key={l.href}>
+                  <Link href={l.href} legacyBehavior passHref>
+                    <NavigationMenuLink
+                      className={clsx(
+                        "px-3 py-2 rounded-md text-lg underline underline-offset-2 transition-colors",
+                        pathname === l.href
+                          ? "bg-accent text-accent-foreground"
+                          : "hover:bg-accent hover:text-accent-foreground",
+                      )}
+                    >
+                      {l.label}
+                    </NavigationMenuLink>
+                  </Link>
+                </NavigationMenuItem>
+              ))}
+            </NavigationMenuList>
+          </NavigationMenu>
+        </nav>
+
+        {/* Right controls */}
+        <div className="flex items-center gap-2">
+          <div className="hidden md:block">
+            <ThemeToggle />
+          </div>
+          {/* Mobile menu */}
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" className="md:hidden" aria-label="Open menu">
+                <Menu className="h-6 w-6" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="bg-background text-foreground">
+              <SheetHeader>
+                <SheetTitle>Menu</SheetTitle>
+              </SheetHeader>
+              <nav className="mt-4 flex flex-col gap-3">
+                {links.map((l) => (
+                  <SheetClose asChild key={l.href}>
+                    <Link
+                      href={l.href}
+                      className={clsx(
+                        "px-2 py-2 rounded-md text-lg underline underline-offset-2",
+                        pathname === l.href
+                          ? "bg-accent text-accent-foreground"
+                          : "hover:bg-accent hover:text-accent-foreground",
+                      )}
+                    >
+                      {l.label}
+                    </Link>
+                  </SheetClose>
+                ))}
+                <div className="mt-2">
+                  <ThemeToggle />
+                </div>
+              </nav>
+            </SheetContent>
+          </Sheet>
         </div>
-      )}
-    </nav>
+      </div>
+    </header>
   );
 };
 
