@@ -4,6 +4,10 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import TitleUpdater from "@/app/_components/title-updater";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -51,14 +55,10 @@ const ContactPage = () => {
         </h1>
         <form className="w-full max-w-lg mt-5" onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label
-              className="block text-gray-700 dark:text-neutral-300 text-sm font-bold mb-2"
-              htmlFor="name"
-            >
-              Name:
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-neutral-200 dark:bg-neutral-800 dark:border-neutral-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-neutral-600 focus:border-transparent"
+            <Label htmlFor="name" className="mb-2 block text-sm font-medium">
+              Name
+            </Label>
+            <Input
               id="name"
               type="text"
               name="name"
@@ -68,14 +68,10 @@ const ContactPage = () => {
             />
           </div>
           <div className="mb-4">
-            <label
-              className="block text-gray-700 dark:text-neutral-300 text-sm font-bold mb-2"
-              htmlFor="email"
-            >
-              Email:
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-neutral-200 dark:bg-neutral-800 dark:border-neutral-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-neutral-600 focus:border-transparent"
+            <Label htmlFor="email" className="mb-2 block text-sm font-medium">
+              Email
+            </Label>
+            <Input
               id="email"
               type="email"
               name="email"
@@ -85,14 +81,10 @@ const ContactPage = () => {
             />
           </div>
           <div className="mb-4">
-            <label
-              className="block text-gray-700 dark:text-neutral-300 text-sm font-bold mb-2"
-              htmlFor="subject"
-            >
-              Subject:
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-neutral-200 dark:bg-neutral-800 dark:border-neutral-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-neutral-600 focus:border-transparent"
+            <Label htmlFor="subject" className="mb-2 block text-sm font-medium">
+              Subject
+            </Label>
+            <Input
               id="subject"
               type="text"
               name="subject"
@@ -102,28 +94,25 @@ const ContactPage = () => {
             />
           </div>
           <div className="mb-6">
-            <label
-              className="block text-gray-700 dark:text-neutral-300 text-sm font-bold mb-2"
-              htmlFor="message"
-            >
-              Message:
-            </label>
-            <textarea
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-neutral-200 dark:bg-neutral-800 dark:border-neutral-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-neutral-600 focus:border-transparent h-32"
+            <Label htmlFor="message" className="mb-2 block text-sm font-medium">
+              Message
+            </Label>
+            <Textarea
               id="message"
               name="message"
               value={formData.message}
               onChange={handleChange}
               required
-            ></textarea>
+              rows={6}
+            />
           </div>
           <div className="flex items-center justify-between">
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+							<Button
               type="submit"
+              className="min-w-[6rem] shadow-md hover:shadow-lg transition-shadow"
             >
               Send
-            </button>
+            </Button>
           </div>
         </form>
       </div>

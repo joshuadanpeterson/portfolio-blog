@@ -28,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta
@@ -67,7 +67,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/favicon/apple-icon.png" />
         <link rel="manifest" href="/favicon/manifest.json" />
       </head>
-      <body className={`${inter.className} bg-white text-black dark:bg-neutral-900 dark:text-neutral-100`} suppressHydrationWarning>
+    <body className={`${inter.className} bg-background text-foreground`} suppressHydrationWarning>
         <GCScript siteUrl="https://joshuadanpeterson.goatcounter.com/count" />
         <TitleProvider defaultTitle={metadata.title as string}>
           <ThemeProvider>

@@ -8,6 +8,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { fetchRSSFeeds, FeedItem } from "@/lib/rss";
 import TitleUpdater from "@/app/_components/title-updater";
+import { Input } from "@/components/ui/input";
 
 // Interface for your local post format
 interface Post {
@@ -304,17 +305,16 @@ export default function BlogPage() {
 
       <div className="relative w-full max-w-md mb-12" ref={searchRef}>
         <form onSubmit={handleFormSubmit} className="relative">
-          <input
+          <Input
             ref={inputRef}
             type="text"
             value={value}
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
             placeholder="Search blog posts..."
-            className="border border-gray-300 p-2 w-full rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-shadow duration-200"
           />
           {suggestions.length > 0 && (
-            <ul className="absolute w-full bg-white border border-gray-300 rounded-b shadow-lg z-10">
+            <ul className="absolute w-full bg-white dark:bg-neutral-900 border border-gray-300 dark:border-neutral-800 rounded-b shadow-lg z-10">
               {suggestions.map((currentPost, index) => (
                 <li
                   key={
@@ -322,8 +322,8 @@ export default function BlogPage() {
                     ("slug" in currentPost ? currentPost.slug : "")
                   }
                   onClick={() => handleSuggestionClick(currentPost)}
-                  className={`p-2 cursor-pointer hover:bg-gray-100 ${
-                    index === selectedIndex ? "bg-gray-200" : ""
+                  className={`p-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-neutral-800 ${
+                    index === selectedIndex ? "bg-gray-200 dark:bg-neutral-700" : ""
                   }`}
                 >
                   {currentPost.title}
@@ -357,8 +357,8 @@ export default function BlogPage() {
                     )} // Ensure no null errors
                   />
                 ) : (
-                  <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                    <span className="text-gray-400">No image available</span>
+                  <div className="w-full h-full bg-gray-200 dark:bg-neutral-800 flex items-center justify-center">
+                    <span className="text-gray-400 dark:text-neutral-500">No image available</span>
                   </div>
                 )}
               </div>
@@ -368,11 +368,11 @@ export default function BlogPage() {
                     currentPost.link ||
                     `/posts/${"slug" in currentPost ? currentPost.slug : ""}`
                   }
-                  className="text-xl font-semibold text-blue-600 hover:underline"
+                  className="text-xl font-semibold text-blue-600 dark:text-sky-400 hover:underline dark:hover:text-sky-300"
                 >
                   {currentPost.title}
                 </Link>
-                <p className="text-gray-500 text-sm">
+                <p className="text-gray-500 dark:text-neutral-400 text-sm">
                   {new Date(
                     "pubDate" in currentPost && currentPost.pubDate
                       ? currentPost.pubDate
@@ -381,7 +381,7 @@ export default function BlogPage() {
                         : new Date().toISOString(), // Fallback to current date if neither exists
                   ).toLocaleDateString()}
                 </p>
-                <p className="text-gray-600 mt-2 line-clamp-3">
+                <p className="text-gray-600 dark:text-neutral-300 mt-2 line-clamp-3">
                   {getExcerpt(currentPost)}
                 </p>
               </div>

@@ -38,7 +38,7 @@ export function HeroPost({
           <h3 className="mb-4 text-4xl lg:text-5xl leading-tight">
             <Link
               href={`/posts/${slug}`}
-              className="text-black dark:text-neutral-200 visited:text-purple-600 dark:visited:text-purple-400 hover:underline hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 motion-reduce:transition-none"
+              className="text-black dark:text-white visited:text-purple-600 dark:visited:text-purple-400 hover:underline hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 motion-reduce:transition-none"
             >
               {title}
             </Link>
@@ -48,7 +48,7 @@ export function HeroPost({
           </div>
         </div>
         <div>
-          <p className="text-lg leading-relaxed mb-4 text-gray-700 dark:text-neutral-300">
+          <p className="text-lg leading-relaxed mb-4 text-gray-700 dark:text-white/80">
             {excerpt}
           </p>
           {author && <Avatar name={author.name} picture={author.picture} />}

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { fetchPinnedRepos } from "@/lib/github";
 import Container from "@/app/_components/container"; // Ensure this path is correct
 import TitleUpdater from "@/app/_components/title-updater";
+import { Card } from "@/components/ui/card";
 
 interface Repository {
   name: string;
@@ -41,24 +42,24 @@ const PortfolioPage = () => {
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
           {repos.map((repo) => (
-            <div key={repo.name} className="border rounded-lg p-4 shadow-lg">
+            <Card key={repo.name} className="p-4 shadow-lg">
               <h2 className="text-2xl font-bold">{repo.name}</h2>
-              <p className="mt-2 text-gray-600">{repo.description}</p>
+              <p className="mt-2 text-gray-600 dark:text-neutral-400">{repo.description}</p>
               <div className="mt-4">
                 <a
                   href={repo.url}
-                  className="text-blue-500 hover:underline"
+                  className="text-blue-500 dark:text-sky-400 hover:underline dark:hover:text-sky-300"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   View Repository
                 </a>
               </div>
-              <div className="mt-4 flex items-center justify-between text-gray-600">
+              <div className="mt-4 flex items-center justify-between text-gray-600 dark:text-neutral-400">
                 <span>⭐ {repo.stargazerCount}</span>
                 <span>🍴 {repo.forkCount}</span>
               </div>
-            </div>
+            </Card>
           ))}
         </div>
       </div>
