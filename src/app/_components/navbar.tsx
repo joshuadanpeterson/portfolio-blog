@@ -35,41 +35,43 @@ const Navbar: FC = () => {
 
   return (
     <header className="sticky top-0 z-40 w-full bg-transparent">
-      <div className="flex items-center justify-between mt-16 mb-16 md:mb-12">
+      <div className="flex items-center mt-16 mb-16 md:mb-12">
         <div className="flex items-center">
           <h1 className="text-5xl md:text-8xl font-bold tracking-tighter leading-tight md:pr-8 text-foreground">
             josh
           </h1>
         </div>
 
-        {/* Desktop nav */}
-        <nav className="hidden md:block">
-          <NavigationMenu>
-            <NavigationMenuList>
-              {links.map((l) => (
-                <NavigationMenuItem key={l.href}>
-                  <NavigationMenuLink
-                    asChild
-                    className={clsx(
-                      "px-3 py-2 rounded-md text-lg underline underline-offset-2 transition-colors",
-                      pathname === l.href
-                        ? "bg-accent text-accent-foreground"
-                        : "hover:bg-accent hover:text-accent-foreground",
-                    )}
-                  >
-                    <Link href={l.href}>{l.label}</Link>
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-              ))}
-            </NavigationMenuList>
-          </NavigationMenu>
-        </nav>
+        {/* Right-aligned nav and controls */}
+        <div className="ml-auto flex items-center gap-3">
+          {/* Desktop nav */}
+          <nav className="hidden md:block">
+            <NavigationMenu>
+              <NavigationMenuList>
+                {links.map((l) => (
+                  <NavigationMenuItem key={l.href}>
+                    <NavigationMenuLink
+                      asChild
+                      className={clsx(
+                        "px-3 py-2 rounded-md text-lg underline underline-offset-2 transition-colors",
+                        pathname === l.href
+                          ? "bg-accent text-accent-foreground"
+                          : "hover:bg-accent hover:text-accent-foreground",
+                      )}
+                    >
+                      <Link href={l.href}>{l.label}</Link>
+                    </NavigationMenuLink>
+                  </NavigationMenuItem>
+                ))}
+              </NavigationMenuList>
+            </NavigationMenu>
+          </nav>
 
-        {/* Right controls */}
-        <div className="flex items-center gap-2">
+          {/* Theme toggle (desktop) */}
           <div className="hidden md:block">
             <ThemeToggle />
           </div>
+
           {/* Mobile menu */}
           <Sheet>
             <SheetTrigger asChild>
