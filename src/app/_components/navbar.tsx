@@ -40,9 +40,9 @@ const Navbar: FC = () => {
           </svg>
         </button>
       </div>
-      <ul
+      ul
         className={`flex-col md:flex-row flex md:space-x-4 text-lg mt-5 md:pl-8 ${isOpen ? "block" : "hidden"} md:flex`}
-      >
+      
         <li>
           <Link
             href="/"
