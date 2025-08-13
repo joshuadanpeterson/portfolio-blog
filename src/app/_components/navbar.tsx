@@ -6,10 +6,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import ThemeToggle from "@/app/_components/ThemeToggle";
+import { useTheme } from "@/context/ThemeContext";
 
 const Navbar: FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -30,7 +33,8 @@ const Navbar: FC = () => {
           type="button"
         >
           <svg
-            className="w-6 h-6 text-black dark:text-white"
+            className="w-6 h-6"
+            style={{ color: isDark ? "#ffffff" : "#000000" }}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
