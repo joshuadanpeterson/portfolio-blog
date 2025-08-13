@@ -35,10 +35,10 @@ export function HeroPost({
       </div>
       <div className="md:grid md:grid-cols-2 md:gap-x-16 lg:gap-x-8 mb-20 md:mb-28">
         <div>
-          <h3 className="mb-4 text-4xl lg:text-5xl leading-tight">
+          <h3 className="mb-4 text-4xl lg:text-5xl leading-tight dark:text-white">
             <Link
               href={`/posts/${slug}`}
-              className="text-black dark:text-white visited:text-purple-600 dark:visited:text-purple-400 hover:underline hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 motion-reduce:transition-none"
+              className="text-black dark:text-white visited:text-purple-600 dark:visited:text-white hover:underline hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 motion-reduce:transition-none"
             >
               {title}
             </Link>
