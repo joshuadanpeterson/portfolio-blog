@@ -28,7 +28,7 @@ export function PostPreview({
       <div className="mb-5">
         <CoverImage slug={slug} title={title} src={coverImage} />
       </div>
-      ch3 className="text-3xl mb-3 leading-snug" style={{ color: "hsl(var(--foreground))" }}e
+      <h3 className="text-3xl mb-3 leading-snug" style={{ color: "hsl(var(--foreground))" }}>
         <Link
           href={`/posts/${slug}`}
           className="text-inherit visited:text-inherit hover:underline hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 motion-reduce:transition-none"

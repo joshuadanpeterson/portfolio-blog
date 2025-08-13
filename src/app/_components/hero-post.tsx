@@ -35,7 +35,7 @@ export function HeroPost({
       </div>
       <div className="md:grid md:grid-cols-2 md:gap-x-16 lg:gap-x-8 mb-20 md:mb-28">
         <div>
-          ch3 className="mb-4 text-4xl lg:text-5xl leading-tight" style={{ color: "hsl(var(--foreground))" }}e
+          <h3 className="mb-4 text-4xl lg:text-5xl leading-tight" style={{ color: "hsl(var(--foreground))" }}>
             <Link
               href={`/posts/${slug}`}
               className="text-inherit visited:text-inherit hover:underline hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 motion-reduce:transition-none"
