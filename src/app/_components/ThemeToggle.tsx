@@ -17,7 +17,18 @@ export default function ThemeToggle() {
       {isDark ? (
         <Sun size={18} className="text-white" aria-hidden="true" />
       ) : (
-        <Moon size={18} className="text-black dark:text-white" aria-hidden="true" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          width="18"
+          height="18"
+          fill="currentColor"
+          className="text-black dark:text-white"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path d="M21.752 15.002A9 9 0 0 1 9 2.248 9.002 9.002 0 1 0 21.752 15.002Zm-2.104 1.695A7 7 0 1 1 11.303 3.35a9 9 0 0 0 8.345 13.347Z" />
+        </svg>
       )}
     </button>
   );
