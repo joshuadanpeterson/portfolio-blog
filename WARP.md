@@ -3,36 +3,56 @@
 This file provides guidance to WARP (warp.dev) when working with code in this repository.
 
 Project overview
-- Next.js (App Router, TypeScript) personal blog derived from Vercel’s blog-starter. Content is Markdown in _posts with front matter parsed at build/runtime server-side. Rendering uses components under src/app with dynamic routing for posts.
-- Styling: Tailwind CSS (postcss/autoprefixer). Code highlighting via Prism CSS with Markdown-to-HTML done server-side and highlighting completed client-side.
+- Next.js (App Router + Pages Router hybrid) personal blog derived from Vercel's blog-starter
+- Mixed routing: App Router for UI (src/app), Pages Router for APIs (src/pages/api)
+- Content: Markdown files in _posts with front matter, parsed at build/runtime server-side
+- Styling: Tailwind CSS + ShadCN UI components (src/components/ui)
+- Code highlighting: Prism.js applied client-side after markdown-to-HTML conversion
+- External content: RSS feed aggregation from Medium, Substack, and custom feeds
 
 Common commands
 - Install deps (npm is implied by package-lock.json):
   - npm install
 - Dev server
   - npm run dev
+  - npm run dev -- -p 3001  # Use different port
 - Build
   - npm run build
+  - rm -rf .next && npm run build  # Clean build
 - Start production server (after build)
   - npm run start
+- Type checking
+  - npx tsc --noEmit
 - Lint and Test
   - No lint or test scripts are currently defined in package.json.
   - If you want linting (recommended for Next.js):
     - Scripts to add: "lint": "next lint"
-    - Dev deps (choose your pkg mgr):
-      - npm i -D eslint eslint-config-next
+    - Dev deps: npm i -D eslint eslint-config-next
   - If you want tests (example with Vitest):
     - Scripts to add: "test": "vitest run", "test:watch": "vitest"
     - Dev deps: npm i -D vitest @vitest/coverage-v8
-    - Run a single test (once configured): npm run test -- path/to/file.test.ts
+    - Run a single test: npm run test -- path/to/file.test.ts
+
+Environment setup
+- Create .env file with required variables:
+  - GITHUB_ACCESS_TOKEN: GitHub personal access token for fetching pinned repos (portfolio page)
+  - EMAIL_USER: Gmail address for contact form
+  - EMAIL_PASS: Gmail app password (not regular password) for SMTP
+- Without these, specific features will fail silently - homepage won't show pinned repos, contact form won't send emails
 
 High-level architecture
 - Content source
   - _posts/*.md holds blog posts with front matter. The filename determines the canonical slug used in routes and linking, not the H1 title.
 - Content loading and slug strategy
   - src/lib/api.ts reads _posts using fs + gray-matter. It normalizes Dropbox symlink vs CloudStorage paths to avoid path issues on macOS.
-  - It derives the URL slug from the filename (filenameToSlug), carefully handling URL encoding and potential double-encoding; when given a slug, it resolves back to a filename (slugToFilename) with safe fallbacks.
+  - URL slug encoding: filenameToSlug() converts filenames to URL-safe slugs, detecting and preventing double-encoding (checks for %25 and % patterns)
+  - Slug decoding: slugToFilename() safely decodes URLs back to filenames, handling double-encoded slugs (%2520 → space) with fallbacks
+  - Special characters in filenames (apostrophes, spaces, unicode) are preserved through encode/decode cycle
   - getAllPosts() filters for .md, maps through getPostBySlug(), augments with extracted heading, and sorts by date descending.
+- Dropbox path normalization (macOS specific)
+  - getPostsDirectory() handles two scenarios: symlink path (/Users/*/Dropbox) vs actual path (/Users/*/Library/CloudStorage/Dropbox)
+  - Automatically detects and normalizes paths to prevent "posts not found" errors
+  - If posts aren't loading, check process.cwd() output and _posts directory location
 - Markdown pipeline
   - src/lib/markdownToHtml.ts uses remark + remark-gfm + remark-html to convert Markdown to HTML. It then:
     - Normalizes <pre><code> blocks for Prism client-side highlighting
