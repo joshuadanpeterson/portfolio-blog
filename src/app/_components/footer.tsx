@@ -16,7 +16,7 @@ const SUBSTACK_PATH = "M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 1
 
 export default function Footer() {
   const { theme } = useTheme();
-  const [isGithubHovered, setIsGithubHovered] = React.useState(false);
+  const [hoveredIcon, setHoveredIcon] = React.useState<string | null>(null);
   
   return (
     <footer className="bg-background text-foreground border-t border-border">
@@ -28,9 +28,11 @@ export default function Footer() {
               href="https://substack.com/@joshuadanpeterson"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 rounded-md text-neutral-700 dark:text-neutral-300 hover:text-[#FF6719] dark:hover:text-[#FF6719] hover:bg-neutral-100 dark:hover:bg-neutral-800 visited:text-inherit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50 align-middle transition-colors duration-150 motion-reduce:transition-none"
+              className="p-2 rounded-md hover:bg-neutral-100 dark:hover:bg-neutral-800 visited:text-inherit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50 align-middle transition-colors duration-150 motion-reduce:transition-none"
               aria-label="Substack"
               title="Substack"
+              onMouseEnter={() => setHoveredIcon('substack')}
+              onMouseLeave={() => setHoveredIcon(null)}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -40,7 +42,12 @@ export default function Footer() {
                 viewBox="0 0 24 24"
                 aria-hidden="true"
                 focusable="false"
-                className="align-middle"
+                className="align-middle transition-colors duration-150"
+                style={{ 
+                  color: hoveredIcon === 'substack'
+                    ? '#FF6719' // Substack orange on hover
+                    : (theme === 'dark' ? 'white' : 'black')
+                }}
               >
                 <path d={SUBSTACK_PATH} />
               </svg>
@@ -49,21 +56,43 @@ export default function Footer() {
               href="https://medium.com/@joshpeterson"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 rounded-md text-neutral-700 dark:text-neutral-300 hover:text-[#00AB6C] dark:hover:text-[#00AB6C] hover:bg-neutral-100 dark:hover:bg-neutral-800 visited:text-inherit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50 align-middle transition-colors duration-150 motion-reduce:transition-none"
+              className="p-2 rounded-md hover:bg-neutral-100 dark:hover:bg-neutral-800 visited:text-inherit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50 align-middle transition-colors duration-150 motion-reduce:transition-none"
               aria-label="Medium"
               title="Medium"
+              onMouseEnter={() => setHoveredIcon('medium')}
+              onMouseLeave={() => setHoveredIcon(null)}
             >
-              <FontAwesomeIcon icon={faMedium} size="2x" className="align-middle" />
+              <FontAwesomeIcon 
+                icon={faMedium} 
+                size="2x" 
+                className="align-middle transition-colors duration-150" 
+                style={{ 
+                  color: hoveredIcon === 'medium'
+                    ? '#00AB6C' // Medium green on hover
+                    : (theme === 'dark' ? 'white' : 'black')
+                }}
+              />
             </a>
             <a
               href="https://x.com/jdpeterson"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 rounded-md text-neutral-700 dark:text-neutral-300 hover:text-black dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-800 visited:text-inherit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50 align-middle transition-colors duration-150 motion-reduce:transition-none"
+              className="p-2 rounded-md hover:bg-neutral-100 dark:hover:bg-neutral-800 visited:text-inherit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50 align-middle transition-colors duration-150 motion-reduce:transition-none"
               aria-label="X"
               title="X (Twitter)"
+              onMouseEnter={() => setHoveredIcon('x')}
+              onMouseLeave={() => setHoveredIcon(null)}
             >
-              <FontAwesomeIcon icon={faXTwitter} size="2x" className="align-middle" />
+              <FontAwesomeIcon 
+                icon={faXTwitter} 
+                size="2x" 
+                className="align-middle transition-colors duration-150" 
+                style={{ 
+                  color: hoveredIcon === 'x'
+                    ? (theme === 'dark' ? '#1DA1F2' : 'black') // Twitter blue in dark, black in light
+                    : (theme === 'dark' ? 'white' : 'black')
+                }}
+              />
             </a>
             <a
               href="https://github.com/joshuadanpeterson"
@@ -72,17 +101,17 @@ export default function Footer() {
               className="p-2 rounded-md hover:bg-neutral-100 dark:hover:bg-neutral-800 visited:text-inherit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50 align-middle transition-colors duration-150 motion-reduce:transition-none"
               aria-label="GitHub"
               title="GitHub"
-              onMouseEnter={() => setIsGithubHovered(true)}
-              onMouseLeave={() => setIsGithubHovered(false)}
+              onMouseEnter={() => setHoveredIcon('github')}
+              onMouseLeave={() => setHoveredIcon(null)}
             >
               <FontAwesomeIcon 
                 icon={faGithub} 
                 size="2x" 
                 className="align-middle transition-colors duration-150" 
                 style={{ 
-                  color: isGithubHovered 
-                    ? (theme === 'dark' ? 'black' : '#6b7280') // black on hover in dark, gray on hover in light
-                    : (theme === 'dark' ? 'white' : 'black')   // white in dark, black in light
+                  color: hoveredIcon === 'github'
+                    ? (theme === 'dark' ? '#6b7280' : '#6b7280') // gray on hover in both modes
+                    : (theme === 'dark' ? 'white' : 'black')     // white in dark, black in light
                 }}
               />
             </a>
@@ -90,21 +119,43 @@ export default function Footer() {
               href="https://linkedin.com/in/joshuadanpeterson"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 rounded-md text-neutral-700 dark:text-neutral-300 hover:text-[#0A66C2] dark:hover:text-[#0A66C2] hover:bg-neutral-100 dark:hover:bg-neutral-800 visited:text-inherit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50 align-middle transition-colors duration-150 motion-reduce:transition-none"
+              className="p-2 rounded-md hover:bg-neutral-100 dark:hover:bg-neutral-800 visited:text-inherit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50 align-middle transition-colors duration-150 motion-reduce:transition-none"
               aria-label="LinkedIn"
               title="LinkedIn"
+              onMouseEnter={() => setHoveredIcon('linkedin')}
+              onMouseLeave={() => setHoveredIcon(null)}
             >
-              <FontAwesomeIcon icon={faLinkedin} size="2x" className="align-middle" />
+              <FontAwesomeIcon 
+                icon={faLinkedin} 
+                size="2x" 
+                className="align-middle transition-colors duration-150" 
+                style={{ 
+                  color: hoveredIcon === 'linkedin'
+                    ? '#0A66C2' // LinkedIn blue on hover
+                    : (theme === 'dark' ? 'white' : 'black')
+                }}
+              />
             </a>
             <a
               href="https://instagram.com/chromaticera"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 rounded-md text-neutral-700 dark:text-neutral-300 hover:text-[#E4405F] dark:hover:text-[#E4405F] hover:bg-neutral-100 dark:hover:bg-neutral-800 visited:text-inherit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50 align-middle transition-colors duration-150 motion-reduce:transition-none"
+              className="p-2 rounded-md hover:bg-neutral-100 dark:hover:bg-neutral-800 visited:text-inherit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50 align-middle transition-colors duration-150 motion-reduce:transition-none"
               aria-label="Instagram"
               title="Instagram"
+              onMouseEnter={() => setHoveredIcon('instagram')}
+              onMouseLeave={() => setHoveredIcon(null)}
             >
-              <FontAwesomeIcon icon={faInstagram} size="2x" className="align-middle" />
+              <FontAwesomeIcon 
+                icon={faInstagram} 
+                size="2x" 
+                className="align-middle transition-colors duration-150" 
+                style={{ 
+                  color: hoveredIcon === 'instagram'
+                    ? '#E4405F' // Instagram pink on hover
+                    : (theme === 'dark' ? 'white' : 'black')
+                }}
+              />
             </a>
           </div>
           <div className="mt-4 lg:mt-0 text-gray-600 dark:text-neutral-400">
