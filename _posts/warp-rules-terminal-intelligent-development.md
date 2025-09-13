@@ -472,7 +472,7 @@ The terminal has always been powerful. With rules, it becomes personal.
 - [**ripgrep**](https://github.com/BurntSushi/ripgrep)
 - [**forgit**](https://github.com/wfxr/forgit)
 - [**lolcat**](https://github.com/busyloop/lolcat)
-- [**Model Context Protocol (MCP)**](https://modelcontext.dev)
+- [**Model Context Protocol (MCP)**](https://modelcontextprotocol.io/))
 - [**Obsidian**](https://obsidian.md)
 - [**Pieces for Developers**](https://pieces.app)
 
