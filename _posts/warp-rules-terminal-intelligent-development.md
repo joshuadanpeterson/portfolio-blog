@@ -8,12 +8,12 @@ id: 01K500KH3K689PBDY16SYYZ5XD
 author:
   name: Josh Peterson
   picture: /assets/blog/authors/2017_profile_pic.jpg
-coverImage: https://cdn.midjourney.com/d3188487-7321-4a81-8d97-fab0d3446bb8/0_1.png
-date: 2025-09-12 02:13:03
+coverImage: /assets/blog/images/warp-rules-terminal-cover.png
+date: 2025-09-12 12:13:03
 excerpt: After six months of iterative refinement, I've built a collection of over 50 Warp rules that have fundamentally changed how I interact with my terminal.
 Favorite: 
 ogImage:
-  url: https://cdn.midjourney.com/d3188487-7321-4a81-8d97-fab0d3446bb8/0_1.png
+  url: /assets/blog/images/warp-rules-terminal-cover.png
 ---
 # How 50+ Warp Rules Transformed My Terminal Into an Intelligent Development Partner
 

@@ -8,11 +8,11 @@ id: 01JBTX108VXRC8Z8Y3Q1EABXWD
 author:
   name: Josh Peterson
   picture: /assets/blog/authors/2017_profile_pic.jpg
-coverImage: https://cdn.midjourney.com/4ae17717-e54f-436d-b1b6-cb3b3bd19ce7/0_0.png
+coverImage: /assets/blog/images/mastering-slack-canvas-cover.png
 date: 2025-04-06T05:35:07.322Z
 excerpt: From chasing ghost endpoints to battling undocumented limits, this journey taught me more about the Slack API than I bargained for.
 ogImage:
-  url: https://cdn.midjourney.com/4ae17717-e54f-436d-b1b6-cb3b3bd19ce7/0_0.png
+  url: /assets/blog/images/mastering-slack-canvas-cover.png
 ---
 # Mastering Slack Canvas Automation: A Journey Through API Quirks
 

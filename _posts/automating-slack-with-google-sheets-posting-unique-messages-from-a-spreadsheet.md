@@ -8,11 +8,11 @@ id: 01JBTX108VXRC8Z8Y3Q1EABXWD
 author:
   name: Josh Peterson
   picture: /assets/blog/authors/2017_profile_pic.jpg
-coverImage: https://cdn.midjourney.com/8562ed74-87db-4fc1-877c-81c51dccd7c2/0_2.png
+coverImage: /assets/blog/images/automating-slack-google-sheets-cover.png
 date: 2025-04-05T00:00:00.322Z
 excerpt: I recently tackled this exact challenge, and after some tinkering with Google Apps Script and the Slack API, I’ve got a solution that works like a charm.
 ogImage:
-  url: https://cdn.midjourney.com/8562ed74-87db-4fc1-877c-81c51dccd7c2/0_2.png
+  url: /assets/blog/images/automating-slack-google-sheets-cover.png
 ---
 # Automating Slack with Google Sheets: Posting Unique Messages from a Spreadsheet
 

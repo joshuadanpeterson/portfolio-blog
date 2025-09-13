@@ -8,11 +8,11 @@ id: 01JBTX108VXRC8Z8Y3Q1EABXWD
 author:
   name: Josh Peterson
   picture: /assets/blog/authors/2017_profile_pic.jpg
-coverImage: https://cdn.midjourney.com/201d9f2d-ba3a-4376-9cc3-61f65c4b389a/0_2.png
+coverImage: /assets/blog/images/automating-google-tasks-cover.png
 date: 2025-03-22 02:26:35
 excerpt: Managing tasks in Google Tasks can be a repetitive chore, especially when you want to organize them into specific lists and avoid duplicates.
 ogImage:
-  url: https://cdn.midjourney.com/201d9f2d-ba3a-4376-9cc3-61f65c4b389a/0_2.png
+  url: /assets/blog/images/automating-google-tasks-cover.png
 ---
 # Automating Google Tasks with google-tasks1-cli and Warp's Agentic Mode
 

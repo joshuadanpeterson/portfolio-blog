@@ -8,11 +8,11 @@ id: 01JBTX108VXRC8Z8Y3Q1EABXWD
 author:
   name: Josh Peterson
   picture: /assets/blog/authors/2017_profile_pic.jpg
-coverImage: https://cdn.midjourney.com/6ffbcf58-0dcd-455a-8965-5a5ed3b0bddc/0_3.png
+coverImage: /assets/blog/images/slack-api-secrets-cover.png
 date: 2025-04-05T01:00:00.322Z
 excerpt: Turns out, the Slack API enforces a one-change-per-request limit, and it’s a game-changer for bulk edits. 
 ogImage:
-  url: https://cdn.midjourney.com/6ffbcf58-0dcd-455a-8965-5a5ed3b0bddc/0_3.png
+  url: /assets/blog/images/slack-api-secrets-cover.png
 ---
 # Slack API Secrets: Overcoming the Canvas Editing One-Change Limit
 
