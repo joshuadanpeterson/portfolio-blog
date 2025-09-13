@@ -1,7 +1,7 @@
 ---
 title: automating-google-tasks-with-google-tasks1-cli-and-warps-agentic-mode
 date_created: 2025-03-22 02:26:35
-date_modified: 2025-04-04 09:57:43
+date_modified: 2025-09-12 06:04:26
 tags: [informative, documentation, tools, task-automation, google-tasks, warp-agentic-mode]
 favorite: 
 id: 01JBTX108VXRC8Z8Y3Q1EABXWD
@@ -132,3 +132,13 @@ With `google-tasks1-cli` and Warp’s agentic mode, you can streamline Google Ta
 **Tip**: Double-check your tasks in the Google Tasks app or web interface to ensure everything worked as expected.
 
 Happy automating!
+
+---
+
+_P.S. – Yeah, I know—hooking Google Tasks up to Warp’s Agentic Mode probably makes me “too online.” But once you’ve watched Claude spin a pile of sticky notes into clean task lists, it’s hard to go back._
+
+_If you want to try it yourself, here’s a shortcut:_
+
+_Use **`JOSHPETERSONPRO`** for **$5 off your first month of Warp Pro** (about 25–33% off depending on your plan), and sign up through my [referral link](https://app.warp.dev/referral/MPN8V3) (I get credit if you do).
+
+_No pressure—just a way to save a few bucks if you’re curious enough to see what happens when your terminal starts managing your to-dos for you._
