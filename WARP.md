@@ -40,6 +40,20 @@ Environment setup
   - EMAIL_PASS: Gmail app password (not regular password) for SMTP
 - Without these, specific features will fail silently - homepage won't show pinned repos, contact form won't send emails
 
+Image handling
+- Blog post images should be stored in `public/assets/blog/images/`
+- Reference images in frontmatter with paths starting with `/assets/blog/images/`
+- Example frontmatter:
+  ```yaml
+  coverImage: /assets/blog/images/post-name-cover.png
+  ogImage:
+    url: /assets/blog/images/post-name-cover.png
+  ```
+- Images in public directory are served from root URL in Next.js
+- Use descriptive filenames like `post-slug-cover.png` for organization
+- Supported formats: PNG, JPG, WebP (PNG recommended for quality)
+- External image URLs (CDN) are supported but local images load faster
+
 High-level architecture
 - Content source
   - _posts/*.md holds blog posts with front matter. The filename determines the canonical slug used in routes and linking, not the H1 title.
