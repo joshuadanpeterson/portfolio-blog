@@ -1,20 +1,22 @@
-// @/lib/github
-// Grabs pinned repositories from GitHub using the GitHub GraphQL API
-
-import axios from "axios";
+import "server-only";
 
 const GITHUB_API_URL = "https://api.github.com/graphql";
-const GITHUB_ACCESS_TOKEN = process.env.GITHUB_ACCESS_TOKEN;
 
-interface Repository {
+export interface Repository {
   name: string;
-  description: string;
+  description: string | null;
   url: string;
   stargazerCount: number;
   forkCount: number;
 }
 
 export async function fetchPinnedRepos(): Promise<Repository[]> {
+  const token = process.env.GITHUB_ACCESS_TOKEN;
+
+  if (!token) {
+    throw new Error("GITHUB_ACCESS_TOKEN is not configured");
+  }
+
   const query = `
     {
       viewer {
@@ -33,21 +35,42 @@ export async function fetchPinnedRepos(): Promise<Repository[]> {
     }
   `;
 
-  const response = await axios.post(
-    GITHUB_API_URL,
-    { query },
-    {
-      headers: {
-        Authorization: `Bearer ${GITHUB_ACCESS_TOKEN}`,
-      },
+  const response = await fetch(GITHUB_API_URL, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
     },
-  );
+    body: JSON.stringify({ query }),
+    next: { revalidate: 3600 },
+  });
 
-  return response.data.data.viewer.pinnedItems.nodes.map((repo: any) => ({
-    name: repo.name,
-    description: repo.description,
-    url: repo.url,
-    stargazerCount: repo.stargazerCount,
-    forkCount: repo.forkCount,
-  }));
+  if (!response.ok) {
+    throw new Error(`GitHub API request failed with ${response.status}`);
+  }
+
+  const payload = (await response.json()) as {
+    data?: {
+      viewer?: {
+        pinnedItems?: {
+          nodes?: Repository[];
+        };
+      };
+    };
+    errors?: unknown[];
+  };
+
+  if (payload.errors?.length) {
+    throw new Error("GitHub API returned GraphQL errors");
+  }
+
+  return (
+    payload.data?.viewer?.pinnedItems?.nodes?.map((repo) => ({
+      name: repo.name,
+      description: repo.description,
+      url: repo.url,
+      stargazerCount: repo.stargazerCount,
+      forkCount: repo.forkCount,
+    })) ?? []
+  );
 }

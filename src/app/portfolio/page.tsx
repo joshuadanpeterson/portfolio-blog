@@ -2,29 +2,32 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { fetchPinnedRepos } from "@/lib/github";
 import Container from "@/app/_components/container"; // Ensure this path is correct
 import TitleUpdater from "@/app/_components/title-updater";
 import { Card } from "@/components/ui/card";
-
-interface Repository {
-  name: string;
-  description: string;
-  url: string;
-  stargazerCount: number;
-  forkCount: number;
-}
+import type { Repository } from "@/lib/github";
 
 const PortfolioPage = () => {
   const [repos, setRepos] = useState<Repository[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function getRepos() {
       try {
-        const repos = await fetchPinnedRepos();
+        const response = await fetch("/api/github/pinned");
+
+        if (!response.ok) {
+          throw new Error("Failed to load pinned repositories");
+        }
+
+        const repos = (await response.json()) as Repository[];
         setRepos(repos);
       } catch (error) {
         console.error("Error fetching pinned repositories:", error);
+        setError("Pinned repositories are temporarily unavailable.");
+      } finally {
+        setIsLoading(false);
       }
     }
     getRepos();
@@ -41,6 +44,16 @@ const PortfolioPage = () => {
           Welcome to my portfolio! Here are my pinned GitHub repositories.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
+          {isLoading && (
+            <p className="col-span-full text-gray-600 dark:text-neutral-400">
+              Loading repositories...
+            </p>
+          )}
+          {error && (
+            <p className="col-span-full text-gray-600 dark:text-neutral-400">
+              {error}
+            </p>
+          )}
           {repos.map((repo) => (
             <Card key={repo.name} className="p-4 shadow-lg">
               <h2 className="text-2xl font-bold">{repo.name}</h2>
