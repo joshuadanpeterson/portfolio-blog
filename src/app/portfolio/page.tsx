@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Container from "@/app/_components/container"; // Ensure this path is correct
 import TitleUpdater from "@/app/_components/title-updater";
 import { Card } from "@/components/ui/card";
-import type { Repository } from "@/lib/github";
+import type { Repository } from "@/lib/github-types";
 
 const PortfolioPage = () => {
   const [repos, setRepos] = useState<Repository[]>([]);

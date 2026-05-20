@@ -9,7 +9,7 @@ import DateFormatter from "./date-formatter";
 type Props = {
   title: string;
   coverImage: string;
-  date: string;
+  date: string | Date;
   excerpt: string;
   author: Author;
   slug: string;

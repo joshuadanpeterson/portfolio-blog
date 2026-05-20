@@ -1,14 +1,8 @@
 import "server-only";
 
-const GITHUB_API_URL = "https://api.github.com/graphql";
+import type { Repository } from "@/lib/github-types";
 
-export interface Repository {
-  name: string;
-  description: string | null;
-  url: string;
-  stargazerCount: number;
-  forkCount: number;
-}
+const GITHUB_API_URL = "https://api.github.com/graphql";
 
 export async function fetchPinnedRepos(): Promise<Repository[]> {
   const token = process.env.GITHUB_ACCESS_TOKEN;

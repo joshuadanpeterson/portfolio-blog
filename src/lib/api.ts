@@ -4,6 +4,20 @@ import fs from "fs";
 import matter from "gray-matter";
 import { join } from "path";
 
+const DEBUG_POSTS = process.env.DEBUG_POSTS === "1";
+
+function debugPosts(message: string, details?: unknown) {
+  if (!DEBUG_POSTS) {
+    return;
+  }
+
+  if (details === undefined) {
+    console.log(message);
+  } else {
+    console.log(message, details);
+  }
+}
+
 /**
  * Normalize Dropbox paths to handle both symlink and actual paths
  * This solves the issue where process.cwd() resolves to the actual path,
@@ -60,11 +74,11 @@ export function filenameToSlug(filename: string): string {
   // %25 is the encoding for the % character, indicating double-encoding
   if (withoutExtension.includes('%25')) {
     // If already double-encoded, return as is
-    console.log(`Filename already double-encoded: ${withoutExtension}`);
+    debugPosts(`Filename already double-encoded: ${withoutExtension}`);
     return withoutExtension;
   } else if (withoutExtension.includes('%')) {
     // If already single-encoded, return as is
-    console.log(`Filename already encoded: ${withoutExtension}`);
+    debugPosts(`Filename already encoded: ${withoutExtension}`);
     return withoutExtension;
   }
   
@@ -82,7 +96,7 @@ export function slugToFilename(slug: string): string {
     // Try to decode the slug, handling potential double-encoding
     if (slug.includes('%25')) {
       // Handle double-encoded slugs (e.g., %2520 instead of %20)
-      console.log(`Decoding double-encoded slug: ${slug}`);
+      debugPosts(`Decoding double-encoded slug: ${slug}`);
       decodedSlug = decodeURIComponent(decodeURIComponent(slug));
     } else {
       // Standard decoding for normal slugs
@@ -90,7 +104,9 @@ export function slugToFilename(slug: string): string {
     }
   } catch (error: unknown) {
     // If decoding fails, use the original slug as a fallback
-    console.warn(`Error decoding slug '${slug}':`, error);
+    debugPosts(
+      `Error decoding slug '${slug}': ${error instanceof Error ? error.message : String(error)}`,
+    );
     decodedSlug = slug;
   }
   
@@ -124,7 +140,7 @@ export function getPostSlugs() {
   return fs.readdirSync(postsDirectory);
 }
 export function getPostBySlug(slug: string) {
-  console.log(`getPostBySlug called with slug: "${slug}"`);
+  debugPosts(`getPostBySlug called with slug: "${slug}"`);
   
   // Determine if the input is a filename or a URL slug
   const isFilename = slug.toLowerCase().endsWith('.md');
@@ -134,22 +150,22 @@ export function getPostBySlug(slug: string) {
   if (isFilename) {
     // Input is already a filename
     filename = slug;
-    console.log(`Input is a filename: "${filename}"`);
+    debugPosts(`Input is a filename: "${filename}"`);
   } else {
     // Input is a slug, convert to filename
     filename = slugToFilename(slug);
-    console.log(`Converted slug to filename: "${filename}"`);
+    debugPosts(`Converted slug to filename: "${filename}"`);
   }
   
   // Generate the slug from the filename to ensure consistency
   const fileBasedSlug = filenameToSlug(filename);
-  console.log(`Generated slug from filename: "${fileBasedSlug}"`);
+  debugPosts(`Generated slug from filename: "${fileBasedSlug}"`);
   
   // Normalize path to prevent double slashes
   const normPath = postsDirectory.replace(/\/+$/, ''); // Remove trailing slashes
   const fullPath = join(normPath, filename.replace(/^\/+/, '')); // Remove leading slashes
   
-  console.log(`Attempting to read file from: "${fullPath}"`);
+  debugPosts(`Attempting to read file from: "${fullPath}"`);
   
   // Try multiple approaches to find the correct file
   const pathsToTry = [
@@ -164,13 +180,15 @@ export function getPostBySlug(slug: string) {
     try {
       // Handle potentially double-encoded slugs
       if (slug.includes('%25')) {
-        console.log(`Detected double-encoded slug: ${slug}`);
+        debugPosts(`Detected double-encoded slug: ${slug}`);
         decodedSlug = decodeURIComponent(decodeURIComponent(slug));
       } else {
         decodedSlug = decodeURIComponent(slug);
       }
     } catch (error: unknown) {
-      console.warn(`Error decoding slug '${slug}':`, error);
+      debugPosts(
+        `Error decoding slug '${slug}': ${error instanceof Error ? error.message : String(error)}`,
+      );
       decodedSlug = slug;
     }
     
@@ -190,7 +208,7 @@ export function getPostBySlug(slug: string) {
   // Try each path in sequence
   for (const path of pathsToTry) {
     try {
-      console.log(`Trying path: "${path}"`);
+      debugPosts(`Trying path: "${path}"`);
       const fileContents = fs.readFileSync(path, "utf8");
       
       // This ensures URLs are derived from filenames, not post titles
@@ -205,11 +223,11 @@ export function getPostBySlug(slug: string) {
       // If H1 heading was found, use it as the title, otherwise use frontmatter title
       const title = h1Heading || data.title;
       
-      console.log(`Successfully loaded post from: "${path}", using slug: "${encodedSlug}"`);
+      debugPosts(`Successfully loaded post from: "${path}", using slug: "${encodedSlug}"`);
       return { ...data, title, slug: encodedSlug, content } as Post;
     } catch (error: unknown) {
       lastError = error;
-      console.log(`Failed to read from path: "${path}" - ${error instanceof Error ? error.message : String(error)}`);
+      debugPosts(`Failed to read from path: "${path}" - ${error instanceof Error ? error.message : String(error)}`);
     }
   }
   
@@ -219,25 +237,25 @@ export function getPostBySlug(slug: string) {
 }
 
 export function getAllPosts(): Post[] {
-  console.log(`getAllPosts: Getting posts from directory: ${postsDirectory}`);
+  debugPosts(`getAllPosts: Getting posts from directory: ${postsDirectory}`);
   const filenames = getPostSlugs();
-  console.log(`getAllPosts: Found ${filenames.length} files: ${JSON.stringify(filenames)}`);
+  debugPosts(`getAllPosts: Found ${filenames.length} files`, filenames);
   
   // Filter out non-markdown files (like .DS_Store)
   const markdownFiles = filenames.filter(filename => {
     const isMarkdown = filename.toLowerCase().endsWith('.md');
     if (!isMarkdown) {
-      console.log(`getAllPosts: Skipping non-markdown file: "${filename}"`);
+      debugPosts(`getAllPosts: Skipping non-markdown file: "${filename}"`);
     }
     return isMarkdown;
   });
-  console.log(`getAllPosts: Processing ${markdownFiles.length} markdown files`);
+  debugPosts(`getAllPosts: Processing ${markdownFiles.length} markdown files`);
   
   // Log any suspicious filenames that might cause issues
   markdownFiles.forEach(filename => {
     if (filename.includes(' ') || filename.includes('`') || filename.includes("'") || 
         filename.includes('%') || filename.includes('&')) {
-      console.log(`getAllPosts: Warning - Special characters in filename: "${filename}"`);
+      debugPosts(`getAllPosts: Warning - Special characters in filename: "${filename}"`);
     }
   });
   
@@ -248,30 +266,16 @@ export function getAllPosts(): Post[] {
         // This ensures the slug is derived from the filename
         const post = getPostBySlug(filename);
         
-        // Extract H1 heading for logging purposes
-        const extractedH1 = extractH1FromMarkdown(post.content);
-        const originalFrontmatterTitle = post.title !== extractedH1 ? post.title : "same as H1";
-        
-        console.log(`getAllPosts: Successfully processed post: \"${filename}\"`, {
-          originalTitle: originalFrontmatterTitle,
-          extractedH1: extractedH1 || "none",
-          title: post.title, // This now contains either the H1 or original title
-          slug: post.slug,
-          date: post.date,
-          hasAuthor: !!post.author,
-          hasHeroImage: !!post.coverImage,
-          excerpt: post.excerpt?.substring(0, 50) + '...',
-        });
+        debugPosts(
+          `getAllPosts: Successfully processed post "${filename}" as slug "${post.slug}"`,
+        );
         
         return post;
       } catch (error: unknown) {
         if (error instanceof Error && 'code' in error && error.code === 'ENOENT' && 'path' in error) {
-          console.warn(`getAllPosts: File not found: ${(error as { path: string }).path}`);
+          debugPosts(`getAllPosts: File not found: ${(error as { path: string }).path}`);
         } else if (error instanceof Error) {
-          console.warn(`getAllPosts: Error type: ${error.name}, Message: ${error.message}`);
-          if (error.stack) {
-            console.warn(`getAllPosts: Stack trace: ${error.stack}`);
-          }
+          debugPosts(`getAllPosts: Error type: ${error.name}, Message: ${error.message}`);
         }
         return null;
       }
@@ -279,7 +283,7 @@ export function getAllPosts(): Post[] {
     .filter((post): post is Post => {
       if (post === null) {
         // Additional logging for filtered out posts
-        console.log('getAllPosts: Post was filtered out because it failed to load');
+        debugPosts('getAllPosts: Post was filtered out because it failed to load');
         return false;
       }
       return true;
@@ -287,12 +291,12 @@ export function getAllPosts(): Post[] {
     // Sort posts by date in descending order
     .sort((post1, post2) => (post1.date > post2.date ? -1 : 1));
   
-  console.log(`getAllPosts: Successfully loaded ${posts.length} posts`);
+  debugPosts(`getAllPosts: Successfully loaded ${posts.length} posts`);
   
   // Log the first post that would be used as the hero post
   if (posts.length > 0) {
     const heroPost = posts[0];
-    console.log(`getAllPosts: Hero post candidate:`, {
+    debugPosts(`getAllPosts: Hero post candidate`, {
       title: heroPost.title,
       slug: heroPost.slug,
       date: heroPost.date,
@@ -304,7 +308,7 @@ export function getAllPosts(): Post[] {
       hasCoverImage: !!heroPost.coverImage
     });
   } else {
-    console.log(`getAllPosts: No posts available for hero post`);
+    debugPosts(`getAllPosts: No posts available for hero post`);
   }
   
   return posts;

@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { fetchPinnedRepos } from "@/lib/github";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   try {
     const repos = await fetchPinnedRepos();
@@ -10,8 +12,8 @@ export async function GET() {
         "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400",
       },
     });
-  } catch (error) {
-    console.error("Error fetching pinned repositories:", error);
+  } catch {
+    console.error("Error fetching pinned repositories");
 
     return NextResponse.json(
       { error: "Failed to fetch pinned repositories" },
