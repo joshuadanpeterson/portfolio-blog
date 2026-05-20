@@ -1,8 +1,10 @@
 // src/lib/api.ts
 import { Post } from "@/interfaces/post";
 import fs from "fs";
-import matter from "gray-matter";
 import { join } from "path";
+import { parse as parseYaml } from "yaml";
+
+type FrontMatterData = Partial<Post> & Record<string, unknown>;
 
 const DEBUG_POSTS = process.env.DEBUG_POSTS === "1";
 
@@ -62,6 +64,31 @@ function getPostsDirectory(): string {
 }
 
 const postsDirectory = getPostsDirectory();
+
+function parseFrontMatter(fileContents: string): {
+  data: FrontMatterData;
+  content: string;
+} {
+  const frontMatterMatch = fileContents.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);
+
+  if (!frontMatterMatch) {
+    return {
+      data: {},
+      content: fileContents,
+    };
+  }
+
+  const parsedData = parseYaml(frontMatterMatch[1]) ?? {};
+
+  if (typeof parsedData !== "object" || Array.isArray(parsedData)) {
+    throw new Error("Post frontmatter must be a YAML object");
+  }
+
+  return {
+    data: parsedData as FrontMatterData,
+    content: fileContents.slice(frontMatterMatch[0].length),
+  };
+}
 
 /**
  * Convert a filename to a URL-friendly slug
@@ -214,14 +241,13 @@ export function getPostBySlug(slug: string) {
       // This ensures URLs are derived from filenames, not post titles
       const encodedSlug = fileBasedSlug;
       
-      // Parse the file with matter
-      const { data, content } = matter(fileContents);
+      const { data, content } = parseFrontMatter(fileContents);
       
       // Extract H1 heading from content if available
       const h1Heading = extractH1FromMarkdown(content);
       
       // If H1 heading was found, use it as the title, otherwise use frontmatter title
-      const title = h1Heading || data.title;
+      const title = h1Heading || (typeof data.title === "string" ? data.title : "");
       
       debugPosts(`Successfully loaded post from: "${path}", using slug: "${encodedSlug}"`);
       return { ...data, title, slug: encodedSlug, content } as Post;
