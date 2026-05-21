@@ -4,7 +4,7 @@ import Footer from "@/app/_components/footer";
 import Navbar from "@/app/_components/navbar";
 import { TitleProvider } from "@/context/TitleContext";
 import { ThemeProvider } from "@/context/ThemeContext";
-import { CMS_NAME, HOME_OG_IMAGE_URL } from "@/lib/constants";
+import { HOME_OG_IMAGE_URL, SITE_URL } from "@/lib/constants";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
@@ -15,10 +15,36 @@ import "./prism.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: `Josh Peterson's Portfolio and Blog`,
   description: `Welcome to Josh Peterson's portfolio and blog showcasing projects, writings, and ideas.`,
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
+    title: `Josh Peterson's Portfolio and Blog`,
+    description: `Welcome to Josh Peterson's portfolio and blog showcasing projects, writings, and ideas.`,
+    url: SITE_URL,
+    siteName: "Josh Peterson",
     images: [HOME_OG_IMAGE_URL],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `Josh Peterson's Portfolio and Blog`,
+    description: `Welcome to Josh Peterson's portfolio and blog showcasing projects, writings, and ideas.`,
+    images: [HOME_OG_IMAGE_URL],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
   },
 };
 
