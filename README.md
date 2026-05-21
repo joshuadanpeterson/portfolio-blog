@@ -12,7 +12,18 @@ This example showcases Next.js's [Static Generation](https://nextjs.org/docs/app
 
 The blog posts are stored in `/_posts` as Markdown files with front matter support. Adding a new Markdown file in there will create a new blog post.
 
-To create the blog posts we use [`remark`](https://github.com/remarkjs/remark) and [`remark-html`](https://github.com/remarkjs/remark-html) to convert the Markdown files into an HTML string, and then send it down as a prop to the page. The metadata of every post is handled by [`gray-matter`](https://github.com/jonschlinkert/gray-matter) and also sent in props to the page.
+To create the blog posts we use [`remark`](https://github.com/remarkjs/remark), [`remark-html`](https://github.com/remarkjs/remark-html), and [`yaml`](https://eemeli.org/yaml/) to parse front matter and convert Markdown into HTML.
+
+## Local runtime
+
+This project targets Node.js `20.19.4`, matching the checked-in `.nvmrc` and `.node-version` files. If you use nvm, run:
+
+```bash
+nvm install
+nvm use
+```
+
+The npm scripts also source nvm automatically when it is available, so `npm run build` works even if the parent shell still points at an older Node binary.
 
 ## Demo
 

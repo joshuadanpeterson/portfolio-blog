@@ -1,9 +1,13 @@
 {
   "private": true,
   "scripts": {
-    "dev": "next",
-    "build": "next build",
-    "start": "next start"
+    "dev": "bash scripts/with-node.sh next",
+    "build": "bash scripts/with-node.sh next build",
+    "start": "bash scripts/with-node.sh next start"
+  },
+  "engines": {
+    "node": ">=20.17.0 <23",
+    "npm": ">=10 <12"
   },
   "dependencies": {
     "@fortawesome/free-brands-svg-icons": "^6.6.0",
