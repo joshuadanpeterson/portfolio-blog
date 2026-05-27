@@ -41,23 +41,23 @@ const PortfolioPage = () => {
           Portfolio
         </h1>
         <p className="text-lg mt-5 md:pl-8 text-center md:text-left max-w-2xl">
-          Welcome to my portfolio! Here are my pinned GitHub repositories.
+          Selected repositories and public builds from the automation lab.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
           {isLoading && (
-            <p className="col-span-full text-gray-600 dark:text-neutral-400">
+            <p className="col-span-full text-muted-foreground">
               Loading repositories...
             </p>
           )}
           {error && (
-            <p className="col-span-full text-gray-600 dark:text-neutral-400">
+            <p className="col-span-full text-muted-foreground">
               {error}
             </p>
           )}
           {repos.map((repo) => (
             <Card key={repo.name} className="p-4 shadow-lg">
               <h2 className="text-2xl font-bold">{repo.name}</h2>
-              <p className="mt-2 text-gray-600 dark:text-neutral-400">{repo.description}</p>
+              <p className="mt-2 text-muted-foreground">{repo.description}</p>
               <div className="mt-4">
                 <a
                   href={repo.url}
@@ -68,7 +68,7 @@ const PortfolioPage = () => {
                   View Repository
                 </a>
               </div>
-              <div className="mt-4 flex items-center justify-between text-gray-600 dark:text-neutral-400">
+              <div className="mt-4 flex items-center justify-between text-muted-foreground">
                 <span>⭐ {repo.stargazerCount}</span>
                 <span>🍴 {repo.forkCount}</span>
               </div>

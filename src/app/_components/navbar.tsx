@@ -27,7 +27,8 @@ const Navbar: FC = () => {
   const pathname = usePathname();
   const links = [
     { href: "/", label: "Home" },
-    { href: "/posts", label: "Blog" },
+    { href: "/posts", label: "Lab Notes" },
+    { href: "/notebook", label: "Notebook" },
     { href: "/portfolio", label: "Portfolio" },
     { href: "/about", label: "About" },
     { href: "/contact", label: "Contact" },

@@ -36,10 +36,10 @@ export function PostPreview({
           {title}
         </Link>
       </h3>
-      <div className="text-lg mb-4 text-gray-600 dark:text-neutral-400">
+      <div className="text-lg mb-4 text-muted-foreground">
         <DateFormatter dateString={date} />
       </div>
-      <p className="text-lg leading-relaxed mb-4 text-gray-700 dark:text-neutral-400">{excerpt}</p>
+      <p className="text-lg leading-relaxed mb-4 text-muted-foreground">{excerpt}</p>
       {author && <Avatar name={author.name} picture={author.picture} />}
     </div>
   );

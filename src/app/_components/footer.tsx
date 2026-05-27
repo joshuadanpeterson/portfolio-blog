@@ -22,7 +22,7 @@ export default function Footer() {
     <footer className="bg-background text-foreground border-t border-border">
       <Container>
         <div className="flex flex-col lg:flex-row items-center justify-between py-4">
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
             {/* Conversion-focused order: Substack, Medium, X, GitHub, LinkedIn, Instagram */}
             <a
               href="https://substack.com/@joshuadanpeterson"

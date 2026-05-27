@@ -1,5 +1,10 @@
 // src/lib/api.ts
 import { Post } from "@/interfaces/post";
+import {
+  normalizeArtifactType,
+  normalizePostLane,
+  type PostLane,
+} from "@/lib/post-lanes";
 import fs from "fs";
 import { join } from "path";
 import { parse as parseYaml } from "yaml";
@@ -248,9 +253,18 @@ export function getPostBySlug(slug: string) {
       
       // If H1 heading was found, use it as the title, otherwise use frontmatter title
       const title = h1Heading || (typeof data.title === "string" ? data.title : "");
+      const lane = normalizePostLane(data.lane);
+      const artifactType = normalizeArtifactType(data.artifactType);
       
       debugPosts(`Successfully loaded post from: "${path}", using slug: "${encodedSlug}"`);
-      return { ...data, title, slug: encodedSlug, content } as Post;
+      return {
+        ...data,
+        title,
+        slug: encodedSlug,
+        content,
+        lane,
+        ...(artifactType ? { artifactType } : {}),
+      } as Post;
     } catch (error: unknown) {
       lastError = error;
       debugPosts(`Failed to read from path: "${path}" - ${error instanceof Error ? error.message : String(error)}`);
@@ -338,4 +352,8 @@ export function getAllPosts(): Post[] {
   }
   
   return posts;
+}
+
+export function getPostsByLane(lane: PostLane): Post[] {
+  return getAllPosts().filter((post) => post.lane === lane);
 }

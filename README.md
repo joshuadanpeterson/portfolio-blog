@@ -1,20 +1,41 @@
-# A statically generated blog example using Next.js, Markdown, and TypeScript
+# Josh Peterson Public Automation Lab
 
-<div>
-  <a href="https://deepwiki.com/joshuadanpeterson/portfolio-blog">
-    <img src="https://deepwiki.com/badge.svg" alt="Ask DeepWiki">
-  </a>
-</div>
+This is Josh Peterson's portfolio site, public automation lab, and reporter's notebook.
 
-This is the existing [blog-starter](https://github.com/vercel/next.js/tree/canary/examples/blog-starter) plus TypeScript.
+The site is built with Next.js, Markdown posts, TypeScript, and Tailwind CSS. It publishes two public lanes:
 
-This example showcases Next.js's [Static Generation](https://nextjs.org/docs/app/building-your-application/routing/layouts-and-templates) feature using Markdown files as the data source.
+- **Automation Lab**: workflow systems, Google Sheets tools, Apps Script snippets, AI-assisted operations, and practical artifacts.
+- **Reporter's Notebook**: cleaned public research logs, source trails, FOIA/public-record methods, and investigation notes.
 
-The blog posts are stored in `/_posts` as Markdown files with front matter support. Adding a new Markdown file in there will create a new blog post.
+## Content Model
 
-To create the blog posts we use [`remark`](https://github.com/remarkjs/remark), [`remark-html`](https://github.com/remarkjs/remark-html), and [`yaml`](https://eemeli.org/yaml/) to parse front matter and convert Markdown into HTML.
+Posts live in `/_posts` as Markdown files with YAML frontmatter. The filename determines the canonical slug.
 
-## Local runtime
+Optional lane fields:
+
+```yaml
+lane: automation-lab
+artifactType: checklist
+```
+
+Supported lanes:
+
+- `automation-lab`
+- `reporters-notebook`
+- `portfolio`
+
+Supported artifact types:
+
+- `template`
+- `script`
+- `checklist`
+- `research-note`
+- `source-map`
+- `case-study`
+
+Posts without a `lane` default to `automation-lab`.
+
+## Local Runtime
 
 This project targets Node.js `20.19.4`, matching the checked-in `.nvmrc` and `.node-version` files. If you use nvm, run:
 
@@ -23,58 +44,19 @@ nvm install
 nvm use
 ```
 
-The npm scripts also source nvm automatically when it is available, so `npm run build` works even if the parent shell still points at an older Node binary.
+The npm scripts source nvm automatically when it is available, so `npm run build` works even if the parent shell still points at an older Node binary.
 
-## Demo
-
-[https://next-blog-starter.vercel.app/](https://next-blog-starter.vercel.app/)
-
-## Deploy your own
-
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example) or preview live with [StackBlitz](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/blog-starter)
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vercel/next.js/tree/canary/examples/blog-starter&project-name=blog-starter&repository-name=blog-starter)
-
-### Related examples
-
-- [WordPress](/examples/cms-wordpress)
-- [DatoCMS](/examples/cms-datocms)
-- [Sanity](/examples/cms-sanity)
-- [TakeShape](/examples/cms-takeshape)
-- [Prismic](/examples/cms-prismic)
-- [Contentful](/examples/cms-contentful)
-- [Strapi](/examples/cms-strapi)
-- [Agility CMS](/examples/cms-agilitycms)
-- [Cosmic](/examples/cms-cosmic)
-- [ButterCMS](/examples/cms-buttercms)
-- [Storyblok](/examples/cms-storyblok)
-- [GraphCMS](/examples/cms-graphcms)
-- [Kontent](/examples/cms-kontent)
-- [Umbraco Heartcore](/examples/cms-umbraco-heartcore)
-- [Builder.io](/examples/cms-builder-io)
-- [TinaCMS](/examples/cms-tina/)
-- [Enterspeed](/examples/cms-enterspeed)
-
-## How to use
-
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init), [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/), or [pnpm](https://pnpm.io) to bootstrap the example:
+## Commands
 
 ```bash
-npx create-next-app --example blog-starter blog-starter-app
+npm install
+npm run dev
+npm run build
+npm run start
+npx tsc --noEmit
 ```
 
-```bash
-yarn create next-app --example blog-starter blog-starter-app
-```
+## Strategy And Status
 
-```bash
-pnpm create next-app --example blog-starter blog-starter-app
-```
-
-Your blog should be up and running on [http://localhost:3000](http://localhost:3000)! If it doesn't work, post on [GitHub discussions](https://github.com/vercel/next.js/discussions).
-
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
-
-# Notes
-
-`blog-starter` uses [Tailwind CSS](https://tailwindcss.com) [(v3.0)](https://tailwindcss.com/blog/tailwindcss-v3).
+- Strategy: `docs/strategy/2026-05-24-public-lab-niche-pilot.md`
+- Status: `docs/status.md`

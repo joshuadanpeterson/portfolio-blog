@@ -1,4 +1,5 @@
 import { type Author } from "./author";
+import { type ArtifactType, type PostLane } from "@/lib/post-lanes";
 
 export type Post = {
   slug: string;
@@ -11,5 +12,8 @@ export type Post = {
     url: string;
   };
   content: string;
+  lane: PostLane;
+  artifactType?: ArtifactType;
+  tags?: string[];
   preview?: boolean;
 };

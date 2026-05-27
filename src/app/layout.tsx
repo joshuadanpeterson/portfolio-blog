@@ -16,14 +16,14 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: `Josh Peterson's Portfolio and Blog`,
-  description: `Welcome to Josh Peterson's portfolio and blog showcasing projects, writings, and ideas.`,
+  title: `Josh Peterson | Public Automation Lab`,
+  description: `Josh Peterson's public automation lab and reporter's notebook for workflow systems, AI-assisted operations, public records, and source trails.`,
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: `Josh Peterson's Portfolio and Blog`,
-    description: `Welcome to Josh Peterson's portfolio and blog showcasing projects, writings, and ideas.`,
+    title: `Josh Peterson | Public Automation Lab`,
+    description: `Josh Peterson's public automation lab and reporter's notebook for workflow systems, AI-assisted operations, public records, and source trails.`,
     url: SITE_URL,
     siteName: "Josh Peterson",
     images: [HOME_OG_IMAGE_URL],
@@ -31,8 +31,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `Josh Peterson's Portfolio and Blog`,
-    description: `Welcome to Josh Peterson's portfolio and blog showcasing projects, writings, and ideas.`,
+    title: `Josh Peterson | Public Automation Lab`,
+    description: `Josh Peterson's public automation lab and reporter's notebook for workflow systems, AI-assisted operations, public records, and source trails.`,
     images: [HOME_OG_IMAGE_URL],
   },
   robots: {
@@ -59,7 +59,7 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta
           name="keywords"
-          content="Josh Peterson, Software Engineer, Programming, Blog"
+          content="Josh Peterson, Automation Lab, AI Workflows, Reporter Notebook, Public Records, Google Sheets Automation"
         />
         {/* Set theme early to avoid flash */}
         <script dangerouslySetInnerHTML={{
