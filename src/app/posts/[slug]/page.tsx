@@ -1,9 +1,7 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getAllPosts, getPostBySlug } from "@/lib/api";
-import { CMS_NAME } from "@/lib/constants";
 import markdownToHtml from "@/lib/markdownToHtml";
-import Alert from "@/app/_components/alert";
 import Container from "@/app/_components/container";
 import Header from "@/app/_components/header";
 import { PostBody } from "@/app/_components/post-body";
@@ -25,13 +23,12 @@ export default async function Post(props: any) {
   const displayTitle = heading || post.title;
   
   // Format the title for the browser tab
-  const pageTitle = `${displayTitle} | Josh Peterson's Blog`;
+  const pageTitle = `${displayTitle} | Josh Peterson's Lab Notes`;
 
   return (
     <main>
       {/* Update the document title using our context provider */}
       <TitleUpdater title={pageTitle} />
-      {/* <Alert preview={post.preview} /> */}
       <Container>
         <Header />
         <article className="mb-32">
@@ -62,7 +59,7 @@ export async function generateMetadata(props: any): Promise<Metadata> {
   
   // Use the extracted heading if available, otherwise use frontmatter title
   const postTitle = heading || post.title;
-  const title = `${postTitle} | Josh Peterson's Blog`;
+  const title = `${postTitle} | Josh Peterson's Lab Notes`;
 
   return {
     title,

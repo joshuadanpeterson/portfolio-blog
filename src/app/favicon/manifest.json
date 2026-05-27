@@ -1,6 +1,6 @@
 {
-  "name": "Josh Peterson's Portfolio Blog",
-  "short_name": "Portfolio Blog",
+  "name": "Josh Peterson Public Automation Lab",
+  "short_name": "Automation Lab",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",
@@ -19,4 +19,3 @@
   "background_color": "#ffffff",
   "display": "standalone"
 }
-

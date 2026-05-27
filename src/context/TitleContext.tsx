@@ -20,7 +20,7 @@ type TitleProviderProps = {
 // Create the provider component
 export function TitleProvider({ 
   children, 
-  defaultTitle = 'Josh Peterson | Developer Blog' 
+  defaultTitle = 'Josh Peterson | Public Automation Lab'
 }: TitleProviderProps) {
   const [title, setTitle] = useState<string>(defaultTitle);
 

@@ -1,6 +1,3 @@
-// src/app/_components/portfolio.tsx
-import Portfolio from "@/app/_components/portfolio";
-
 const PortfolioPage = () => {
   return (
     <div className="flex flex-col items-center justify-center mt-16 mb-16">
@@ -8,7 +5,7 @@ const PortfolioPage = () => {
         Portfolio
       </h1>
       <p className="text-lg mt-5 md:pl-8 text-center md:text-left max-w-2xl">
-        Welcome to my portfolio! Here you can see my latest projects.
+        Selected repositories and public builds from the automation lab.
       </p>
     </div>
   );
