@@ -2,33 +2,16 @@
 
 "use client";
 
-import { useState, useEffect, useRef, KeyboardEvent } from "react";
-import Link from "next/link";
+import { KeyboardEvent, useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { fetchRSSFeeds, FeedItem } from "@/lib/rss";
 import TitleUpdater from "@/app/_components/title-updater";
 import { Input } from "@/components/ui/input";
+import type { Post } from "@/interfaces/post";
+import type { FeedItem } from "@/lib/rss";
+import { getArtifactLabel, getLaneLabel } from "@/lib/post-lanes";
 
-// Interface for your local post format
-interface Post {
-  link?: string;
-  title: string;
-  excerpt: string;
-  coverImage: string;
-  date: string;
-  author: {
-    name: string;
-    picture: string;
-  };
-  ogImage: {
-    url: string;
-  };
-  slug?: string;
-  content?: string;
-}
-
-// Interface for RSS feed items
 interface ExtendedFeedItem extends FeedItem {
   "content:encoded"?: string;
   description?: string;
@@ -41,118 +24,131 @@ interface ExtendedFeedItem extends FeedItem {
   };
 }
 
-// Helper function to extract CDATA content
+type ContentPost = Post | ExtendedFeedItem;
+
 const extractCDATA = (text: string): string => {
   const cdataMatch = text.match(/<!\[CDATA\[(.*?)\]\]>/s);
   return cdataMatch ? cdataMatch[1] : text;
 };
 
-// Helper function to strip HTML and CDATA
-const stripHtml = (html: string): string => {
-  if (!html) return "";
-
-  let text = extractCDATA(html);
-  text = text.replace(/<[^>]*>/g, " ");
-  text = text
+const stripHtml = (html: string): string =>
+  extractCDATA(html)
+    .replace(/<[^>]*>/g, " ")
     .replace(/&amp;/g, "&")
     .replace(/&lt;/g, "<")
     .replace(/&gt;/g, ">")
     .replace(/&quot;/g, '"')
     .replace(/&#39;/g, "'")
-    .replace(/&#8216;/g, "'")  // Left single quote
-    .replace(/&#8217;/g, "'")  // Right single quote
-    .replace(/&nbsp;/g, " ");
+    .replace(/&#8216;/g, "'")
+    .replace(/&#8217;/g, "'")
+    .replace(/&nbsp;/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
 
-  return text.replace(/\s+/g, " ").trim();
+const truncate = (text: string, length = 120): string =>
+  text.length > length ? `${text.substring(0, length - 3)}...` : text;
+
+const isLocalPost = (post: ContentPost): post is Post =>
+  "slug" in post && typeof post.slug === "string";
+
+const getExcerpt = (post: ContentPost): string => {
+  const excerpt = isLocalPost(post)
+    ? post.excerpt
+    : post.contentSnippet ||
+      post.description ||
+      post["content:encoded"] ||
+      post.content ||
+      "";
+
+  const cleanExcerpt = stripHtml(String(excerpt || ""));
+
+  return cleanExcerpt ? truncate(cleanExcerpt) : "No excerpt available";
 };
 
-// Helper function to get excerpt
-const getExcerpt = (post: Post | ExtendedFeedItem): string => {
-  // For local posts with excerpt field
-  if ("excerpt" in post && post.excerpt) {
-    if (post.excerpt.length > 80) {
-      return post.excerpt.substring(0, 77) + "...";
-    }
-    return post.excerpt;
+const getImagePath = (post: ContentPost): string => {
+  if (isLocalPost(post)) {
+    return post.coverImage || "/assets/blog/preview/cover.jpg";
   }
 
-  // For RSS feed items
-  if ("content:encoded" in post && post["content:encoded"]) {
-    const content = extractCDATA(post["content:encoded"]);
-    const paragraphMatch = content.match(/<p>(.*?)<\/p>/);
-    if (paragraphMatch && paragraphMatch[1]) {
-      const plainText = stripHtml(paragraphMatch[1]);
-      if (plainText.length > 80) {
-        return plainText.substring(0, 77) + "...";
-      }
-      return plainText;
-    }
+  if (post.imageUrl) {
+    return post.imageUrl.startsWith("http")
+      ? post.imageUrl
+      : `/assets/blog/${post.imageUrl}`;
   }
 
-  // For RSS items with description
-  if ("description" in post && post.description) {
-    const plainText = stripHtml(extractCDATA(post.description));
-    if (plainText.length > 80) {
-      return plainText.substring(0, 77) + "...";
-    }
-    return plainText;
+  const content = post["content:encoded"] || post.content || "";
+  const imgMatch = content.match(/<img.*?src=["'](.*?)["'].*?>/);
+  if (imgMatch?.[1]) {
+    return imgMatch[1];
   }
 
-  return "No excerpt available";
+  if (post.enclosure?.url) {
+    return post.enclosure.url;
+  }
+
+  return "/assets/blog/preview/cover.jpg";
 };
 
-// Helper function to determine image path
-const getImagePath = (post: Post | ExtendedFeedItem): string | null => {
-  try {
-    // For local posts with coverImage (including Midjourney)
-    if ("coverImage" in post && post.coverImage) {
-      return post.coverImage;
-    }
+const getPostHref = (post: ContentPost): string =>
+  isLocalPost(post) ? `/posts/${post.slug}` : post.link || "/";
 
-    // For local posts with explicit imageUrl
-    if ("imageUrl" in post && post.imageUrl) {
-      if (post.imageUrl.startsWith("http")) {
-        return post.imageUrl;
-      }
-      return `/assets/blog/${post.imageUrl}`;
-    }
+const getPostDate = (post: ContentPost): string | Date =>
+  isLocalPost(post) ? post.date : post.pubDate;
 
-    // For Medium RSS items with content:encoded
-    if ("content:encoded" in post && post["content:encoded"]) {
-      const imgMatch = post["content:encoded"].match(/<img.*?src="(.*?)".*?>/);
-      if (imgMatch && imgMatch[1]) {
-        const imageUrl = imgMatch[1];
-        if (
-          imageUrl.includes("cdn-images-1.medium.com") ||
-          imageUrl.includes("cdn.pixabay.com") ||
-          imageUrl.includes("img.youtube.com")
-        ) {
-          return imageUrl;
-        }
-      }
-    }
+const getPostKey = (post: ContentPost): string =>
+  isLocalPost(post)
+    ? post.slug
+    : post.externalId || post.link || `${post.source || "syndicated"}-${post.title}`;
 
-    // For RSS.app feed items with enclosure
-    if ("enclosure" in post && post.enclosure?.url) {
-      return post.enclosure.url;
-    }
+const getSourceLabel = (post: ContentPost): string => {
+  if (isLocalPost(post)) {
+    return getLaneLabel(post.lane);
+  }
 
-    return "/assets/blog/preview/cover.jpg";
-  } catch (error) {
-    console.error("Error getting image path:", error);
-    return "/assets/blog/preview/cover.jpg";
+  switch (post.source) {
+    case "medium":
+      return "Medium";
+    case "substack":
+      return "Substack";
+    case "steemit":
+      return "Steemit";
+    default:
+      return "Syndicated";
   }
 };
+
+const matchesSearch = (post: ContentPost, query: string): boolean => {
+  const value = query.toLowerCase();
+  const searchable = isLocalPost(post)
+    ? [
+        post.title,
+        post.excerpt,
+        post.lane,
+        post.artifactType,
+        ...(post.tags ?? []),
+      ]
+    : [
+        post.title,
+        post.contentSnippet,
+        post.description,
+        post.source,
+        post.link,
+      ];
+
+  return searchable.filter(Boolean).join(" ").toLowerCase().includes(value);
+};
+
+const sortByDateDesc = (posts: ContentPost[]): ContentPost[] =>
+  [...posts].sort(
+    (a, b) =>
+      new Date(getPostDate(b)).getTime() - new Date(getPostDate(a)).getTime(),
+  );
 
 export default function BlogPage() {
-  const [posts, setPosts] = useState<(Post | ExtendedFeedItem)[]>([]);
+  const [posts, setPosts] = useState<ContentPost[]>([]);
   const [value, setValue] = useState<string>("");
-  const [filteredPosts, setFilteredPosts] = useState<
-    (Post | ExtendedFeedItem)[]
-  >([]);
-  const [suggestions, setSuggestions] = useState<(Post | ExtendedFeedItem)[]>(
-    [],
-  );
+  const [filteredPosts, setFilteredPosts] = useState<ContentPost[]>([]);
+  const [suggestions, setSuggestions] = useState<ContentPost[]>([]);
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
   const searchRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -160,31 +156,21 @@ export default function BlogPage() {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const feedUrls = [
-        "/api/proxy-rss?url=https://medium.com/feed/@joshpeterson",
-        "/api/proxy-rss?url=https://rss.app/feeds/Q0d7If1vLw2uZdL2.xml",
-        "/api/proxy-rss?url=https://attentionwars.substack.com/feed",
-      ];
-
       try {
-        const [rssData, apiPosts] = await Promise.all([
-          fetchRSSFeeds(feedUrls),
+        const [syndicatedPosts, apiPosts] = await Promise.all([
+          fetch("/api/syndicated-posts").then((res) => {
+            if (!res.ok) {
+              throw new Error("Failed to fetch syndicated posts");
+            }
+            return res.json();
+          }),
           fetch("/api/posts").then((res) => res.json()),
         ]);
 
-        const processedRssData = (rssData as ExtendedFeedItem[]).map(
-          (post) => ({
-            ...post,
-            "content:encoded": post["content:encoded"] || undefined,
-            description: post.description || undefined,
-          }),
-        );
-
-        const combinedPosts = [...apiPosts, ...processedRssData].sort(
-          (a, b) =>
-            new Date(b.pubDate || b.date).getTime() -
-            new Date(a.pubDate || a.date).getTime(),
-        );
+        const combinedPosts = sortByDateDesc([
+          ...(apiPosts as Post[]),
+          ...(syndicatedPosts as ExtendedFeedItem[]),
+        ]);
 
         setPosts(combinedPosts);
         setFilteredPosts(combinedPosts);
@@ -211,13 +197,24 @@ export default function BlogPage() {
     }
   };
 
+  const navigateToPost = (post: ContentPost) => {
+    const href = getPostHref(post);
+
+    if (href.startsWith("http")) {
+      window.location.href = href;
+      return;
+    }
+
+    router.push(href);
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
     setValue(inputValue);
 
     if (inputValue.trim()) {
       const filteredSuggestions = posts.filter((post) =>
-        (post.title || "").toLowerCase().includes(inputValue.toLowerCase()),
+        matchesSearch(post, inputValue),
       );
       setSuggestions(filteredSuggestions);
       setFilteredPosts(filteredSuggestions);
@@ -229,9 +226,9 @@ export default function BlogPage() {
     }
   };
 
-  const handleSuggestionClick = (currentPost: Post | ExtendedFeedItem) => {
-    setValue(currentPost.title || "");
-    setFilteredPosts([currentPost]);
+  const handleSuggestionClick = (post: ContentPost) => {
+    setValue(post.title || "");
+    setFilteredPosts([post]);
     setSuggestions([]);
     setSelectedIndex(-1);
   };
@@ -249,15 +246,7 @@ export default function BlogPage() {
       e.preventDefault();
       const selectedPost = suggestions[selectedIndex];
       if (selectedPost) {
-        setValue(selectedPost.title || "");
-        setSuggestions([]);
-
-        // Use type narrowing to safely access slug
-        if ("slug" in selectedPost && selectedPost.slug) {
-          router.push(selectedPost.link || `/posts/${selectedPost.slug}`);
-        } else {
-          router.push(selectedPost.link || "/");
-        }
+        navigateToPost(selectedPost);
       }
     }
   };
@@ -267,21 +256,13 @@ export default function BlogPage() {
 
     if (value.trim()) {
       const matchedPost = posts.find(
-        (post) => (post.title || "").toLowerCase() === value.toLowerCase(),
+        (post) => post.title.toLowerCase() === value.toLowerCase(),
       );
 
       if (matchedPost) {
-        // Safely access slug with type check
-        if ("slug" in matchedPost && matchedPost.slug) {
-          router.push(matchedPost.link || `/posts/${matchedPost.slug}`);
-        } else {
-          router.push(matchedPost.link || "/");
-        }
+        navigateToPost(matchedPost);
       } else {
-        const filtered = posts.filter((post) =>
-          (post.title || "").toLowerCase().includes(value.toLowerCase()),
-        );
-        setFilteredPosts(filtered);
+        setFilteredPosts(posts.filter((post) => matchesSearch(post, value)));
       }
     } else {
       setFilteredPosts(posts);
@@ -293,14 +274,13 @@ export default function BlogPage() {
 
   return (
     <div className="flex flex-col items-center justify-center mt-16 mb-16 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <TitleUpdater title="Blog | Josh Peterson" />
+      <TitleUpdater title="Lab Notes | Josh Peterson" />
       <h1 className="text-5xl md:text-8xl font-bold tracking-tighter leading-tight md:pr-8 mb-8">
-        Blog
+        Lab Notes
       </h1>
-      <p className="text-lg text-center mt-5 md:pl-8 max-w-2xl mb-8">
-        Welcome to my personal blog, where I share my journey as a web developer
-        and explore a wide range of topics at the intersection of technology,
-        AI, supply chain logistics, crypto, space, and tech policy.
+      <p className="text-lg text-center mt-5 md:pl-8 max-w-2xl mb-8 text-muted-foreground">
+        Automation builds, source trails, public research notes, syndicated
+        writing, and practical artifacts from the public lab.
       </p>
 
       <div className="relative w-full max-w-md mb-12" ref={searchRef}>
@@ -311,22 +291,21 @@ export default function BlogPage() {
             value={value}
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
-            placeholder="Search blog posts..."
+            placeholder="Search lab notes..."
           />
           {suggestions.length > 0 && (
-            <ul className="absolute w-full bg-white dark:bg-neutral-900 border border-gray-300 dark:border-neutral-800 rounded-b shadow-lg z-10">
-              {suggestions.map((currentPost, index) => (
+            <ul className="absolute w-full bg-background border border-border rounded-b shadow-lg z-10">
+              {suggestions.map((post, index) => (
                 <li
-                  key={
-                    currentPost.link ||
-                    ("slug" in currentPost ? currentPost.slug : "")
-                  }
-                  onClick={() => handleSuggestionClick(currentPost)}
-                  className={`p-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-neutral-800 ${
-                    index === selectedIndex ? "bg-gray-200 dark:bg-neutral-700" : ""
+                  key={getPostKey(post)}
+                  onClick={() => handleSuggestionClick(post)}
+                  className={`p-2 cursor-pointer hover:bg-accent hover:text-accent-foreground ${
+                    index === selectedIndex
+                      ? "bg-accent text-accent-foreground"
+                      : ""
                   }`}
                 >
-                  {currentPost.title}
+                  {post.title}
                 </li>
               ))}
             </ul>
@@ -336,57 +315,60 @@ export default function BlogPage() {
 
       <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
         {filteredPosts.length > 0 ? (
-          filteredPosts.map((currentPost) => (
-            <li
-              key={
-                currentPost.link ||
-                ("slug" in currentPost ? currentPost.slug : "")
-              }
-              className="border rounded-lg shadow-lg overflow-hidden"
-            >
-              <div className="relative h-48">
-                {getImagePath(currentPost) ? (
+          filteredPosts.map((post) => {
+            const href = getPostHref(post);
+            const external = href.startsWith("http");
+            const imagePath = getImagePath(post);
+
+            return (
+              <li
+                key={getPostKey(post)}
+                className="border border-border rounded-lg shadow-lg overflow-hidden"
+              >
+                <div className="relative h-48 bg-muted">
                   <Image
-                    src={getImagePath(currentPost) as string} // Type assertion to ensure it's treated as string
-                    alt={currentPost.title || "Blog post thumbnail"}
+                    src={imagePath}
+                    alt={post.title || "Lab note thumbnail"}
                     fill
                     style={{ objectFit: "cover" }}
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    unoptimized={getImagePath(currentPost)?.includes(
-                      "cdn.midjourney.com",
-                    )} // Ensure no null errors
+                    unoptimized={imagePath.includes("cdn.midjourney.com")}
                   />
-                ) : (
-                  <div className="w-full h-full bg-gray-200 dark:bg-neutral-800 flex items-center justify-center">
-                    <span className="text-gray-400 dark:text-neutral-500">No image available</span>
+                </div>
+                <div className="p-4">
+                  <div className="mb-3 flex flex-wrap gap-2">
+                    <span className="rounded border border-border px-2 py-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                      {getSourceLabel(post)}
+                    </span>
+                    {isLocalPost(post) && post.artifactType && (
+                      <span className="rounded bg-accent px-2 py-1 text-xs font-semibold uppercase tracking-wide text-accent-foreground">
+                        {getArtifactLabel(post.artifactType)}
+                      </span>
+                    )}
+                    {!isLocalPost(post) && (
+                      <span className="rounded bg-accent px-2 py-1 text-xs font-semibold uppercase tracking-wide text-accent-foreground">
+                        Syndicated
+                      </span>
+                    )}
                   </div>
-                )}
-              </div>
-              <div className="p-4">
-                <Link
-                  href={
-                    currentPost.link ||
-                    `/posts/${"slug" in currentPost ? currentPost.slug : ""}`
-                  }
-                  className="text-xl font-semibold text-blue-600 dark:text-sky-400 hover:underline dark:hover:text-sky-300"
-                >
-                  {currentPost.title}
-                </Link>
-                <p className="text-gray-500 dark:text-neutral-400 text-sm">
-                  {new Date(
-                    "pubDate" in currentPost && currentPost.pubDate
-                      ? currentPost.pubDate
-                      : "date" in currentPost && currentPost.date
-                        ? currentPost.date
-                        : new Date().toISOString(), // Fallback to current date if neither exists
-                  ).toLocaleDateString()}
-                </p>
-                <p className="text-gray-600 dark:text-neutral-300 mt-2 line-clamp-3">
-                  {getExcerpt(currentPost)}
-                </p>
-              </div>
-            </li>
-          ))
+                  <Link
+                    href={href}
+                    target={external ? "_blank" : undefined}
+                    rel={external ? "noopener noreferrer" : undefined}
+                    className="text-xl font-semibold text-blue-600 dark:text-sky-400 hover:underline dark:hover:text-sky-300"
+                  >
+                    {post.title}
+                  </Link>
+                  <p className="text-muted-foreground text-sm">
+                    {new Date(getPostDate(post)).toLocaleDateString()}
+                  </p>
+                  <p className="text-muted-foreground mt-2 line-clamp-3">
+                    {getExcerpt(post)}
+                  </p>
+                </div>
+              </li>
+            );
+          })
         ) : (
           <li className="col-span-full text-center">No posts found.</li>
         )}

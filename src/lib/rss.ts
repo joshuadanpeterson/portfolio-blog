@@ -1,6 +1,8 @@
 // src/lib/rss.ts
 import Parser from "rss-parser";
 
+export type FeedSource = "medium" | "substack" | "steemit";
+
 export interface FeedItem {
   title: string;
   link: string;
@@ -10,6 +12,13 @@ export interface FeedItem {
   "content:encoded"?: string;
   imageUrl?: string;
   description?: string;
+  source?: FeedSource;
+  externalId?: string;
+}
+
+export interface RSSFeedSource {
+  url: string;
+  source?: FeedSource;
 }
 
 interface CustomFeed {
@@ -32,6 +41,7 @@ interface CustomItem {
   };
   description?: string;
   content?: string;
+  guid?: string;
 }
 
 const parser = new Parser<CustomFeed, CustomItem>({
@@ -50,9 +60,15 @@ const parser = new Parser<CustomFeed, CustomItem>({
   },
 });
 
-export async function fetchRSSFeeds(feedUrls: string[]): Promise<FeedItem[]> {
+export async function fetchRSSFeeds(
+  feedSources: Array<string | RSSFeedSource>,
+): Promise<FeedItem[]> {
   const feeds = await Promise.all(
-    feedUrls.map(async (url) => {
+    feedSources.map(async (feedSource) => {
+      const url = typeof feedSource === "string" ? feedSource : feedSource.url;
+      const source =
+        typeof feedSource === "string" ? undefined : feedSource.source;
+
       try {
         const feed = await parser.parseURL(url);
         return feed.items.map((item) => {
@@ -85,6 +101,8 @@ export async function fetchRSSFeeds(feedUrls: string[]): Promise<FeedItem[]> {
             description,
             content,
             imageUrl,
+            source,
+            externalId: item.guid || item.link,
           };
         });
       } catch (error) {
@@ -97,7 +115,7 @@ export async function fetchRSSFeeds(feedUrls: string[]): Promise<FeedItem[]> {
   return feeds.flat();
 }
 
-function getContentSnippet(content: string): string {
+export function getContentSnippet(content: string): string {
   if (!content) return "No content";
 
   const textContent = content

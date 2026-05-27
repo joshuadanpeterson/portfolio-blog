@@ -3,7 +3,8 @@
   "scripts": {
     "dev": "bash scripts/with-node.sh next",
     "build": "bash scripts/with-node.sh next build",
-    "start": "bash scripts/with-node.sh next start"
+    "start": "bash scripts/with-node.sh next start",
+    "test:steemit": "bash scripts/with-node.sh node scripts/check-steemit-normalization.cjs"
   },
   "engines": {
     "node": ">=20.17.0 <23",
