@@ -73,6 +73,12 @@ export default function Index() {
                 Read lab notes
               </Link>
               <Link
+                href="/freelance"
+                className="inline-flex min-h-11 items-center justify-center rounded-md border border-foreground px-5 py-3 text-sm font-semibold transition-colors hover:bg-foreground hover:text-background"
+              >
+                Work with Josh
+              </Link>
+              <Link
                 href="/notebook"
                 className="inline-flex min-h-11 items-center justify-center rounded-md border border-border px-5 py-3 text-sm font-semibold transition-colors hover:bg-accent hover:text-accent-foreground"
               >
@@ -90,6 +96,12 @@ export default function Index() {
                 AI-assisted operations, and implementation notes with practical
                 artifacts.
               </p>
+              <Link
+                href="/freelance"
+                className="mt-4 inline-flex text-sm font-semibold text-blue-600 underline underline-offset-4 hover:text-blue-700 dark:text-sky-400 dark:hover:text-sky-300"
+              >
+                Hire me for automation and internal tools
+              </Link>
             </div>
             <div>
               <h2 className="text-2xl font-bold tracking-tight text-foreground">

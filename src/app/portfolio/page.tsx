@@ -7,6 +7,24 @@ import TitleUpdater from "@/app/_components/title-updater";
 import { Card } from "@/components/ui/card";
 import type { Repository } from "@/lib/github-types";
 
+const clientLanes = [
+  {
+    title: "Workflow automation",
+    description:
+      "Google Sheets, Apps Script, Slack, and Workspace systems that remove repeated manual steps.",
+  },
+  {
+    title: "Reporting and visibility",
+    description:
+      "Dashboards, status views, and KPI workflows that make scattered operations easier to inspect.",
+  },
+  {
+    title: "Cleanup and internal tools",
+    description:
+      "Scripts, sync jobs, and lightweight admin surfaces for messy back-office data paths.",
+  },
+];
+
 const PortfolioPage = () => {
   const [repos, setRepos] = useState<Repository[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -41,8 +59,21 @@ const PortfolioPage = () => {
           Portfolio
         </h1>
         <p className="text-lg mt-5 md:pl-8 text-center md:text-left max-w-2xl">
-          Selected repositories and public builds from the automation lab.
+          Selected repositories and public builds from the automation lab,
+          grouped around the kinds of buyer problems they help solve.
         </p>
+        <div className="mt-10 grid w-full max-w-5xl grid-cols-1 gap-4 md:grid-cols-3">
+          {clientLanes.map((lane) => (
+            <Card key={lane.title} className="rounded-md p-5 shadow-sm">
+              <h2 className="text-xl font-semibold leading-snug text-foreground">
+                {lane.title}
+              </h2>
+              <p className="mt-3 leading-relaxed text-muted-foreground">
+                {lane.description}
+              </p>
+            </Card>
+          ))}
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
           {isLoading && (
             <p className="col-span-full text-muted-foreground">

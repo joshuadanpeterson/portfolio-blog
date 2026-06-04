@@ -1,6 +1,6 @@
 # Portfolio Blog Status
 
-Last updated: 2026-05-25 01:58 MDT
+Last updated: 2026-06-03 19:11 MDT
 
 ## Current Direction
 
@@ -15,14 +15,22 @@ The site is being repositioned as a public automation lab with a visible reporte
 - Major automation posts should include a practical artifact.
 - Notebook posts should include an evidence artifact such as a source trail, public-record method, or open-question list.
 - The old client-side `/api/proxy-rss` flow has been replaced by server-side syndication helpers in `src/lib/syndication.ts` and `src/lib/steemit.ts`.
+- The first freelance services layer is implemented at `/freelance`, with `Services` in the nav, homepage/about/contact entry points, project-fit contact fields, sitemap coverage, and a public case-study proof asset.
 
 ## Open Questions
 
 - Whether the niche pilot earns its own name, newsletter, or domain after validation.
 - Which artifact format gets the strongest response: Sheet template, Apps Script snippet, checklist, or teardown.
 - Whether the Reporter's Notebook should later split into public records, source trails, and methods sub-pages.
+- Which deeper proof assets should come next for the freelance services layer: Sheets CRM, reporting dashboard, API/CRM sync, Python cleanup, or lightweight admin panel case studies.
 
 ## Next Verification
 
 - Smoke-test `/posts` and `/api/syndicated-posts` in a browser-backed local run after the merge.
-- Verify `/`, `/about`, `/posts`, `/notebook`, `/portfolio`, `/robots.txt`, and `/sitemap.xml` before publishing.
+- Before publishing, recheck the full buyer-path smoke set: `/`, `/freelance`, `/about`, `/portfolio`, `/contact?type=freelance`, `/posts`, `/notebook`, `/robots.txt`, `/sitemap.xml`, and `/posts/public-automation-lab-freelance-services-case-study`.
+
+## Recent Verification
+
+- 2026-06-03 19:10 MDT: `npm run build` passed; route table included `/freelance` and `/posts/public-automation-lab-freelance-services-case-study`.
+- 2026-06-03 19:10 MDT: `npx tsc --noEmit` passed after the build regenerated `.next/types`.
+- 2026-06-03 19:10 MDT: Local smoke checks returned 200 for `/`, `/freelance`, `/about`, `/portfolio`, `/contact?type=freelance`, `/posts`, `/notebook`, `/robots.txt`, `/sitemap.xml`, and the new case-study post.

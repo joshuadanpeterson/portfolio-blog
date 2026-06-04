@@ -29,6 +29,7 @@ const Navbar: FC = () => {
     { href: "/", label: "Home" },
     { href: "/posts", label: "Lab Notes" },
     { href: "/notebook", label: "Notebook" },
+    { href: "/freelance", label: "Services" },
     { href: "/portfolio", label: "Portfolio" },
     { href: "/about", label: "About" },
     { href: "/contact", label: "Contact" },

@@ -2,6 +2,7 @@
 "use client";
 import About from "@/app/_components/about";
 import TitleUpdater from "@/app/_components/title-updater";
+import Link from "next/link";
 
 const AboutPage = () => {
   return (
@@ -31,6 +32,18 @@ const AboutPage = () => {
             This site is the public version of that practice: an automation lab
             for workflows that can be reused, and a reporter&apos;s notebook for
             source trails, public-record methods, and evidence-led research.
+          </p>
+          <p className="mt-4">
+            For freelance work, I build practical Google Sheets automation,
+            dashboards, API-connected reporting, cleanup scripts, and lightweight
+            internal tools for operations-heavy teams.{" "}
+            <Link
+              href="/freelance"
+              className="font-semibold text-blue-600 underline underline-offset-4 hover:text-blue-700 dark:text-sky-400 dark:hover:text-sky-300"
+            >
+              See how I can help
+            </Link>
+            .
           </p>
         </div>
       </div>

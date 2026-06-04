@@ -5,7 +5,20 @@ import nodemailer from "nodemailer";
 
 export default async (req, res) => {
   if (req.method === "POST") {
-    const { name, email, subject, message } = req.body;
+    const {
+      name,
+      email,
+      subject,
+      projectType,
+      timeline,
+      budgetRange,
+      message,
+    } = req.body;
+    const projectLines = [
+      projectType ? `Project type: ${projectType}` : null,
+      timeline ? `Timeline: ${timeline}` : null,
+      budgetRange ? `Budget range: ${budgetRange}` : null,
+    ].filter(Boolean);
 
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -24,6 +37,7 @@ export default async (req, res) => {
       
       Name: ${name}
       Email: ${email}
+      ${projectLines.length > 0 ? `${projectLines.join("\n      ")}\n      ` : ""}
       Message: ${message}`,
     };
 
