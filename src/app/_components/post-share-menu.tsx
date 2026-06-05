@@ -141,7 +141,7 @@ export function PostShareMenu({ title, url }: Props) {
         <DropdownMenuContent
           ref={contentRef}
           align="end"
-          className="z-[1000] w-52 bg-white dark:bg-popover"
+          className="z-[1000] w-52"
         >
           <DropdownMenuItem asChild>
             <a
