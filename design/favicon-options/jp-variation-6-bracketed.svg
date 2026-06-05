@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">JP Bracketed Variation</title>
+  <desc id="desc">A JP monogram framed like a code bracket.</desc>
+  <rect width="64" height="64" rx="14" fill="#f8fafc"/>
+  <path d="M14 20l-6 12 6 12" fill="none" stroke="#0ea5e9" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M22 13v30c0 7-4 10-10 10" fill="none" stroke="#0f172a" stroke-width="7" stroke-linecap="round"/>
+  <path d="M27 13h16c7 0 12 5 12 12s-5 12-12 12h-7v16" fill="none" stroke="#0f172a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

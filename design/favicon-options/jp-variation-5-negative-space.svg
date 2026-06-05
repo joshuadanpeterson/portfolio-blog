@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">JP Negative Space Variation</title>
+  <desc id="desc">A block JP mark using negative space.</desc>
+  <rect width="64" height="64" rx="14" fill="#0f172a"/>
+  <path fill="#f8fafc" fill-rule="evenodd" d="M15 11h31c8 0 13 5 13 13 0 7-5 12-13 12h-7v17h-9V20H15zm24 9v8h7c3 0 5-1 5-4s-2-4-5-4zm-23 7h9v18c0 8-5 12-14 12v-8c3 0 5-2 5-6z"/>
+  <circle cx="51" cy="51" r="5" fill="#0ea5e9"/>
+</svg>

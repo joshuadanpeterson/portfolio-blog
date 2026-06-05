@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 700" role="img" aria-labelledby="title desc">
+  <title id="title">Portfolio Blog Favicon Options</title>
+  <desc id="desc">Six favicon concepts for Josh Peterson's public automation lab and reporter's notebook.</desc>
+  <rect width="960" height="700" fill="#f8fafc"/>
+  <style>
+    .label{font:600 22px system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#0f172a}
+    .note{font:400 15px system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#475569}
+    .card{fill:#fff;stroke:#e2e8f0;stroke-width:2}
+  </style>
+  <text x="64" y="68" class="label">Favicon concepts</text>
+  <text x="64" y="96" class="note">Crisp, small-size marks for the Public Automation Lab / reporter's notebook site.</text>
+
+  <g transform="translate(64 135)">
+    <rect class="card" width="250" height="210" rx="16"/>
+    <svg x="73" y="28" width="104" height="104" viewBox="0 0 64 64">
+      <rect width="64" height="64" rx="14" fill="#020617"/>
+      <path d="M18 14h19c7 0 12 5 12 12s-5 12-12 12H27" fill="none" stroke="#f8fafc" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M26 14v32c0 6-4 9-10 9" fill="none" stroke="#f8fafc" stroke-width="7" stroke-linecap="round"/>
+      <path d="M37 38v10c0 5-3 7-8 7" fill="none" stroke="#f8fafc" stroke-width="7" stroke-linecap="round"/>
+      <circle cx="49" cy="15" r="5" fill="#0ea5e9"/>
+    </svg>
+    <text x="24" y="164" class="label">1. JP Node</text>
+    <text x="24" y="188" class="note">Personal, technical, compact.</text>
+  </g>
+
+  <g transform="translate(355 135)">
+    <rect class="card" width="250" height="210" rx="16"/>
+    <svg x="73" y="28" width="104" height="104" viewBox="0 0 64 64">
+      <rect width="64" height="64" rx="14" fill="#f8fafc"/>
+      <path d="M19 12h23l7 7v33H19z" fill="#fff" stroke="#0f172a" stroke-width="5" stroke-linejoin="round"/>
+      <path d="M42 12v9h7" fill="none" stroke="#0f172a" stroke-width="5" stroke-linejoin="round"/>
+      <path d="M27 30h12M27 39h7" stroke="#0f172a" stroke-width="4" stroke-linecap="round"/>
+      <path d="M16 22h-3M16 32h-3M16 42h-3" stroke="#0ea5e9" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="44" cy="43" r="4" fill="#0ea5e9"/>
+    </svg>
+    <text x="24" y="164" class="label">2. Notebook Circuit</text>
+    <text x="24" y="188" class="note">Editorial plus automation.</text>
+  </g>
+
+  <g transform="translate(646 135)">
+    <rect class="card" width="250" height="210" rx="16"/>
+    <svg x="73" y="28" width="104" height="104" viewBox="0 0 64 64">
+      <rect width="64" height="64" rx="14" fill="#0f172a"/>
+      <path d="M18 21l12 11-12 11" fill="none" stroke="#f8fafc" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M34 44h13" stroke="#f8fafc" stroke-width="7" stroke-linecap="round"/>
+      <circle cx="38" cy="22" r="3.5" fill="#0ea5e9"/>
+      <circle cx="47" cy="17" r="3.5" fill="#0ea5e9"/>
+      <circle cx="52" cy="27" r="3.5" fill="#0ea5e9"/>
+    </svg>
+    <text x="24" y="164" class="label">3. Prompt Trail</text>
+    <text x="24" y="188" class="note">CLI, process, source trail.</text>
+  </g>
+
+  <g transform="translate(64 395)">
+    <rect class="card" width="250" height="210" rx="16"/>
+    <svg x="73" y="28" width="104" height="104" viewBox="0 0 64 64">
+      <rect width="64" height="64" rx="14" fill="#020617"/>
+      <circle cx="32" cy="32" r="19" fill="none" stroke="#f8fafc" stroke-width="5"/>
+      <path d="M32 11v11M32 42v11M11 32h11M42 32h11" stroke="#f8fafc" stroke-width="5" stroke-linecap="round"/>
+      <path d="M20 44l24-24" stroke="#64748b" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="32" cy="32" r="6" fill="#0ea5e9"/>
+    </svg>
+    <text x="24" y="164" class="label">4. Source Map</text>
+    <text x="24" y="188" class="note">Research, targeting, evidence.</text>
+  </g>
+
+  <g transform="translate(355 395)">
+    <rect class="card" width="250" height="210" rx="16"/>
+    <svg x="73" y="28" width="104" height="104" viewBox="0 0 64 64">
+      <rect width="64" height="64" rx="14" fill="#f8fafc"/>
+      <path d="M18 10h24l8 8v36H18z" fill="#fff" stroke="#0f172a" stroke-width="5" stroke-linejoin="round"/>
+      <path d="M42 10v10h8" fill="none" stroke="#0f172a" stroke-width="5" stroke-linejoin="round"/>
+      <path d="M32 25v18M23 34h18M26 28l12 12M38 28L26 40" stroke="#0ea5e9" stroke-width="4" stroke-linecap="round"/>
+    </svg>
+    <text x="24" y="164" class="label">5. Document Spark</text>
+    <text x="24" y="188" class="note">Simple artifact/workflow mark.</text>
+  </g>
+
+  <g transform="translate(646 395)">
+    <rect class="card" width="250" height="210" rx="16"/>
+    <svg x="73" y="28" width="104" height="104" viewBox="0 0 64 64">
+      <rect width="64" height="64" rx="14" fill="#111827"/>
+      <path d="M24 15v28c0 6-4 9-10 9" fill="none" stroke="#f8fafc" stroke-width="7" stroke-linecap="round"/>
+      <path d="M25 16h17c6 0 10 4 10 10s-4 10-10 10H33v15" fill="none" stroke="#f8fafc" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M42 46h11" stroke="#0ea5e9" stroke-width="6" stroke-linecap="round"/>
+    </svg>
+    <text x="24" y="164" class="label">6. Slate Ligature</text>
+    <text x="24" y="188" class="note">Most app-icon-like.</text>
+  </g>
+</svg>
