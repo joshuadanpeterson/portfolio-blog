@@ -1,6 +1,7 @@
 import Avatar from "./avatar";
 import CoverImage from "./cover-image";
 import DateFormatter from "./date-formatter";
+import { PostShareMenu } from "@/app/_components/post-share-menu";
 import { PostTitle } from "@/app/_components/post-title";
 import { type Author } from "@/interfaces/author";
 
@@ -9,9 +10,10 @@ type Props = {
   coverImage: string;
   date: string | Date;
   author: Author;
+  postUrl: string;
 };
 
-export function PostHeader({ title, coverImage, date, author }: Props) {
+export function PostHeader({ title, coverImage, date, author, postUrl }: Props) {
   return (
     <>
       <PostTitle>{title}</PostTitle>
@@ -25,8 +27,9 @@ export function PostHeader({ title, coverImage, date, author }: Props) {
         <div className="block md:hidden mb-6">
           <Avatar name={author.name} picture={author.picture} />
         </div>
-        <div className="mb-6 text-lg">
+        <div className="mb-6 flex flex-col gap-4 text-lg sm:flex-row sm:items-center sm:justify-between">
           <DateFormatter dateString={date} />
+          <PostShareMenu title={title} url={postUrl} />
         </div>
       </div>
     </>

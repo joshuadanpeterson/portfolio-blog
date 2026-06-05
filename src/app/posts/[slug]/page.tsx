@@ -7,6 +7,7 @@ import Header from "@/app/_components/header";
 import { PostBody } from "@/app/_components/post-body";
 import { PostHeader } from "@/app/_components/post-header";
 import TitleUpdater from "@/app/_components/title-updater";
+import { SITE_URL } from "@/lib/constants";
 
 export default async function Post(props: any) {
   // Await the entire params object
@@ -24,6 +25,7 @@ export default async function Post(props: any) {
   
   // Format the title for the browser tab
   const pageTitle = `${displayTitle} | Josh Peterson's Lab Notes`;
+  const postUrl = new URL(`/posts/${post.slug}`, SITE_URL).toString();
 
   return (
     <main>
@@ -37,6 +39,7 @@ export default async function Post(props: any) {
             coverImage={post.coverImage}
             date={post.date}
             author={post.author}
+            postUrl={postUrl}
           />
           <PostBody content={content} />
         </article>
