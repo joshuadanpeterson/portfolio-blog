@@ -36,9 +36,13 @@ const AboutPage = () => {
           <p className="mt-4">
             For freelance work, I build practical Google Sheets automation,
             dashboards, API-connected reporting, cleanup scripts, and lightweight
-            internal tools for operations-heavy teams.{" "}
+            internal tools for operations-heavy teams. I also take on selected
+            writing, research, and AI-assisted creative production projects for
+            clients who need technical editorial copy, founder thought
+            leadership, research briefs, case studies, positioning cleanup, or
+            marketing concepts.{" "}
             <Link
-              href="/freelance"
+              href="/work-with-me"
               className="font-semibold text-blue-600 underline underline-offset-4 hover:text-blue-700 dark:text-sky-400 dark:hover:text-sky-300"
             >
               See how I can help

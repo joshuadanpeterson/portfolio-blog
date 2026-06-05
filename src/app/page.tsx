@@ -73,7 +73,7 @@ export default function Index() {
                 Read lab notes
               </Link>
               <Link
-                href="/freelance"
+                href="/work-with-me"
                 className="inline-flex min-h-11 items-center justify-center rounded-md border border-foreground px-5 py-3 text-sm font-semibold transition-colors hover:bg-foreground hover:text-background"
               >
                 Work with Josh
@@ -86,7 +86,7 @@ export default function Index() {
               </Link>
             </div>
           </div>
-          <div className="mt-12 grid gap-8 border-y border-border py-8 md:grid-cols-2">
+          <div className="mt-12 grid gap-8 border-y border-border py-8 md:grid-cols-3">
             <div>
               <h2 className="text-2xl font-bold tracking-tight text-foreground">
                 Automation Lab
@@ -101,6 +101,22 @@ export default function Index() {
                 className="mt-4 inline-flex text-sm font-semibold text-blue-600 underline underline-offset-4 hover:text-blue-700 dark:text-sky-400 dark:hover:text-sky-300"
               >
                 Hire me for automation and internal tools
+              </Link>
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold tracking-tight text-foreground">
+                Writing & Creative Production
+              </h2>
+              <p className="mt-3 text-muted-foreground">
+                Technical editorial writing, founder thought leadership,
+                research briefs, positioning cleanup, and AI-assisted marketing
+                concept work.
+              </p>
+              <Link
+                href="/writing"
+                className="mt-4 inline-flex text-sm font-semibold text-blue-600 underline underline-offset-4 hover:text-blue-700 dark:text-sky-400 dark:hover:text-sky-300"
+              >
+                Hire me for writing and creative support
               </Link>
             </div>
             <div>

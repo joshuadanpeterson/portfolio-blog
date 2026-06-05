@@ -13,11 +13,20 @@ function ContactForm() {
   const searchParams = useSearchParams();
   const inquiryType = searchParams?.get("type");
   const isFreelanceInquiry = inquiryType === "freelance";
+  const isWritingInquiry = inquiryType === "writing";
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    subject: isFreelanceInquiry ? "Freelance project inquiry" : "",
-    projectType: isFreelanceInquiry ? "Automation or internal tools" : "",
+    subject: isWritingInquiry
+      ? "Writing or creative production inquiry"
+      : isFreelanceInquiry
+        ? "Freelance project inquiry"
+        : "",
+    projectType: isWritingInquiry
+      ? "Technical editorial writing"
+      : isFreelanceInquiry
+        ? "Automation or internal tools"
+        : "",
     timeline: "",
     budgetRange: "",
     message: "",
@@ -59,9 +68,11 @@ function ContactForm() {
           Contact Me
         </h1>
         <p className="mt-5 max-w-2xl text-center text-lg leading-relaxed text-muted-foreground md:text-left">
-          {isFreelanceInquiry
-            ? "Tell me what workflow is painful, what tools are involved, and what would count as a useful first win. I am strongest on automation, dashboards, reporting, cleanup scripts, and lightweight internal tools."
-            : "Send a note about collaborations, reporting, automation work, or anything else that belongs in this orbit."}
+          {isWritingInquiry
+            ? "For writing or creative projects, include the audience, format, deadline, rough word count or asset need, and whether the work is public-facing, internal, or ghostwritten."
+            : isFreelanceInquiry
+              ? "Tell me what workflow is painful, what tools are involved, and what would count as a useful first win. I am strongest on automation, dashboards, reporting, cleanup scripts, and lightweight internal tools."
+              : "Send a note about collaborations, reporting, automation work, writing projects, creative production, or anything else that belongs in this orbit."}
         </p>
         <form className="w-full max-w-lg mt-5" onSubmit={handleSubmit}>
           <div className="mb-4">
@@ -132,6 +143,24 @@ function ContactForm() {
               </option>
               <option value="Lightweight internal tool or admin panel">
                 Lightweight internal tool or admin panel
+              </option>
+              <option value="Technical editorial writing">
+                Technical editorial writing
+              </option>
+              <option value="Founder thought leadership">
+                Founder thought leadership
+              </option>
+              <option value="Research brief or white paper">
+                Research brief or white paper
+              </option>
+              <option value="Case study or customer story">
+                Case study or customer story
+              </option>
+              <option value="Website or positioning cleanup">
+                Website or positioning cleanup
+              </option>
+              <option value="AI-assisted creative production">
+                AI-assisted creative production
               </option>
               <option value="Not sure yet">Not sure yet</option>
             </select>

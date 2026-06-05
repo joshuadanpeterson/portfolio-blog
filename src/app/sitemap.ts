@@ -10,6 +10,8 @@ const staticRoutes = [
   "/notebook",
   "/portfolio",
   "/posts",
+  "/work-with-me",
+  "/writing",
 ] as const;
 
 function getLastModified(date: string | Date): Date | undefined {

@@ -1,6 +1,6 @@
 # Portfolio Blog Status
 
-Last updated: 2026-06-03 19:11 MDT
+Last updated: 2026-06-04 21:13 MDT
 
 ## Current Direction
 
@@ -16,6 +16,7 @@ The site is being repositioned as a public automation lab with a visible reporte
 - Notebook posts should include an evidence artifact such as a source trail, public-record method, or open-question list.
 - The old client-side `/api/proxy-rss` flow has been replaced by server-side syndication helpers in `src/lib/syndication.ts` and `src/lib/steemit.ts`.
 - The first freelance services layer is implemented at `/freelance`, with `Services` in the nav, homepage/about/contact entry points, project-fit contact fields, sitemap coverage, and a public case-study proof asset.
+- The next buyer-path expansion keeps `/freelance` focused on automation, adds `/work-with-me` as the main hub, and adds `/writing` for technical editorial writing plus AI-assisted creative production as a sub-offer. The nav now points to `Work With Me`.
 
 ## Open Questions
 
@@ -27,7 +28,7 @@ The site is being repositioned as a public automation lab with a visible reporte
 ## Next Verification
 
 - Smoke-test `/posts` and `/api/syndicated-posts` in a browser-backed local run after the merge.
-- Before publishing, recheck the full buyer-path smoke set: `/`, `/freelance`, `/about`, `/portfolio`, `/contact?type=freelance`, `/posts`, `/notebook`, `/robots.txt`, `/sitemap.xml`, and `/posts/public-automation-lab-freelance-services-case-study`.
+- Before publishing, recheck the full buyer-path smoke set: `/`, `/work-with-me`, `/freelance`, `/writing`, `/about`, `/portfolio`, `/contact?type=freelance`, `/contact?type=writing`, `/posts`, `/notebook`, `/robots.txt`, `/sitemap.xml`, and `/posts/public-automation-lab-freelance-services-case-study`.
 
 ## Recent Verification
 

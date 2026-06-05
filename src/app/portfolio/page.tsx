@@ -23,6 +23,16 @@ const clientLanes = [
     description:
       "Scripts, sync jobs, and lightweight admin surfaces for messy back-office data paths.",
   },
+  {
+    title: "Writing and research",
+    description:
+      "Technical editorial writing, source trails, explainers, research briefs, and public proof from the lab and notebook.",
+  },
+  {
+    title: "Creative production support",
+    description:
+      "AI-assisted visual concepts, marketing asset directions, prompt systems, and creative QA grounded in writing and workflow judgment.",
+  },
 ];
 
 const PortfolioPage = () => {
@@ -62,7 +72,7 @@ const PortfolioPage = () => {
           Selected repositories and public builds from the automation lab,
           grouped around the kinds of buyer problems they help solve.
         </p>
-        <div className="mt-10 grid w-full max-w-5xl grid-cols-1 gap-4 md:grid-cols-3">
+        <div className="mt-10 grid w-full max-w-5xl grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {clientLanes.map((lane) => (
             <Card key={lane.title} className="rounded-md p-5 shadow-sm">
               <h2 className="text-xl font-semibold leading-snug text-foreground">
