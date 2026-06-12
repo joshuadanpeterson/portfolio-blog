@@ -40,3 +40,11 @@ portfolio-blog.zip
 
 # production html output
 production.html
+
+# local planning/spec drafts
+PRD.md
+REPORT_SPEC.md
+docs/*prd*.md
+
+# generated image scratch variants
+public/assets/blog/images/nano-banana-variants/
