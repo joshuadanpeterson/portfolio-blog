@@ -1,6 +1,6 @@
 # Portfolio Blog Status
 
-Last updated: 2026-06-04 21:13 MDT
+Last updated: 2026-06-11 22:23 MDT
 
 ## Current Direction
 
@@ -17,6 +17,7 @@ The site is being repositioned as a public automation lab with a visible reporte
 - The old client-side `/api/proxy-rss` flow has been replaced by server-side syndication helpers in `src/lib/syndication.ts` and `src/lib/steemit.ts`.
 - The first freelance services layer is implemented at `/freelance`, with `Services` in the nav, homepage/about/contact entry points, project-fit contact fields, sitemap coverage, and a public case-study proof asset.
 - The next buyer-path expansion keeps `/freelance` focused on automation, adds `/work-with-me` as the main hub, and adds `/writing` for technical editorial writing plus AI-assisted creative production as a sub-offer. The nav now points to `Work With Me`.
+- Contact form emails append `[Portfolio Contact]` by default so Gmail can filter `subject:"[Portfolio Contact]"` into a dedicated label. `CONTACT_FORM_TO` and `CONTACT_FORM_SUBJECT_TAG` can override the recipient and filter token.
 
 ## Open Questions
 

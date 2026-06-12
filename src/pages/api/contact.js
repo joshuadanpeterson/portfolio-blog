@@ -3,6 +3,16 @@
 
 import nodemailer from "nodemailer";
 
+const DEFAULT_CONTACT_EMAIL = "joshuadanpeterson@gmail.com";
+const DEFAULT_SUBJECT_TAG = "[Portfolio Contact]";
+
+function sanitizeSubject(value) {
+  return String(value || "Website inquiry")
+    .replace(/[\r\n]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 export default async (req, res) => {
   if (req.method === "POST") {
     const {
@@ -14,6 +24,15 @@ export default async (req, res) => {
       budgetRange,
       message,
     } = req.body;
+    const subjectTag =
+      process.env.CONTACT_FORM_SUBJECT_TAG || DEFAULT_SUBJECT_TAG;
+    const contactRecipient =
+      process.env.CONTACT_FORM_TO ||
+      process.env.EMAIL_USER ||
+      DEFAULT_CONTACT_EMAIL;
+    const taggedSubject = `Contact Form Submission: ${sanitizeSubject(
+      subject,
+    )} ${subjectTag}`;
     const projectLines = [
       projectType ? `Project type: ${projectType}` : null,
       timeline ? `Timeline: ${timeline}` : null,
@@ -31,8 +50,8 @@ export default async (req, res) => {
     const mailOptions = {
       from: process.env.EMAIL_USER,
       replyTo: email,
-      to: "joshuadanpeterson@gmail.com",
-      subject: `Contact Form Submission: ${subject}`,
+      to: contactRecipient,
+      subject: taggedSubject,
       text: `You have a new contact form submission from:
       
       Name: ${name}

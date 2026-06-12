@@ -46,6 +46,17 @@ nvm use
 
 The npm scripts source nvm automatically when it is available, so `npm run build` works even if the parent shell still points at an older Node binary.
 
+## Contact Form Mail Routing
+
+The contact form posts to `/api/contact`, sends through Gmail SMTP, and appends `[Portfolio Contact]` to the email subject by default. Create a Gmail filter for `subject:"[Portfolio Contact]"` and apply the desired label so site inquiries are routed into their own Gmail label.
+
+Optional environment overrides:
+
+```bash
+CONTACT_FORM_TO=you@example.com
+CONTACT_FORM_SUBJECT_TAG="[Portfolio Contact]"
+```
+
 ## Commands
 
 ```bash

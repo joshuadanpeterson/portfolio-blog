@@ -39,6 +39,8 @@ Environment setup
   - GITHUB_ACCESS_TOKEN: GitHub personal access token for fetching pinned repos (portfolio page)
   - EMAIL_USER: Gmail address for contact form
   - EMAIL_PASS: Gmail app password (not regular password) for SMTP
+  - CONTACT_FORM_TO: Optional recipient override for contact form submissions
+  - CONTACT_FORM_SUBJECT_TAG: Optional Gmail-filter token appended to contact form subjects; defaults to `[Portfolio Contact]`
 - Without these, specific features will fail silently - homepage won't show pinned repos, contact form won't send emails
 
 Image handling
@@ -102,6 +104,7 @@ Operational tips specific to this repo
   - Native RSS sources are specified in src/lib/syndication.ts and loaded server-side through /api/syndicated-posts. Steemit syndication uses src/lib/steemit.ts instead of an RSS.app wrapper.
 - Gmail contact form
   - The /pages/api/contact.js endpoint uses Gmail SMTP. Configure EMAIL_USER and EMAIL_PASS in your environment; for production consider app passwords or a dedicated SMTP provider.
+  - Contact form subjects append `[Portfolio Contact]` by default. Gmail can filter `subject:"[Portfolio Contact]"` into a dedicated label.
 
 Pointers
 - README.md explains the public lab direction and content model. For deployment, use standard Next.js/Vercel guidance.
