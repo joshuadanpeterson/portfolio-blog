@@ -8,11 +8,11 @@ artifactType: checklist
 author:
   name: Josh Peterson
   picture: /assets/blog/authors/2017_profile_pic.jpg
-coverImage: /assets/blog/images/automating-slack-google-sheets-cover.png
+coverImage: /assets/blog/images/google-sheets-crm-follow-up-cover.png
 date: 2026-05-24T23:30:00-06:00
 excerpt: "A practical first lab build for solo consultants: a Google Sheets CRM that turns follow-up from memory into a repeatable operating system."
 ogImage:
-  url: /assets/blog/images/automating-slack-google-sheets-cover.png
+  url: /assets/blog/images/google-sheets-crm-follow-up-cover.png
 ---
 # Google Sheets CRM + Follow-Up Automation for Solo Consultants
 

@@ -8,11 +8,11 @@ artifactType: case-study
 author:
   name: Josh Peterson
   picture: /assets/blog/authors/2017_profile_pic.jpg
-coverImage: /assets/blog/images/automating-slack-google-sheets-cover.png
+coverImage: /assets/blog/images/public-automation-lab-case-study-cover.png
 date: 2026-06-03T19:00:00-06:00
 excerpt: "How the public automation lab turns messy recurring work into reusable artifacts, documented workflows, and buyer-facing proof for operations automation."
 ogImage:
-  url: /assets/blog/images/automating-slack-google-sheets-cover.png
+  url: /assets/blog/images/public-automation-lab-case-study-cover.png
 ---
 # Case Study: Public Automation Lab as a Workflow Systems Practice
 

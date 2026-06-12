@@ -44,6 +44,7 @@ Environment setup
 Image handling
 - Blog post images should be stored in `public/assets/blog/images/`
 - Reference images in frontmatter with paths starting with `/assets/blog/images/`
+- Each blog cover/OG image should be used by only one post. Before reusing an existing image, scan `_posts` for the path and create a new local cover when it is already assigned.
 - Example frontmatter:
   ```yaml
   coverImage: /assets/blog/images/post-name-cover.png

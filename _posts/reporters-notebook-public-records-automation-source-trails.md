@@ -8,11 +8,11 @@ artifactType: research-note
 author:
   name: Josh Peterson
   picture: /assets/blog/authors/2017_profile_pic.jpg
-coverImage: /assets/blog/images/warp-rules-terminal-cover.png
+coverImage: /assets/blog/images/reporters-notebook-source-trails-cover.png
 date: 2026-05-24T23:20:00-06:00
 excerpt: "The reporter's notebook is the public record of how I investigate systems: source trails, public records, open questions, and the tools that make research repeatable."
 ogImage:
-  url: /assets/blog/images/warp-rules-terminal-cover.png
+  url: /assets/blog/images/reporters-notebook-source-trails-cover.png
 ---
 # Reporter's Notebook: Public Records, Automation, And Source Trails
 
