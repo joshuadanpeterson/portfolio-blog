@@ -10,26 +10,28 @@ import {
   ArrowRight,
   BarChart3,
   CheckCircle2,
-  Database,
+  ClipboardList,
+  Eye,
   FileText,
-  GitBranch,
+  MessageSquareText,
   PanelsTopLeft,
+  ReceiptText,
   Search,
-  Table2,
+  ShieldCheck,
   XCircle,
 } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Automation, Dashboards, and Internal Tools | Josh Peterson",
   description:
-    "Practical Google Sheets, Apps Script, reporting, API integration, and internal tool automation for operations-heavy teams.",
+    "Office bottleneck cleanup, reporting workflows, and safe AI-assisted automation for service businesses and operations-heavy teams.",
   alternates: {
     canonical: "/freelance",
   },
   openGraph: {
     title: "Automation, Dashboards, and Internal Tools | Josh Peterson",
     description:
-      "Practical Google Sheets, Apps Script, reporting, API integration, and internal tool automation for operations-heavy teams.",
+      "Office bottleneck cleanup, reporting workflows, and safe AI-assisted automation for service businesses and operations-heavy teams.",
     url: `${SITE_URL}/freelance`,
     siteName: "Josh Peterson",
     images: [HOME_OG_IMAGE_URL],
@@ -39,46 +41,46 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Automation, Dashboards, and Internal Tools | Josh Peterson",
     description:
-      "Practical Google Sheets, Apps Script, reporting, API integration, and internal tool automation for operations-heavy teams.",
+      "Office bottleneck cleanup, reporting workflows, and safe AI-assisted automation for service businesses and operations-heavy teams.",
     images: [HOME_OG_IMAGE_URL],
   },
 };
 
 const services = [
   {
-    title: "Sheets and Apps Script automation",
+    title: "Service-business office workflow cleanup",
     description:
-      "Turn spreadsheet handoffs, follow-up lists, and manual status checks into repeatable Google Workspace workflows.",
-    icon: Table2,
+      "Turn scattered job notes, reminders, inbox threads, and admin handoffs into one workflow the office can actually use.",
+    icon: ClipboardList,
   },
   {
-    title: "Dashboards and reporting workflows",
+    title: "Follow-up and owner visibility dashboards",
     description:
-      "Build practical KPI views and reporting paths for teams that need cleaner visibility without a heavy BI rollout.",
-    icon: BarChart3,
+      "Give owners and managers a clear daily or weekly view of customer follow-ups, invoices, AR, and work that needs attention.",
+    icon: Eye,
   },
   {
-    title: "API integrations and CRM sync",
+    title: "Service software and accounting handoffs",
     description:
-      "Connect the tools already in use, reconcile messy records, and reduce duplicate entry across operational systems.",
-    icon: GitBranch,
+      "Reduce duplicate entry across QuickBooks, Jobber, ServiceTitan, Housecall Pro, Google Workspace, spreadsheets, and inboxes.",
+    icon: ReceiptText,
   },
   {
-    title: "Python automation and cleanup scripts",
+    title: "Safe AI-assisted drafting and summaries",
     description:
-      "Clean, normalize, enrich, and move data through small scripts that are documented enough for the team to trust.",
-    icon: Database,
+      "Use AI behind the scenes to draft, summarize, or route information while your team approves customer-facing and money-sensitive steps.",
+    icon: ShieldCheck,
   },
   {
-    title: "Lightweight internal tools",
+    title: "Lightweight internal tools and cleanup scripts",
     description:
-      "Ship focused React or Next.js admin panels for the workflow that keeps escaping email, chat, and spreadsheets.",
+      "Ship focused scripts, dashboards, or admin panels for the workflow that keeps escaping email, chat, and spreadsheets.",
     icon: PanelsTopLeft,
   },
 ];
 
 const goodFit = [
-  "You have a real workflow already running in Sheets, Gmail, Slack, a CRM, or a shared inbox.",
+  "You run a service business where jobs, invoices, customer follow-ups, or admin notes are scattered across tools.",
   "Your team needs a small working slice before a larger build decision.",
   "The problem crosses data cleanup, communication, reporting, and operations handoffs.",
   "You want documentation and maintainability, not a black box.",
@@ -88,6 +90,7 @@ const notFit = [
   "Speculative app ideas without a clear operating problem.",
   "Growth hacking, scraping, spam, or account-risk automation.",
   "Projects that require publishing private client data or unverified claims.",
+  "Fully autonomous customer communication, collections, dispatch, or other black-box workflows.",
   "Large enterprise rewrites that need a full agency team from day one.",
 ];
 
@@ -138,16 +141,18 @@ export default function FreelancePage() {
     url: SITE_URL,
     jobTitle: "Automation builder and systems-minded operator",
     knowsAbout: [
+      "Office bottleneck cleanup",
+      "Service-business operations",
       "Google Sheets automation",
       "Apps Script",
-      "API integrations",
-      "Python automation",
+      "QuickBooks and service software handoffs",
+      "Safe AI-assisted workflows",
       "Internal tools",
-      "Operations workflows",
+      "Owner visibility dashboards",
     ],
     offers: {
       "@type": "Offer",
-      name: "Automation, dashboards, and internal tools for operations-heavy teams",
+      name: "Office bottleneck cleanup for service businesses",
       url: `${SITE_URL}/freelance`,
     },
   };
@@ -163,12 +168,13 @@ export default function FreelancePage() {
           <div className="grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(18rem,0.85fr)] lg:items-end">
             <div className="max-w-4xl">
               <h1 className="text-5xl font-bold leading-tight tracking-tighter text-foreground md:text-8xl">
-                Automation, dashboards, and internal tools for operations-heavy teams.
+                Office bottleneck cleanup, automation, and dashboards for service businesses.
               </h1>
               <p className="mt-6 max-w-3xl text-lg leading-relaxed text-muted-foreground md:text-xl">
-                I help small teams turn spreadsheet sprawl, manual reporting,
-                API handoffs, and back-office cleanup into practical systems
-                they can actually use and maintain.
+                I help service-business owners and operations-heavy teams turn
+                messy job notes, customer follow-ups, invoice reminders, and
+                back-office handoffs into practical systems they can actually
+                use and maintain.
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Button asChild size="lg" className="min-h-11">
@@ -184,14 +190,40 @@ export default function FreelancePage() {
             </div>
             <div className="border-l-4 border-foreground pl-5 text-sm leading-relaxed text-muted-foreground">
               <p className="font-semibold text-foreground">
-                Best fit for founders, solo consultants, agency owners, ops
-                managers, and fractional COOs.
+                Best fit for owners, office managers, dispatchers, operations
+                managers, and admin leads.
               </p>
               <p className="mt-3">
-                The sweet spot is work where operations, automation, software,
-                and clear communication all meet.
+                The sweet spot is work where follow-up, cash visibility,
+                reporting, automation, software, and clear communication all meet.
               </p>
             </div>
+          </div>
+        </section>
+
+        <section className="mb-16 border-y border-border bg-muted/30 py-10 md:mb-20">
+          <div className="grid gap-8 md:grid-cols-[minmax(0,1fr)_auto] md:items-center">
+            <div className="max-w-4xl">
+              <h2 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl">
+                Office bottleneck cleanup for service businesses
+              </h2>
+              <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
+                I help service-business owners turn messy job notes, customer
+                follow-ups, invoice reminders, owner summaries, and admin
+                handoffs into one safe workflow their office can actually use.
+              </p>
+              <p className="mt-4 leading-relaxed text-muted-foreground">
+                When AI helps, it drafts, summarizes, or routes information
+                behind the scenes. Your team still approves customer-facing
+                messages and money-sensitive steps.
+              </p>
+            </div>
+            <Button asChild size="lg" className="min-h-11 w-full sm:w-fit">
+              <Link href="/contact?type=freelance">
+                Talk through the bottleneck
+                <MessageSquareText className="ml-2 h-4 w-4" aria-hidden="true" />
+              </Link>
+            </Button>
           </div>
         </section>
 
@@ -201,8 +233,9 @@ export default function FreelancePage() {
               What you can hire me for
             </h2>
             <p className="mt-3 text-lg leading-relaxed text-muted-foreground">
-              Focused builds for teams that need cleaner workflows more than
-              they need a giant platform migration.
+              Focused builds for service businesses and small teams that need
+              cleaner office workflows more than they need a giant platform
+              migration.
             </p>
           </div>
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -267,8 +300,8 @@ export default function FreelancePage() {
               </h2>
               <p className="mt-3 text-lg leading-relaxed text-muted-foreground">
                 Public artifacts translated into buyer problems: follow-up
-                systems, spreadsheet automation, API cleanup, and maintainable
-                operational workflows.
+                systems, spreadsheet automation, reporting cleanup, and
+                maintainable operational workflows.
               </p>
             </div>
             <Button asChild variant="outline" className="w-full sm:w-fit">
@@ -340,12 +373,12 @@ export default function FreelancePage() {
           <div className="grid gap-8 md:grid-cols-[minmax(0,1fr)_auto] md:items-center">
             <div className="max-w-3xl">
               <h2 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-                Bring the messy workflow.
+                Bring the office bottleneck.
               </h2>
               <p className="mt-3 text-lg leading-relaxed text-muted-foreground">
-                A good first note includes the current tool stack, the recurring
-                pain, the people affected, and what would count as a useful
-                first win.
+                A good first note includes the service software or accounting
+                tool, the recurring follow-up or admin pain, the people
+                affected, and what would count as a useful first win.
               </p>
             </div>
             <Button asChild size="lg" className="min-h-11">

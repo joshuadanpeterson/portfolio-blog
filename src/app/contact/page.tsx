@@ -20,12 +20,12 @@ function ContactForm() {
     subject: isWritingInquiry
       ? "Writing or creative production inquiry"
       : isFreelanceInquiry
-        ? "Freelance project inquiry"
+        ? "Office workflow cleanup inquiry"
         : "",
     projectType: isWritingInquiry
       ? "Technical editorial writing"
       : isFreelanceInquiry
-        ? "Automation or internal tools"
+        ? "Office workflow cleanup for a service business"
         : "",
     timeline: "",
     budgetRange: "",
@@ -71,7 +71,7 @@ function ContactForm() {
           {isWritingInquiry
             ? "For writing or creative projects, include the audience, format, deadline, rough word count or asset need, and whether the work is public-facing, internal, or ghostwritten."
             : isFreelanceInquiry
-              ? "Tell me what workflow is painful, what tools are involved, and what would count as a useful first win. I am strongest on automation, dashboards, reporting, cleanup scripts, and lightweight internal tools."
+              ? "Tell me what service software or accounting tool is involved, where the recurring office bottleneck shows up, and what would count as a useful first win. I am strongest on follow-up workflows, owner visibility, reporting, cleanup scripts, and safe AI-assisted admin handoffs."
               : "Send a note about collaborations, reporting, automation work, writing projects, creative production, or anything else that belongs in this orbit."}
         </p>
         <form className="w-full max-w-lg mt-5" onSubmit={handleSubmit}>
@@ -129,6 +129,9 @@ function ContactForm() {
               className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
               <option value="">Select a project type</option>
+              <option value="Office workflow cleanup for a service business">
+                Office workflow cleanup for a service business
+              </option>
               <option value="Google Sheets or Apps Script automation">
                 Google Sheets or Apps Script automation
               </option>
